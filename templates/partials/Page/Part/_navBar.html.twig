@@ -1,0 +1,82 @@
+<header class="navbar">
+
+        <a href="#link-start-part" class="logo flex-grow-1">Secrétaire Pro</a>
+
+        <!-- Menu Grand Écran (visible uniquement sur les grands écrans) -->
+        <div class="d-none d-md-flex">
+            <ul class="list-unstyled d-flex mb-0">
+                <li class="me-4">
+                    <a href="#link-service-part" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == 'secretariat' ? 'text-primary' : 'text-dark' }}">Services</h5>
+                    </a>
+                </li>
+                <li class="me-4">
+                    <a href="#link-tarif-part" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == 'numeriques' ? 'text-primary' : 'text-dark' }}">Tarifs</h5>
+                    </a>
+                </li>
+                <li class="me-4">
+                    <a href="#link-job-part" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == 'jobs' ? 'text-primary' : 'text-dark' }}">Jobs</h5>
+                    </a>
+                </li>
+                <li class="me-4">
+                    <a href="#link-contact-part" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == 'contact' ? 'text-primary' : 'text-dark' }}">Contact</h5>
+                    </a>
+                </li>
+                <li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="navBarEspaceClient text-success" href="{{ path('dashboard') }}" style="text-decoration: none;">
+                            <h5 class="{{ app.request.attributes.get('_route') == 'dashboard' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
+                        </a>
+                    {% elseif is_granted('ROLE_USER') %}
+                        <a class="navBarEspaceClient text-success" href="{{ path('user') }}" style="text-decoration: none;">
+                            <h5 class="{{ app.request.attributes.get('_route') == 'user' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" style="text-decoration: none;">
+                            <h5 class="{{ app.request.attributes.get('_route') == 'app_login' ? 'text-primary' : 'text-dark' }}">Espace client</h5>
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+
+        <!-- Menu Burger (visible uniquement sur petits écrans) -->
+        <nav class="sidebar d-md-none navbar-expand-md fixed-top" id="navBurger">
+            <div class="container-fluid">
+                <button class="menu-toggle" id="menu-toggle"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    &#9776;
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="text-center pt-4">
+                        <h1><a href="#link-start-part" class="text-primary">Secrétaire Pro</a></h1>
+                    </div>
+                    
+                    <ul class="mb-3" style="padding-top: 1rem !important;">
+                        <li class="text-center mb-2"><h5><a href="#link-service-part">Services</a></h5></li>
+                        <li class="text-center mb-2"><h5><a href="#link-tarif-part">Tarifs</a></h5></li>
+                        <li class="text-center mb-2"><h5><a href="#link-job-part">Jobs</a></h5></li>
+                        <li class="text-center mb-2"><h5><a href="#link-contact-part">Contact</a></h5></li>
+                        <li class="text-center mb-2">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <h5><a class="navBarEspaceClient text-success" href="{{ path('dashboard') }}">{{ app.user.email }}</a></h5>
+                            {% elseif is_granted('ROLE_USER') %}
+                                <h5><a class="navBarEspaceClient text-success" href="{{ path('user') }}">{{ app.user.email }}</a></h5>
+                            {% else %}
+                                <h5><a href="{{ path('app_login') }}">Espace client</a></h5>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</header>

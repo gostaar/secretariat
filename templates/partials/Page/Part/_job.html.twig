@@ -1,0 +1,59 @@
+<div class="background-jobs">
+    {% include 'partials/Page/Part/_navBar.html.twig' %}
+    <section class="hero d-flex justify-content-center flex-column flex-grow-1">
+        <div class="heroContent">
+            <h1>Rejoignez notre équipe</h1>
+            <p>Découvrez nos offres de jobs dans le domaine administratif et numérique.</p>
+        </div>
+        <div>
+            <a href="#link-contact-part">Contactez-nous</a>
+        </div>
+    </section>
+</div>
+
+<h1 class="services-title">Nos offres d'emploi</h1>
+<h2 class="services-subtitle">Postes disponibles</h2>
+<section id="services" class="service-list d-flex flex-wrap justify-content-center">
+    <div class="service-item d-flex flex-column align-items-center">
+        <h3>Assistant(e) Administratif(ve)</h3>
+        <p>Rejoignez notre équipe pour gérer diverses tâches administratives pour nos clients.</p>
+    </div>
+    <div class="service-item d-flex flex-column align-items-center">
+        <h3>Développeur Web</h3>
+        <p>Nous cherchons un développeur pour créer des sites internet modernes et fonctionnels.</p>
+    </div>
+    <div class="service-item d-flex flex-column align-items-center">
+        <h3>Support Technique</h3>
+        <p>Fournissez un support technique pour nos services numériques et bureautiques.</p>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <h2>Postulez dès maintenant!</h2>
+    <p>
+        Envoyez votre candidature via le formulaire ci-dessous ou par email à 
+        <a href="mailto:contact@secretairepro.com">contact@secretairepro.com</a>
+    </p>
+
+    <!-- Formulaire de Candidature -->
+    <form action="{{ path('jobs_handler') }}" method="post" enctype="multipart/form-data">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="job">Poste souhaité :</label>
+        <select id="job" name="job" required>
+            <option value="assistant_admin">Assistant(e) Administratif(ve)</option>
+            <option value="dev_web">Développeur Web</option>
+            <option value="support_tech">Support Technique</option>
+        </select>
+
+        <label for="cv">CV (en PDF) :</label>
+        <input type="file" id="cv" name="cv" accept=".pdf" required>
+
+        <button type="submit" class="btn">Envoyer ma candidature</button>
+    </form>
+</section>

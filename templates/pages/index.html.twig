@@ -3,33 +3,24 @@
 {% block title %}Secrétaire{% endblock %}
 
 {% block body %}
-    <div class="background-index">
-        <!-- Navbar -->
-        {% include 'partials/header.html.twig' %}
-
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="heroContent">
-                <h1>Votre Secrétaire Indépendante</h1>
-                <p>Des services de secrétariat professionnels pour tous.</p>
-            </div>
-            <a href="{{ path('contact') }}">Contactez-nous</a>
-        </section>
+<div class="d-flex flex-column min-vh-100">
+    <div id="btnPartPro" class="bg-image">
+        
+        <h1 class="m-0 text-center">Bienvenue sur Secrétaire Pro</h1>
+        <div class="d-flex">
+            <button id="btnPart" class="btn btn-lg btn-primary"><h1>Vous êtes un particulier</h1></button>
+            <button id="btnPro" class="btn btn-lg btn-secondary"><h1>Vous êtes un professionnel</h1></button>
+        </div>
     </div>
-    <main>
-    {% include 'partials/pro.html.twig' %}
-    {% include 'partials/part.html.twig' %}
-    </main>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <h2>Une question?</h2>
-        <p>Notre société peut couvrir tous les besoins en secrétariat de votre entreprise.</p>
-        <p><a href="mailto:contact@secretairepro.com">contact@secretairepro.com</a></p>
-        <p><a href="tel:+1234567890">+123 456 7890</a></p>
-    </section>
-
-    <!-- Footer -->
-    {% include 'partials/footer.html.twig' %}
+    <div id="pro" class="d-none">
+        {% include 'partials/Page/Pro/index.html.twig' %}
+    </div>
+    <div id="part" class="d-none">
+        {% include 'partials/Page/Part/index.html.twig' %}
+    </div>
+        
+    {% include 'partials/Page/footer.html.twig' %}  
+</div>
 {% endblock %}
+
     

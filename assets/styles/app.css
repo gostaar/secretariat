@@ -6,6 +6,8 @@ body {
     line-height: 1.6;
     background-color: #f9f9f9;
     color: #333;
+    width: 100vw;
+    height: 100vh;
   }
   
   .container {
@@ -21,6 +23,12 @@ body {
     min-height: 50vh; /* Utilisez 100vh pour occuper toute la hauteur de l'écran */
     display: flex;
     flex-direction: column;
+  }
+
+  @media (max-width: 678px) {
+    .background-index{
+      min-height: 100vh;
+    }
   }
   
   .background-jobs {
@@ -229,7 +237,6 @@ body {
   /* ========== Expert Section ========== */
   .expert-title {
     text-align: center; 
-    background: white; 
     margin: 0; 
     padding-top: 5rem;
     padding-left: 5rem;
@@ -238,7 +245,6 @@ body {
   
   #experts {
     padding: 40px 5rem;
-    background-color: white;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -246,7 +252,6 @@ body {
   
   .expert-item {
     width: 30%; /* Par défaut, chaque élément prend 30% de la largeur */
-    background-color: white;
     padding: 20px;
     text-align: center;
     transition: transform 0.3s ease;
@@ -306,7 +311,7 @@ body {
   /* ========== Services Section ========== */
   .services-title {
     text-align: center; 
-    background: #f4f4f4; 
+     
     margin: 0; 
     padding-top: 5rem;
     padding-left: 5rem;
@@ -317,13 +322,13 @@ body {
     font-weight: 100;
     font-size: 1rem;
     text-align: center; 
-    background: #f4f4f4; 
+     
     margin: 0; 
     color: red;
   }
   
   .service-list {
-    background-color: #f4f4f4;
+    
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -409,7 +414,7 @@ body {
 
   /* ========== Contact Section ========== */
   .contact {
-    background-color: #f0f0f0;
+
     padding: 40px 5rem;
     text-align: center;
   }
@@ -852,4 +857,62 @@ body .sidebar.d-none.d-md-block {
   background-color: #f0f0f0ad;
   border-radius: 20px;
   cursor: pointer;
+}
+
+/* boutons PRO et PART */
+.bg-image {
+  background-image: url("../img/main1.jpg");
+  background-size: cover;
+  background-position: center;
+  flex-grow: 1;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#btnPart{
+  margin: 3rem;
+  padding: 5rem;
+}
+
+#btnPro{
+  margin: 3rem;
+  padding: 5rem;
+}
+
+.bg-image > .d-flex {
+  flex-direction: row;
+}
+
+@media (max-width: 767px) {
+  .bg-image {
+    padding: 1rem;
+  }
+
+  .bg-image > .d-flex{
+    flex-direction: column;
+  }
+
+  #btnPart{
+    margin: 1rem 1rem;
+    padding: 1rem;
+  }
+
+  #btnPro{
+    margin: 1rem 1rem;
+    padding: 1rem;
+  }
+}
+
+.fade-in {
+  opacity: 1;
+  animation: fade 2s linear;
+}
+
+
+@keyframes fade {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+
 }

@@ -1,23 +1,11 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}Contact - Secrétaire Indépendante{% endblock %}
-
-{% block body %}
-  <div class="background-contact">
-    <!-- Navbar -->
-    {% include 'partials/Page/header.html.twig' %}
-
-    <!-- Hero Section -->
-    <section class="hero">
+   <section class="hero  d-flex justify-content-center flex-column flex-grow-1">
         <div class="heroContent">
             <h1>Contactez-nous</h1>
             <p>Nous sommes à votre écoute pour répondre à toutes vos questions.</p>
         </div>
     </section>
   </div>
-
-  <!-- Section Contact -->
-  <!-- Coordonnées -->
   <h1 class="expert-title">Coordonnées</h1>
   <section id="experts" class="experts">
       <div class="expert-item d-flex flex-column align-items-center">
@@ -72,12 +60,3 @@
       </div>
     </div>
   </section>
-
-  <!-- Retour à l'accueil -->
-  <section class="back-to-home">
-    <a href="{{ path('home_index') }}" class="btn">Retour à l'accueil</a>
-  </section>
-
-  <!-- Footer -->
-  {% include 'partials/Page/footer.html.twig' %}
-{% endblock %}

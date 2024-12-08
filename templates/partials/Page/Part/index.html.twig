@@ -1,0 +1,30 @@
+<div id='link-start-part' class="background-index fade-in">
+    <div>
+        {% include 'partials/Page/Part/_navBar.html.twig' %}
+
+        <section class="hero d-flex justify-content-center flex-column flex-grow-1">
+            <div class="heroContent">
+                <h1>Votre Secrétaire Indépendante</h1>
+                <p>Des services de secrétariat professionnels pour tous.</p>
+            </div>
+            <div>
+                <a href="#link-contact-part">Contactez-nous</a>
+            </div>
+        </section>
+    </div>
+
+    <div id='link-intro-part' style="min-height:50vh; background-color: #ffffff;">
+        {% include 'partials/Page/Part/_intro.html.twig' %}
+    </div>
+</div>
+<div id='link-service-part' style="min-height:100vh; background-color: #ffffff;" class='d-none fade-in'>
+    {% include 'partials/Page/Part/_service.html.twig' %}
+</div>
+<div id='link-job-part' style="min-height:100vh; background-color: #ffffff;" class='d-none fade-in'>
+    {% include 'partials/Page/Part/_job.html.twig' %}
+</div>
+<div id='link-contact-part' style="min-height:100vh; background-color: #ffffff;" class='d-none fade-in'>
+    <div class="background-contact">
+        {% include 'partials/Page/Part/_navBar.html.twig' %}
+            {% include 'partials/Page/_contact.html.twig' %}
+</div>
