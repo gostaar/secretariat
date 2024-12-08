@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard utilisateur{% endblock %}
+
+{% block body %}
+
+<div class="body-user">
+    <div class="container-fluid custom-bg p-0 m-0">
+        <div class="container-user d-flex flex-column flex-md-row">
+            <!-- Sidebar -->
+            {% include 'partials/user/_headerTest.html.twig' %}
+            <div class="col-md-9 p-4">
+                <!-- Documents Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="container card-header d-flex justify-content-between align-items-center">
+                            <h5>Documents</h5>
+                            <img src="{{ asset('build/images/side8.png') }}" class="icon-size" alt="Icone"/>
+                        </div>
+                        <div class="container card">
+                            <div class="card-body">
+                                {% if fichiers is not empty%}
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom du document</th>
+                                                <th>ID</th>
+                                                <th>Status</th>
+                                                <th>Informations</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for facture in fichiers %}
+                                                <tr>
+                                                    <td>{{ facture.name }}</td>
+                                                    <td>{{ facture.id }}</td>
+                                                    <td>{{ facture.status }}</td>
+                                                    <td>{{ facture.info }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <!-- Aucun document -->
+                                    <div class="text-center">
+                                        <div style="position: relative; display: inline-block;">
+                                            <img src="{{ asset('./build/images/side6.png') }}" alt="Aucun document" class="" />
+                                            <div style="position: absolute; 
+                                                    top: 0; left: 0; 
+                                                    right: 0; bottom: 0; 
+                                                    background-color: rgba(255, 255, 255, 0.7); 
+                                                    z-index: 1;">
+                                            </div>
+                                        </div>
+                                        <h1 style="color: grey;">Aucun document</h1>
+                                        <p class="text-muted">À cet endroit, vous pourrez consulter vos documents.</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>             
+            </div>
+        </div>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+</div>
+{% endblock %}

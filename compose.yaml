@@ -1,0 +1,76 @@
+services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: symfony
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - symfony
+    container_name: database
+
+  apache:
+    build:
+      context: .
+      dockerfile: apache.dockerfile
+    ports:
+      - 8080:80 # Le 1er port est celui de l'hôte
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+      - php
+    networks:
+      - symfony
+    container_name: apache
+
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${UID:-1000}
+    environment:
+      DATABASE_URL: "mysql://symfony:secret@mysql:3306/symfony"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - symfony
+    container_name: php
+
+  composer:
+    build:
+      context: .
+      dockerfile: composer.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${UID:-1000}
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - symfony
+    container_name: composer
+
+  node:
+    container_name: node
+    build: 
+      context: .
+      dockerfile: node.dockerfile
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    environment:
+      - NODE_ENV=development
+
+networks:
+  symfony:
+    driver: bridge
+volumes:
+  mysql-data:

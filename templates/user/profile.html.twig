@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard utilisateur{% endblock %}
+
+{% block body %}
+
+<div class="body-user">
+    <div class="container-fluid custom-bg p-0 m-0">
+        <div class="container-user d-flex flex-column flex-md-row">
+            <!-- Sidebar -->
+            {% include 'partials/user/_headerTest.html.twig' %}
+
+            <!-- Main Content -->
+            <div class="col-md-9 p-4">
+
+                <!-- profile Section -->
+                {% include 'partials/user/_profile.html.twig' %}
+
+            </div>
+        </div>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+</div>
+{% endblock %}

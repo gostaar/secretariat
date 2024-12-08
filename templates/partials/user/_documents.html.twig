@@ -1,0 +1,33 @@
+<div class="container card mb-4">
+    <div class="card-body">
+        <div class="container card-header bg-white">
+            <h5>Documents</h5>
+        </div>
+        <!-- Documents Table -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom du document</th>
+                    <th>ID</th>
+                    <th>Status</th>
+                    <th>Informations</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for facture in fichiers %}
+                    <tr>
+                        <td>{{ facture.name }}</td>
+                        <td>{{ facture.id }}</td>
+                        <td>{{ facture.status }}</td>
+                        <td>{{ facture.info }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Voir tous les documents -->
+        <div class="d-flex justify-content-center mt-4">
+            <a href="{{ path('user_documents') }}" class="btn btn-secondary">Voir tous mes documents</a>
+        </div>
+    </div>
+</div>

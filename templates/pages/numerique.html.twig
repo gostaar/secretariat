@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Services Numériques{% endblock %}
+
+{% block body %}
+    <div class="background-numerique">
+        <!-- Navbar -->
+        {% include 'partials/header.html.twig' %}
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="heroContent">
+                <h1>Services Numériques</h1>
+                <p>Optimisez votre entreprise avec des solutions numériques modernes.</p>
+            </div>
+            <a href="{{ path('contact') }}">Contactez-nous</a>
+        </section>
+    </div>
+
+    <!-- Digital Services Section -->
+    <h1 class="services-title">Nos services numériques</h1>
+    <h2 class="services-subtitle">Innover pour votre entreprise</h2>
+    <section id="services" class="service-list d-flex flex-wrap  justify-content-center">
+        <div class="service-item d-flex flex-column align-items-center">
+            <h3>Création de site web</h3>
+            <p>Nous concevons des sites internet modernes et adaptés à votre activité.</p>
+        </div>
+        <div class="service-item d-flex flex-column align-items-center">
+            <h3>Systèmes de gestion</h3>
+            <p>Optimisez vos processus d'affaires avec des outils numériques performants.</p>
+        </div>
+        <div class="service-item d-flex flex-column align-items-center">
+            <h3>Solutions Cloud</h3>
+            <p>Accédez à vos données et outils en toute sécurité depuis n'importe où.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Une question?</h2>
+        <p>Notre équipe numérique est prête à répondre à vos besoins.</p>
+        <p><a href="mailto:contact@secretairepro.com">contact@secretairepro.com</a></p>
+        <p><a href="tel:+1234567890">+123 456 7890</a></p>
+    </section>
+
+    <!-- Footer -->
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

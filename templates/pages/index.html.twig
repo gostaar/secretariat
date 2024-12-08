@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Secrétaire{% endblock %}
+
+{% block body %}
+    <div class="background-index">
+        <!-- Navbar -->
+        {% include 'partials/header.html.twig' %}
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="heroContent">
+                <h1>Votre Secrétaire Indépendante</h1>
+                <p>Des services de secrétariat professionnels pour tous.</p>
+            </div>
+            <a href="{{ path('contact') }}">Contactez-nous</a>
+        </section>
+    </div>
+    <main>
+    {% include 'partials/pro.html.twig' %}
+    {% include 'partials/part.html.twig' %}
+    </main>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Une question?</h2>
+        <p>Notre société peut couvrir tous les besoins en secrétariat de votre entreprise.</p>
+        <p><a href="mailto:contact@secretairepro.com">contact@secretairepro.com</a></p>
+        <p><a href="tel:+1234567890">+123 456 7890</a></p>
+    </section>
+
+    <!-- Footer -->
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
+    

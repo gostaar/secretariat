@@ -1,0 +1,9 @@
+# api_get_user:
+#   path: /api/users/{id}
+#   controller: App\Controller\Api\UserController::getUser
+#   methods: GET
+
+# api_create_user:
+#   path: /api/users
+#   controller: App\Controller\Api\UserController::createUser
+#   methods: POST
