@@ -40,32 +40,86 @@
         <!-- Menu Burger (visible uniquement sur petits écrans) -->
         <nav class="sidebar d-md-none navbar-expand-md fixed-top" id="navBurger">
             <div class="container-fluid">
-                <button class="menu-toggle" id="menu-toggle"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
+                <button id="menu-toggle" class="menu-toggle"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
                     &#9776;
                 </button>
                 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="text-center pt-4">
-                        <h1><a href="#link-start-pro" class="text-primary">Secrétaire Pro</a></h1>
+                        <a href="#link-start-pro" class="text-primary nav-link">
+                            <h1 type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav"
+                                    aria-controls="navbarNav"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    Secrétaire Pro
+                            </h1>
+                        </a>
                     </div>
                     
                     <ul class="mb-3" style="padding-top: 1rem !important;">
-                        <li class="text-center mb-2"><h5><a href="#link-service-pro">Services</a></h5></li>
-                        <li class="text-center mb-2"><h5><a href="#link-tarif-pro">Tarifs</a></h5></li>
-                        <li class="text-center mb-2"><h5><a href="#link-contact-pro">Contact</a></h5></li>
+                        <li class="text-center mb-2">
+                            <a href="#link-service-pro" class='nav-link'>
+                                <h5 type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav"
+                                    aria-controls="navbarNav"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    Services
+                                </h5>
+                            </a>
+                        </li>
+                        <li class="text-center mb-2">
+                            <a href="#link-tarif-pro" class='nav-link'>
+                                <h5 type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav"
+                                    aria-controls="navbarNav"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    Tarifs
+                                </h5>
+                            </a>
+                        </li>
+                        <li class="text-center mb-2">
+                            <a href="#link-contact-pro" class='nav-link'>
+                                <h5 type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav"
+                                    aria-controls="navbarNav"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    Contact
+                                </h5>
+                            </a>
+                        </li>
                         <li class="text-center mb-2">
                             {% if is_granted('ROLE_ADMIN') %}
-                                <h5><a class="navBarEspaceClient text-success" href="{{ path('dashboard') }}">{{ app.user.email }}</a></h5>
+                            <a class="navBarEspaceClient text-success nav-link" href="{{ path('dashboard') }}">
+                                <h5>
+                                    {{ app.user.email }}
+                                </h5>
+                            </a>
                             {% elseif is_granted('ROLE_USER') %}
-                                <h5><a class="navBarEspaceClient text-success" href="{{ path('user') }}">{{ app.user.email }}</a></h5>
+                            <a class="navBarEspaceClient text-success nav-link" href="{{ path('user') }}">
+                                <h5>
+                                    {{ app.user.email }}
+                                </h5>
+                            </a>
                             {% else %}
-                                <h5><a href="{{ path('app_login') }}">Espace client</a></h5>
+                            <a href="{{ path('app_login') }}" class='nav-link'>
+                                <h5>
+                                    Espace client
+                                </h5>
+                            </a>
                             {% endif %}
                         </li>
                     </ul>

@@ -1,0 +1,79 @@
+<div class="flex-grow-1 p-4 d-flex justify-content-between flex-column">
+    <div class="container card mb-4 ">
+        <div class="card-body">
+            <h4 class="card-title border-bottom py-4">Accès rapide</h4>
+            <div class="c-access d-flex justify-content-around flex-wrap">
+            <!-- Card 5 - Espace Personnel -->
+                <a id="btnEspacePersonnel" href="#link-espacepersonnel" class="btn card-link mb-4">
+                    
+                    <i class="fas fa-user-circle fa-3x d-sm-none"></i>
+                    <i class="fas fa-user-circle fa-3x d-none d-sm-inline d-md-none"></i>
+                    <i class="fas fa-user-circle fa-4x d-none d-md-inline"></i>
+                    <h5>Espace <br>Personnel</h5>
+                </a>
+                <!-- Card 2 - Agenda -->
+                <a id="btnAgenda" href="#link-Agenda" class="btn card-link mb-4">
+                    <i class="fas fa-calendar-alt fa-3x d-sm-none"></i>
+                    <i class="fas fa-calendar-alt fa-3x d-none d-sm-inline d-md-none"></i>
+                    <i class="fas fa-calendar-alt fa-4x d-none d-md-inline"></i>
+                    <h5>Agenda</h5>
+                </a>
+                <!-- Card 6 - Gestion Téléphonique -->
+                <a id="btnTelephone" href="#link-Telephone" class="btn card-link mb-4">
+                    <i class="fas fa-phone-alt fa-3x d-sm-none"></i>
+                    <i class="fas fa-phone-alt fa-3x d-none d-sm-inline d-md-none"></i>
+                    <i class="fas fa-phone-alt fa-4x d-none d-md-inline"></i>
+                    <h5>Gestion <br>Téléphonique</h5>
+                </a>
+                <!-- Card 1 - Documents Administratifs -->
+                <a id="btnAdministratif" href="#link-Administratif" class="btn card-link mb-4">
+                    <i class="fas fa-file-alt fa-3x d-sm-none"></i>
+                    <i class="fas fa-file-alt fa-3x d-none d-sm-inline d-md-none"></i>
+                    <i class="fas fa-file-alt fa-4x d-none d-md-inline"></i>
+                    <h5>Documents <br>Administratifs</h5>
+                </a>
+                <!-- Card 3 - Documents commerciaux -->
+                <a id="btnCommercial" href="#link-Commercial" class="btn card-link mb-4">
+                    <i class="fas fa-briefcase fa-3x d-sm-none"></i>
+                    <i class="fas fa-briefcase fa-3x d-none d-sm-inline d-md-none"></i>
+                    <i class="fas fa-briefcase fa-4x d-none d-md-inline"></i>
+                    <h5>Documents <br>commerciaux</h5>
+                </a>
+                <!-- Card 4 - Documents numériques -->
+                <a id="btnNumerique" href="#link-Numerique" class="btn card-link mb-4">
+                    <i class="fas fa-laptop-code fa-3x d-sm-none"></i>
+                    <i class="fas fa-laptop-code fa-3x d-none d-sm-inline d-md-none"></i>
+                    <i class="fas fa-laptop-code fa-4x d-none d-md-inline"></i>
+                    <h5>Documents <br>numériques</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Accès Direct en dessous des autres éléments -->
+    <div class="card bg-transparent border-0 mb-4">
+        <div class="card-body bg-transparent">
+            <div class="card-header bg-transparent border-0">
+                <h5>Accès direct</h5>
+            </div>
+            <div class="c-access d-flex justify-content-start flex-wrap">
+                <a href="{{ path('home_index') }}" class="access">
+                    <img src="{{ asset('build/images/side1.png') }}" alt="Nos offres" class="iconUser" />
+                    <p>Nos offres</p>
+                </a>
+                <a href="{{ path('home_index') }}" class="access">
+                    <img src="{{ asset('build/images/side2.png') }}" alt="J'ai une question" class="iconUser" />
+                    <p>J'ai une question</p>
+                </a>
+                <a href="{{ path('home_index') }}" class="access">
+                    <img src="{{ asset('build/images/side6.png') }}" alt="Données personnelles" class="iconUser" />
+                    <p>Données personnelles</p>
+                </a>
+                <a href="#" class="access">
+                    <img src="{{ asset('build/images/side6.png') }}" alt="Offres partenaires" class="iconUser" />
+                    <p>Offres partenaires</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

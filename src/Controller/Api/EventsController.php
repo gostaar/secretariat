@@ -99,7 +99,6 @@ class EventsController extends AbstractController
     #[Route('/create_events', name: 'create_event', methods: ['POST'])]
     public function createEvent(Request $request, LoggerInterface $logger): JsonResponse
     {
-        
         $data = json_decode($request->getContent(), true);
         $logger->info('Data received: ' . json_encode($data)); // Affichez le contenu pour le débogage
 
@@ -112,30 +111,43 @@ class EventsController extends AbstractController
         
         foreach ($data as $eventData) {
             try {
+                // Vérifie si l'événement existe déjà dans la base de données
                 $existingEvent = $this->eventsRepository->findOneBy([
                     'title' => $eventData['title'],
                     'location' => $eventData['location'],
                     'start' => new \DateTime($eventData['start']),
                     'end' => new \DateTime($eventData['end']),
                 ]);
-    
+        
                 if ($existingEvent) {
                     $skippedEvents[] = $eventData['title'];
-                    continue;
+                    continue; // Si l'événement existe déjà, on le saute
                 }
-    
+        
+                // Traitement de google_calendar_event_id, s'il existe
+                $googleCalendarEventId = isset($eventData['google_calendar_event_id']) 
+                    ? $eventData['google_calendar_event_id'] // On récupère directement l'array
+                    : ['primary', 'default_event_id']; // Valeurs par défaut si non défini
+        
+                // S'assurer qu'il y a deux éléments dans googleCalendarEventId
+                if (count($googleCalendarEventId) < 2) {
+                    $googleCalendarEventId = array_pad($googleCalendarEventId, 2, 'default_value'); // Complète si nécessaire
+                }
+        
+                // Appel de la méthode saveEvent avec les données
                 $event = $this->eventsRepository->saveEvent(
                     $eventData['title'],
                     $eventData['description'],
                     $eventData['location'],
-                    $eventData['start'],
-                    $eventData['end'],
-                    $eventData['googleCalendarEventId'] ?? null
+                    new \DateTime($eventData['start']),  // Assurez-vous que les dates sont bien des objets DateTime
+                    new \DateTime($eventData['end']),
+                    $googleCalendarEventId // Passer la variable déjà préparée ici
                 );
-    
-                $createdEvents[] = $eventData['title'];
-    
+        
+                $createdEvents[] = $eventData['title']; // Ajouter l'événement créé à la liste des événements créés
+        
             } catch (\Exception $e) {
+                // En cas d'erreur, loguer et retourner une réponse d'erreur
                 $logger->error('Failed to create event: ' . $e->getMessage());
                 return new JsonResponse(['error' => $e->getMessage()], 400);
             }
@@ -171,13 +183,21 @@ class EventsController extends AbstractController
     private function formatEvents(array $events): array
     {
         return array_map(function ($event) {
+            // Récupérez les données de Google Calendar Event (calendarId et eventId)
+            $googleCalendarEventIds = $event->getGoogleCalendarEventId();
+            
+            // Si les IDs ne sont pas présents, utilisez des valeurs par défaut
+            if (empty($googleCalendarEventIds)) {
+                $googleCalendarEventIds = ['primary', 'default_event_id'];
+            }
+            
             return [
                 'title' => $event->getTitle(),
                 'description' => $event->getDescription(),
                 'location' => $event->getLocation(),
                 'start' => $event->getStart()->format('Y-m-d H:i'),
                 'end' => $event->getEnd()->format('Y-m-d H:i'),
-                'googleCalendarEventId' => $event->getGoogleCalendarEventId() ?? null,
+                'googleCalendarEventIds' => $googleCalendarEventIds, // Ajout du tableau avec calendarId et eventId
             ];
         }, $events);
     }

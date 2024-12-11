@@ -1,0 +1,57 @@
+<div class="custom-bg d-flex">
+    <!-- Sidebar -->
+    {% include 'partials/user/_header.html.twig' %}
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4 d-flex flex-column">
+
+        <div class="container card mb-4">
+            <div class="container card-header d-flex justify-content-between align-items-center">
+                <h5>Nouveau Contact Personnel</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-3">
+                        <label for="repertoirenompersonnel">Nom</label>
+                        <input id="repertoirenompersonnel" class="form-control" placeholder="Nom">
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        <label for="repertoireadressepersonnel">Adresse</label>
+                        <input id="repertoireadressepersonnel" class="form-control" placeholder="adresse">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="repertoirecodePostalpersonnel">Code Postal</label>
+                        <input id="repertoirecodePostalpersonnel" class="form-control" placeholder="Code Postal">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="repertoirevillepersonnel">Ville</label>
+                        <input id="repertoirevillepersonnel" class="form-control" placeholder="Ville">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="repertoirepayspersonnel">Pays</label>
+                        <input id="repertoirepayspersonnel" class="form-control" placeholder="Pays">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="repertoiretelephonepersonnel">Téléphone</label>
+                        <input id="repertoiretelephonepersonnel" class="form-control" placeholder="Téléphone">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="repertoiremobilepersonnel">Mobile</label>
+                        <input id="repertoiremobilepersonnel" class="form-control" placeholder="Mobile">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="repertoireemailpersonnel">Adresse e-mail</label>
+                        <input id="repertoireemailpersonnel" class="form-control" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary">Créer un nouveau contact</a>
+        </div>
+    </div>
+</div>   

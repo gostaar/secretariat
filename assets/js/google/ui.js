@@ -5,22 +5,24 @@ export async function updateUIBasedOnState() {
     const isAuthorized = await isAccessTokenValid();
 
     if (isAuthorized) {
-        document.getElementById('authorize_button').classList.add('d-none');
-        document.getElementById('signout_button').classList.remove('d-none');
-        document.getElementById('create-event-button').classList.remove('d-none');
-        document.getElementById('message').classList.remove('d-none');
-        document.getElementById('content').classList.add('d-none');
-        document.getElementById('syncButtonsEvent').classList.remove('d-none');
+        console.log('authorized');
+        //document.getElementById('authorize_button').classList.add('d-none');
+        // document.getElementById('signout_button').classList.remove('d-none');
+        // document.getElementById('create-event-button').classList.remove('d-none');
+        // document.getElementById('message').classList.remove('d-none');
+        // document.getElementById('content').classList.add('d-none');
+        // document.getElementById('syncButtonsEvent').classList.remove('d-none');
     } else {
-        document.getElementById('authorize_button').classList.remove('d-none');
-        document.getElementById('signout_button').classList.add('d-none');
-        document.getElementById('create-event-button').classList.remove('d-none');
-        document.getElementById('syncButtonsEvent').classList.add('d-none');
-        document.getElementById('message').classList.add('d-none');
-        document.getElementById('authorize_button').innerHTML = `
-            <img src="build/images/google.png" alt="Google logo" style="width: 20px; margin-right: 10px;">
-            Connexion avec Google
-        `;
+        console.log('none authorized');
+        // document.getElementById('authorize_button').classList.remove('d-none');
+        // document.getElementById('signout_button').classList.add('d-none');
+        // document.getElementById('create-event-button').classList.remove('d-none');
+        // document.getElementById('syncButtonsEvent').classList.add('d-none');
+        // document.getElementById('message').classList.add('d-none');
+        // document.getElementById('authorize_button').innerHTML = `
+        //     <img src="build/images/google.png" alt="Google logo" style="width: 20px; margin-right: 10px;">
+        //     Connexion avec Google
+        // `;
     } 
 }
 
@@ -32,15 +34,16 @@ export function resetFormFields() {
 }
 
 export function handlePageSpecificUI() {
-    const isUserAgendaPage = window.location.pathname === "/user_agenda";
+    const isUserAgendaPage = window.location.pathname.startsWith("/user_agenda");
     
     if (isUserAgendaPage) {
-        document.getElementById('message').classList.add('d-none');
-        document.getElementById('authorize_button').classList.add('d-none');
-        document.getElementById('signout_button').classList.add('d-none');
-        document.getElementById('create-event-button').classList.add('d-none');
-        document.getElementById('content').classList.add('d-none');
-        document.getElementById('syncButtonsEvent').classList.add('d-none');
+        console.log("isUserAgendaPage");
+        // document.getElementById('message').classList.add('d-none');
+        // document.getElementById('authorize_button').classList.add('d-none');
+        // document.getElementById('signout_button').classList.add('d-none');
+        // document.getElementById('create-event-button').classList.add('d-none');
+        // document.getElementById('content').classList.add('d-none');
+        // document.getElementById('syncButtonsEvent').classList.add('d-none');
     }
     
     return !!isUserAgendaPage;

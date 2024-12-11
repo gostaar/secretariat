@@ -1,0 +1,60 @@
+<div style="min-height:100vh;" class="custom-bg d-flex">
+    <!-- Sidebar -->
+    {% include 'partials/user/_header.html.twig' %}
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4 d-flex justify-content-center flex-column">
+        <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+            <a id='fournisseurFolder' href="#link-fournisseurFolder" class="text-decoration-none">
+                <div class="card text-center shadow" 
+                    style="border-radius: 5px; width: 200px; height: 150px; background-color: rgba(0,0,0,0.2);">
+                    <div class="card-header bg-secondary text-dark" 
+                        style="height: 30px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                    </div>
+                    <div class="card-body text-black">
+                        Mes Fournisseurs
+                    </div>
+                </div>
+            </a>
+            <a id='clientFolder' href="#link-clientFolder" class="text-decoration-none">
+                <div class="card text-center shadow" 
+                    style="border-radius: 5px; width: 200px; height: 150px; background-color: rgba(0,0,0,0.2);">
+                    <div class="card-header bg-secondary text-dark" 
+                        style="height: 30px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                    </div>
+                    <div class="card-body text-black">
+                        Mes Clients
+                    </div>
+                </div>
+            </a>
+            <a id='organismeFolder' href="#link-organismeFolder" class="text-decoration-none">
+                <div class="card text-center shadow" 
+                    style="border-radius: 5px; width: 200px; height: 150px; background-color: rgba(0,0,0,0.2);">
+                    <div class="card-header bg-secondary text-dark" 
+                        style="height: 30px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                    </div>
+                    <div class="card-body text-black">
+                        Mes Organismes
+                    </div>
+                </div>
+            </a>
+            <a id='contactsFolder' href="#link-contactsFolder" class="text-decoration-none">
+                <div class="card text-center shadow" 
+                    style="border-radius: 5px; width: 200px; height: 150px; background-color: rgba(0,0,0,0.2);">
+                    <div class="card-header bg-secondary text-dark" 
+                        style="height: 30px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                    </div>
+                    <div class="card-body text-black">
+                        Mes Contacts Personnels
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+            {# <a href="#" class="btn btn-primary">
+                Créer un nouveau dossier
+            </a> #}
+        </div>
+    </div>
+</div>

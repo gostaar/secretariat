@@ -94,43 +94,52 @@ class GoogleCalendarApiService
     // Fonction pour créer un événement dans un calendrier
     public function createCalendarEvent(
         string $accessToken, 
-        string $calendarId, 
-        array $eventData, 
+        array $eventData,  // eventData contenant 'google_calendar_event_id'
         bool $allDay, 
         array $eventDatetime, 
         string $eventTimezone
     ): ?string {
+        // Extraire calendarId et eventId à partir de google_calendar_event_id
+        $googleCalendarEventId = $eventData['google_calendar_event_id'] ?? ['primary', null];
+        $calendarId = $googleCalendarEventId[0] ?? 'primary'; // Default to 'primary' if no calendarId is set
+        $eventId = $googleCalendarEventId[1] ?? null;  // Default to null if no eventId is set
+    
+        if (empty($calendarId)) {
+            throw new InvalidArgumentException("Calendar ID is required.");
+        }
+    
+        // Utilisation de calendarId pour créer l'URL de l'API
         $apiURL = self::CALENDAR_EVENT . $calendarId . '/events';
-
+    
         $curlPost = [];
-
+    
         if (!empty($eventData['summary'])) {
             $curlPost['summary'] = $eventData['summary'];
         }
-
+    
         if (!empty($eventData['location'])) {
             $curlPost['location'] = $eventData['location'];
         }
-
+    
         if (!empty($eventData['description'])) {
             $curlPost['description'] = $eventData['description'];
         }
-
+    
         // Gestion des dates et heures
         $eventDate = !empty($eventDatetime['event_date']) ? $eventDatetime['event_date'] : date("Y-m-d");
         $startTime = !empty($eventDatetime['start_time']) ? $eventDatetime['start_time'] : date("H:i:s");
         $endTime = !empty($eventDatetime['end_time']) ? $eventDatetime['end_time'] : date("H:i:s");
-
+    
         if ($allDay) {
             $curlPost['start'] = ['date' => $eventDate];
             $curlPost['end'] = ['date' => $eventDate];
         } else {
             $timezoneOffset = $this->getTimezoneOffset($eventTimezone);
             $timezoneOffset = !empty($timezoneOffset) ? $timezoneOffset : '+00:00';
-
+    
             $dateTimeStart = $eventDate . 'T' . $startTime . $timezoneOffset;
             $dateTimeEnd = $eventDate . 'T' . $endTime . $timezoneOffset;
-
+    
             $curlPost['start'] = [
                 'dateTime' => $dateTimeStart,
                 'timeZone' => $eventTimezone
@@ -140,7 +149,12 @@ class GoogleCalendarApiService
                 'timeZone' => $eventTimezone
             ];
         }
-
+    
+        // Ajouter eventId si nécessaire dans les données de la requête
+        if ($eventId) {
+            $curlPost['eventId'] = $eventId; // Si l'eventId doit être utilisé dans le corps de la requête
+        }
+    
         // Création de l'événement via une requête POST
         $response = $this->client->request('POST', $apiURL, [
             'headers' => [
@@ -149,15 +163,16 @@ class GoogleCalendarApiService
             ],
             'json' => $curlPost,
         ]);
-
+    
         $statusCode = $response->getStatusCode();
         if ($statusCode !== 200) {
             throw new BadRequestException('Error during event creation');
         }
-
+    
         $data = $response->toArray();
         return $data['id'] ?? null;
     }
+    
 
     // Fonction pour obtenir le décalage horaire pour un fuseau donné
     public function getTimezoneOffset(string $timezone = 'Europe/Paris'): string

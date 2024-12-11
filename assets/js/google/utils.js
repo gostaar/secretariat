@@ -8,7 +8,7 @@ let calendar = null;
 export async function initialisationFullCalendar() {
     const calendarEl = document.getElementById('calendar');
 
-    const eventsFromSymfony = await fetchSymfonyEvents();
+    // const eventsFromSymfony = await fetchSymfonyEvents();
 
     calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin],
@@ -20,7 +20,7 @@ export async function initialisationFullCalendar() {
             minute: '2-digit',
             hour12: false,
         },
-        events: [eventsFromSymfony] 
+        events: [] 
     });
     calendar.render();
 }

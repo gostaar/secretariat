@@ -58,25 +58,91 @@
                 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="text-center pt-4">
-                        <h1><a href="#link-start-part" class="text-primary">Secrétaire Pro</a></h1>
+                        <a href="#link-start-part" class="text-primary nav-link">
+                            <h1 type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarNav"
+                                aria-controls="navbarNav"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation">
+                                Secrétaire Pro
+                            </h1>
+                        </a>
                     </div>
                     
                     <ul class="mb-3" style="padding-top: 1rem !important;">
-                        <li class="text-center mb-2"><h5><a href="#link-service-part">Services</a></h5></li>
-                        <li class="text-center mb-2"><h5><a href="#link-tarif-part">Tarifs</a></h5></li>
-                        <li class="text-center mb-2"><h5><a href="#link-job-part">Jobs</a></h5></li>
-                        <li class="text-center mb-2"><h5><a href="#link-contact-part">Contact</a></h5></li>
+                        <li class="text-center mb-2">
+                            <a href="#link-service-part" class='nav-link'>
+                                <h5 type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav"
+                                    aria-controls="navbarNav"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    Services
+                                </h5>
+                            </a>
+                        </li>
+                        <li class="text-center mb-2">
+                            <a href="#link-tarif-part" class='nav-link'>
+                                <h5 type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav"
+                                    aria-controls="navbarNav"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    Tarifs
+                                </h5>
+                            </a>
+                        </li>
+                        <li class="text-center mb-2">
+                            <a href="#link-job-part" class='nav-link'>
+                                <h5 type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav"
+                                    aria-controls="navbarNav"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    Jobs
+                                </h5>
+                            </a>
+                        </li>
+                        <li class="text-center mb-2">
+                            <a href="#link-contact-part" class='nav-link'>
+                                <h5 type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav"
+                                    aria-controls="navbarNav"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    Contact
+                                </h5>
+                            </a>
+                        </li>
                         <li class="text-center mb-2">
                             {% if is_granted('ROLE_ADMIN') %}
-                                <h5><a class="navBarEspaceClient text-success" href="{{ path('dashboard') }}">{{ app.user.email }}</a></h5>
+                            <a class="navBarEspaceClient text-success nav-link" href="{{ path('admin') }}">
+                                <h5>
+                                    {{ app.user.email }}
+                                </h5>
+                            </a>
                             {% elseif is_granted('ROLE_USER') %}
-                                <h5><a class="navBarEspaceClient text-success" href="{{ path('user') }}">{{ app.user.email }}</a></h5>
+                            <a class="navBarEspaceClient text-success nav-link" href="{{ path('user') }}">
+                                <h5>
+                                    {{ app.user.email }}
+                                </h5>
+                            </a>
                             {% else %}
-                                <h5><a href="{{ path('app_login') }}">Espace client</a></h5>
+                            <h5><a href="{{ path('app_login') }}" class='nav-link'>
+                                
+                                    Espace client
+                                
+                            </h5></a>
                             {% endif %}
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        
 </header>

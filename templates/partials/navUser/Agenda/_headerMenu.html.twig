@@ -1,0 +1,52 @@
+<!-- Menu Items -->
+<div class="menu-container d-flex">
+    <!-- Conteneur des icônes et textes -->
+    <div class="menu-items d-flex flex-column">
+        <div class="d-flex align-items-center mb-1">
+            <i class="fas fa-home fa-2x text-center" style="width: 50px;"></i>
+            <a href="{{path('user')}}#link-Acceuil" class="nav-link text-white">Accueil</a>
+        </div>
+        <div class="d-flex align-items-center mb-1">
+            <i class="fas fa-file-alt fa-2x text-center" style="width: 50px;"></i>
+            <a href="{{path('user')}}#link-Administratif" class="nav-link text-white">Administratif</a>
+        </div>
+        <div class="d-flex align-items-center mb-1">
+            <i class="fas fa-calendar-alt fa-2x text-center" style="width: 50px;"></i>
+            <a href="{{path('user')}}#link-Agenda" class="nav-link text-white">Agenda</a>
+        </div>
+        <div class="d-flex align-items-center mb-1">
+            <i class="fas fa-briefcase fa-2x text-center" style="width: 50px;"></i>
+            <a href="{{path('user')}}#link-Commercial" class="nav-link text-white">Commercial</a>
+        </div>
+        <div class="d-flex align-items-center mb-1">
+            <i class="fas fa-laptop-code fa-2x text-center" style="width: 50px;"></i>
+            <a href="{{path('user')}}#link-Numerique" class="nav-link text-white">Numérique</a>
+        </div>
+        <div class="d-flex align-items-center mb-1">
+            <i class="fas fa-phone-alt fa-2x text-center" style="width: 50px;"></i>
+            <a href="{{path('user')}}#link-Telephone" class="nav-link text-white">Téléphone</a>
+        </div>
+        <div class="d-flex align-items-center mb-1">
+            <i class="fas fa-user-circle fa-2x text-center" style="width: 50px;"></i>
+            <button aria-expanded="false" data-bs-toggle="collapse" href="#submenu3" class="nav-link text-white text-start">Espace <br>personnel</button>
+        </div>
+        <div id="submenu3" class="collapse">
+            <div class="d-flex align-items-center mb-1">
+                <i class="fas fa-user-circle fa-2x text-center text-warning" style="width: 50px;"></i>
+                <a href="{{path('user')}}#link-Profile" class="nav-link text-warning">Profil</a>
+            </div>
+            <div class="d-flex align-items-center mb-1">
+                <i class="fas fa-file-invoice fa-2x text-center text-warning" style="width: 50px;"></i>
+                <a href="{{path('user')}}#link-Factures" class="nav-link text-warning">Factures</a>
+            </div>
+            <div class="d-flex align-items-center mb-1">
+                <i class="fas fa-folder fa-2x text-center text-warning" style="width: 50px;"></i>
+                <a href="{{path('user')}}#link-Repertoire" class="nav-link text-warning">Répertoire</a>
+            </div>
+            <div class="d-flex align-items-center mb-1">
+                <i class="fas fa-cogs fa-2x text-center text-warning" style="width: 50px;"></i>
+                <a href="{{path('user')}}#link-parametres" class="nav-link text-warning">Paramètres</a>
+            </div>
+        </div>
+    </div>
+</div>

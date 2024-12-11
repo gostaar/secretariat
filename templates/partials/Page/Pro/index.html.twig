@@ -1,16 +1,16 @@
-<div id="link-start-pro" class="background-index fade-in">
-    <div>
-        {% include 'partials/Page/Pro/_navBar.html.twig' %}
-        <section class="hero d-flex justify-content-center flex-column flex-grow-1">
-            <div class="heroContent">
-                <h1>Votre Secrétaire Indépendante</h1>
-                <p>Des services de secrétariat professionnels pour tous.</p>
-            </div>
-            <div>
-                <a href="#link-contact-pro">Contactez-nous</a>
-            </div>
-        </section>
-    </div>
+<div id="link-start-pro" class="background-index d-flex flex-grow-1 fade-in">
+
+    {% include 'partials/Page/Pro/_navBar.html.twig' %}
+
+    <section class="hero">
+        <div class="heroContent">
+            <h1>Votre Secrétaire Indépendante</h1>
+            <p>Des services de secrétariat professionnels pour tous.</p>
+        </div>
+        <div>
+            <a href="#link-contact-pro">Contactez-nous</a>
+        </div>
+    </section>
 
 
     <div id='link-intro-pro' style="min-height:50vh; background-color: #ffffff;">
@@ -24,6 +24,12 @@
     <div class="background-contact">
         {% include 'partials/Page/Pro/_navBar.html.twig' %}
             {% include 'partials/Page/_contact.html.twig' %}
+    </div>
+
+<div id='link-tarif-pro' style="min-height:100vh; background-color: #ffffff;" class='d-none fade-in'>
+    {% include 'partials/Page/Pro/_tarif.html.twig' %}
 </div>
 
-
+<foot id="footer">
+    {% include 'partials/Page/footer.html.twig' %} 
+</foot>

@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Repository;
 
 use App\Entity\Events;
@@ -16,30 +15,25 @@ class EventsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Events::class);
         $this->em = $registry->getManager();
-        $this->logger = $logger;;
+        $this->logger = $logger;
     }
     
-    public function saveEvent(string $title, string $description, string $location, string $start, string $end, string $googleCalendarEventId)
+    public function saveEvent(string $title, string $description, string $location, \DateTimeInterface $start, \DateTimeInterface $end, array $googleCalendarEventIds = [])
     {
-        try {
-            $startDateTime = new \DateTime($start);
-            $endDateTime = new \DateTime($end);
-        } catch (\Exception $e) {
-            $this->logger->error('Erreur lors de la conversion des dates.', [
-                'start' => $start,
-                'end' => $end,
-                'exception' => $e->getMessage()
-            ]);
-            throw new \InvalidArgumentException('Les dates fournies ne sont pas valides.');
+        // Vérification et adaptation du tableau googleCalendarEventIds
+        if (count($googleCalendarEventIds) < 2) {
+            $googleCalendarEventIds = array_pad($googleCalendarEventIds, 2, 'default_value'); // Complète avec des valeurs par défaut si nécessaire
         }
 
         $event = new Events();
         $event->setTitle($title);
         $event->setDescription($description);
         $event->setLocation($location);
-        $event->setStart($startDateTime);
-        $event->setEnd($endDateTime);
-        $event->setGoogleCalendarEventId($googleCalendarEventId);
+        $event->setStart($start);
+        $event->setEnd($end);
+
+        // Stockage du tableau googleCalendarEventIds dans l'entité
+        $event->setGoogleCalendarEventId($googleCalendarEventIds);
     
         $this->logger->info('Sauvegarde de l\'événement dans la base de données.');
         $this->em->persist($event);

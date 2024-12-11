@@ -38,9 +38,9 @@ class Events
     #[Groups(['event:read', 'event:write'])]
     private ?\DateTimeInterface $end = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'json', nullable: true)]
     #[Groups(['event:read', 'event:write'])]
-    private ?string $google_calendar_event_id = null;
+    private ?array $google_calendar_event_id = [];
 
     public function getId(): ?int
     {
@@ -115,12 +115,12 @@ class Events
         return $this;
     }
 
-    public function getGoogleCalendarEventId(): ?string
+    public function getGoogleCalendarEventId(): ?array
     {
         return $this->google_calendar_event_id;
     }
 
-    public function setGoogleCalendarEventId(string $google_calendar_event_id): static
+    public function setGoogleCalendarEventId(?array $google_calendar_event_id): self
     {
         $this->google_calendar_event_id = $google_calendar_event_id;
 

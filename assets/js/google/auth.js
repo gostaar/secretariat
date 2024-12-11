@@ -1,5 +1,5 @@
 import { updateUIBasedOnState, resetFormFields } from './ui.js';
-import { addEventCalendars, fetchCalendars } from './google-calendar.js';
+import { addEventCalendars, updateEventList, addEventToGoogle } from './google-calendar.js';
 
 let tokenClient;
 let gapiInited = false;
@@ -93,9 +93,8 @@ export async function handleAuthButtonClick() {
             return;
         }
         try {
-            fetchCalendars(response.access_token);
+            window.location.href = "http://localhost:8080/user_agenda";
             setAccessToken(response.access_token, response.expires_in || 3600);
-            await updateUIBasedOnState(true); 
         } catch (error) {
             console.error('Error during authentication:', error);
         }
@@ -107,6 +106,7 @@ export async function handleAuthButtonClick() {
     } else {
         tokenClient.requestAccessToken({ prompt: 'consent' });
     }
+
 }
 
 export async function handleLogout() {
@@ -174,14 +174,17 @@ export async function handleSubmitClick(event) {
     if (!calendarId) {
         calendarId = "";
     }
+    const googleEventId = await addEventToGoogle(token, eventData);
 
     const eventDataSymfony = {
         ...eventData,
-        google_calendar_event_id: calendarId,
+        google_calendar_event_id: [calendarId, googleEventId],
     };
 
     await addEventCalendars(eventData, eventDataSymfony, token);
 
-    resetFormFields();
+    
+    await updateEventList('eventGoogle');
+    // window.location.reload();
 }
 

@@ -3,7 +3,7 @@
 {% block title %}Secrétaire{% endblock %}
 
 {% block body %}
-<div class="d-flex flex-column min-vh-100">
+<div id="btnPartPro-container" class="d-flex flex-column min-vh-100">
     <div id="btnPartPro" class="bg-image">
         
         <h1 class="m-0 text-center">Bienvenue sur Secrétaire Pro</h1>
@@ -12,14 +12,13 @@
             <button id="btnPro" class="btn btn-lg btn-secondary"><h1>Vous êtes un professionnel</h1></button>
         </div>
     </div>
-    <div id="pro" class="d-none">
+    <div id="pro" class="d-none flex-column d-flex  flex-grow-1">
         {% include 'partials/Page/Pro/index.html.twig' %}
     </div>
-    <div id="part" class="d-none">
+    <div id="part" class="d-none flex-column d-flex  flex-grow-1">
         {% include 'partials/Page/Part/index.html.twig' %}
     </div>
-        
-    {% include 'partials/Page/footer.html.twig' %}  
+         
 </div>
 {% endblock %}
 

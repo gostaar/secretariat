@@ -34,7 +34,7 @@ class UserController extends AbstractController
         $now = new \DateTime(); 
         $events = $eventsRepository->findUpcomingEvents($now);
 
-        return $this->render('user/dashboard.html.twig', array_merge($this->getUserData(), [
+        return $this->render('pages/user.html.twig', array_merge($this->getUserData(), [
             'currentRoute' => 'user',
             'events' => $events
         ]));
@@ -71,7 +71,7 @@ class UserController extends AbstractController
     #[Route('/user_profile', name: 'user_profile')]
     public function profile(): Response
     {
-        return $this->render('user/profile.html.twig', array_merge($this->getUserData(), [
+        return $this->render('partials/navUser/Profile/_profile.html.twig', array_merge($this->getUserData(), [
             'currentRoute' => 'user_profile',
         ]));
     }
