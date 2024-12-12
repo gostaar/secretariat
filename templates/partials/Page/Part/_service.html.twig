@@ -24,66 +24,31 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-unstyled">
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdmin1" aria-expanded="false" aria-controls="gestionAdmin1">
-                                    Rédaction de courrier
-                                </button>
-                                <div id="gestionAdmin1" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Saisie et création de documents texte sous Word (relecture, corrections....)</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminCV" aria-expanded="false" aria-controls="gestionAdminCV">
-                                    Rédaction et révision de lettres de motivation et CV
-                                </button>
-                                <div id="gestionAdminCV" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Aide à la rédaction ou l'amélioration des lettres de motivation et CV pour les candidatures professionnelles.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminFinances" aria-expanded="false" aria-controls="gestionAdminFinances">
-                                    Gestion des finances personnelles
-                                </button>
-                                <div id="gestionAdminFinances" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Aide à la création de budgets personnels, suivi des dépenses, et conseils en gestion financière.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminFiscalite" aria-expanded="false" aria-controls="gestionAdminFiscalite">
-                                    Aide à la déclaration fiscale
-                                </button>
-                                <div id="gestionAdminFiscalite" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Assistance pour remplir les déclarations fiscales, optimiser les réductions fiscales et expliquer les démarches.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminEnLigne" aria-expanded="false" aria-controls="gestionAdminEnLigne">
-                                    Assistance pour les démarches administratives
-                                </button>
-                                <div id="gestionAdminEnLigne" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Aide pour effectuer leurs démarches administratives ou achats en ligne, comme créer des comptes sur des plateformes, remplir des formulaires, etc.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminJuridique" aria-expanded="false" aria-controls="gestionAdminJuridique">
-                                    Aide à la rédaction de courrier juridique ou officiel
-                                </button>
-                                <div id="gestionAdminJuridique" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Rédaction ou révision des lettres administratives ou juridiques (par exemple : contestation de contravention, demande de remboursement, etc.).</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminVoyages" aria-expanded="false" aria-controls="gestionAdminVoyages">
-                                    Planification de voyages personnalisés
-                                </button>
-                                <div id="gestionAdminVoyages" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Aider à organiser des voyages sur mesure (itinéraires, activités, hébergement) en fonction des préférences.</p>
-                                </div>
-                            </li>
+                            {% set services = [
+                                { 'id': 'gestionAdmin1', 'title': 'Rédaction de courrier', 'description': 'Saisie et création de documents texte sous Word (relecture, corrections....)' },
+                                { 'id': 'gestionAdminCV', 'title': 'Rédaction et révision de lettres de motivation et CV', 'description': 'Aide à la rédaction ou l\'amélioration des lettres de motivation et CV pour les candidatures professionnelles.' },
+                                { 'id': 'gestionAdminFinances', 'title': 'Gestion des finances personnelles', 'description': 'Aide à la création de budgets personnels, suivi des dépenses, et conseils en gestion financière.' },
+                                { 'id': 'gestionAdminFiscalite', 'title': 'Aide à la déclaration fiscale', 'description': 'Assistance pour remplir les déclarations fiscales, optimiser les réductions fiscales et expliquer les démarches.' },
+                                { 'id': 'gestionAdminEnLigne', 'title': 'Assistance pour les démarches administratives', 'description': 'Aide pour effectuer leurs démarches administratives ou achats en ligne, comme créer des comptes sur des plateformes, remplir des formulaires, etc.' },
+                                { 'id': 'gestionAdminJuridique', 'title': 'Aide à la rédaction de courrier juridique ou officiel', 'description': 'Rédaction ou révision des lettres administratives ou juridiques (par exemple : contestation de contravention, demande de remboursement, etc.).' },
+                                { 'id': 'gestionAdminVoyages', 'title': 'Planification de voyages personnalisés', 'description': 'Aider à organiser des voyages sur mesure (itinéraires, activités, hébergement) en fonction des préférences.' }
+                            ] %}
+
+                            {% for service in services %}
+                                <li class="list-group-flush">
+                                    <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#{{ service.id }}" aria-expanded="false" aria-controls="{{ service.id }}">
+                                        {{ service.title }}
+                                    </button>
+                                    <div id="{{ service.id }}" class="collapse">
+                                        <p class="m-2 text-muted" style="font-style: italic;">{{ service.description }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
+
             <div class="col-12 col-md-6 mb-4">
                 <div class="card">
                     <div class="card-header">
@@ -91,75 +56,32 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-unstyled">
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum1" aria-expanded="false" aria-controls="gestionNum1">
-                                    Atelier de découverte numérique
-                                </button>
-                                <div id="gestionNum1" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Un atelier destiné à découvrir les bases de l'informatique et à se familiariser avec les outils numériques essentiels. 
-                                    Nous abordons des notions pratiques comme la navigation sur Internet, l'utilisation des outils de bureautique, et les bonnes pratiques pour sécuriser vos données.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum2" aria-expanded="false" aria-controls="gestionNum2">
-                                    Sensibilisation à la Cybersécurité
-                                </button>
-                                <div id="gestionNum2" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Un accompagnement pour mieux comprendre les enjeux de la sécurité en ligne : apprendre à protéger vos données personnelles, reconnaître les arnaques en ligne, et utiliser des outils simples pour sécuriser vos activités numériques.</p>                            
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum3" aria-expanded="false" aria-controls="gestionNum3">
-                                    Initiation aux outils bureautiques
-                                </button>
-                                <div id="gestionNum3" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Atelier pratique pour apprendre les bases des outils de bureautique comme Word, Excel et PowerPoint. Idéal pour gagner en autonomie et en productivité dans vos tâches quotidiennes.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum4" aria-expanded="false" aria-controls="gestionNum4">
-                                    Utilisation des Réseaux Sociaux
-                                </button>
-                                <div id="gestionNum4" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Un atelier pour découvrir les fonctionnalités de base des principaux réseaux sociaux comme Facebook, Instagram ou Snapchat,  et apprendre à les utiliser en toute sécurité.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum5" aria-expanded="false" aria-controls="gestionNum5">
-                                    Initiation à la création de boite mail
-                                </button>
-                                <div id="gestionNum5" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Un accompagnement pratique pour créer sa propre boite mail.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum6" aria-expanded="false" aria-controls="gestionNum6">
-                                    Introduction à l'Intelligence Artificielle
-                                </button>
-                                <div id="gestionNum6" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Un atelier pour comprendre les bases de l'intelligence artificielle, ses applications dans la vie quotidienne,  et ses impacts sur le monde professionnel.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum7" aria-expanded="false" aria-controls="gestionNum7">
-                                    Aide à l'utilisation des Smartphones et Tablettes
-                                </button>
-                                <div id="gestionNum7" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Des conseils pratiques pour configurer vos appareils mobiles, sécuriser vos données,  et découvrir des applications utiles pour gagner en efficacité au quotidien.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum8" aria-expanded="false" aria-controls="gestionNum8">
-                                    Découverte des outils de stockage en ligne
-                                </button>
-                                <div id="gestionNum8" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Un atelier pour explorer les fonctionnalités des services de stockage en ligne comme Google Drive, OneDrive ou Dropbox,  et apprendre à gérer vos fichiers en toute simplicité.</p>
-                                </div>
-                            </li>
+                            {% set gestion_numerique = [
+                                { 'title': 'Atelier de découverte numérique', 'content': 'Un atelier destiné à découvrir les bases de l\'informatique et à se familiariser avec les outils numériques essentiels. Nous abordons des notions pratiques comme la navigation sur Internet, l\'utilisation des outils de bureautique, et les bonnes pratiques pour sécuriser vos données.' },
+                                { 'title': 'Sensibilisation à la Cybersécurité', 'content': 'Un accompagnement pour mieux comprendre les enjeux de la sécurité en ligne : apprendre à protéger vos données personnelles, reconnaître les arnaques en ligne, et utiliser des outils simples pour sécuriser vos activités numériques.' },
+                                { 'title': 'Initiation aux outils bureautiques', 'content': 'Atelier pratique pour apprendre les bases des outils de bureautique comme Word, Excel et PowerPoint. Idéal pour gagner en autonomie et en productivité dans vos tâches quotidiennes.' },
+                                { 'title': 'Utilisation des Réseaux Sociaux', 'content': 'Un atelier pour découvrir les fonctionnalités de base des principaux réseaux sociaux comme Facebook, Instagram ou Snapchat, et apprendre à les utiliser en toute sécurité.' },
+                                { 'title': 'Initiation à la création de boite mail', 'content': 'Un accompagnement pratique pour créer sa propre boite mail.' },
+                                { 'title': 'Introduction à l\'Intelligence Artificielle', 'content': 'Un atelier pour comprendre les bases de l\'intelligence artificielle, ses applications dans la vie quotidienne, et ses impacts sur le monde professionnel.' },
+                                { 'title': 'Aide à l\'utilisation des Smartphones et Tablettes', 'content': 'Des conseils pratiques pour configurer vos appareils mobiles, sécuriser vos données, et découvrir des applications utiles pour gagner en efficacité au quotidien.' },
+                                { 'title': 'Découverte des outils de stockage en ligne', 'content': 'Un atelier pour explorer les fonctionnalités des services de stockage en ligne comme Google Drive, OneDrive ou Dropbox, et apprendre à gérer vos fichiers en toute simplicité.' }
+                            ] %}
+
+                            {% for item in gestion_numerique %}
+                                <li class="list-group-flush">
+                                    <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum{{ loop.index }}" aria-expanded="false" aria-controls="gestionNum{{ loop.index }}">
+                                        {{ item.title }}
+                                    </button>
+                                    <div id="gestionNum{{ loop.index }}" class="collapse">
+                                        <p class="m-2 text-muted" style="font-style: italic;">{{ item.content }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>

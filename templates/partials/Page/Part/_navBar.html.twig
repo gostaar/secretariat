@@ -1,148 +1,95 @@
 <header class="navbar">
 
-        <a href="#link-start-part" class="logo flex-grow-1">Secrétaire Pro</a>
+    <a href="#link-start-part" class="logo flex-grow-1">Secrétaire Pro</a>
 
-        <!-- Menu Grand Écran (visible uniquement sur les grands écrans) -->
-        <div class="d-none d-md-flex">
-            <ul class="list-unstyled d-flex mb-0">
-                <li class="me-4">
-                    <a href="#link-service-part" style="text-decoration: none;">
-                        <h5 class="{{ app.request.attributes.get('_route') == 'secretariat' ? 'text-primary' : 'text-dark' }}">Services</h5>
-                    </a>
-                </li>
-                <li class="me-4">
-                    <a href="#link-tarif-part" style="text-decoration: none;">
-                        <h5 class="{{ app.request.attributes.get('_route') == 'numeriques' ? 'text-primary' : 'text-dark' }}">Tarifs</h5>
-                    </a>
-                </li>
-                <li class="me-4">
-                    <a href="#link-job-part" style="text-decoration: none;">
-                        <h5 class="{{ app.request.attributes.get('_route') == 'jobs' ? 'text-primary' : 'text-dark' }}">Jobs</h5>
-                    </a>
-                </li>
-                <li class="me-4">
-                    <a href="#link-contact-part" style="text-decoration: none;">
-                        <h5 class="{{ app.request.attributes.get('_route') == 'contact' ? 'text-primary' : 'text-dark' }}">Contact</h5>
-                    </a>
-                </li>
-                <li>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a class="navBarEspaceClient text-success" href="{{ path('dashboard') }}" style="text-decoration: none;">
-                            <h5 class="{{ app.request.attributes.get('_route') == 'dashboard' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
-                        </a>
-                    {% elseif is_granted('ROLE_USER') %}
-                        <a class="navBarEspaceClient text-success" href="{{ path('user') }}" style="text-decoration: none;">
-                            <h5 class="{{ app.request.attributes.get('_route') == 'user' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
-                        </a>
-                    {% else %}
-                        <a href="{{ path('app_login') }}" style="text-decoration: none;">
-                            <h5 class="{{ app.request.attributes.get('_route') == 'app_login' ? 'text-primary' : 'text-dark' }}">Espace client</h5>
-                        </a>
-                    {% endif %}
-                </li>
-            </ul>
-        </div>
+    <!-- Menu Grand Écran (visible uniquement sur les grands écrans) -->
+    <div class="d-none d-md-flex">
+        <ul class="list-unstyled d-flex mb-0">
+            {% set menu_items = [
+                { 'link': '#link-service-part', 'label': 'Services', 'route': 'secretariat' },
+                { 'link': '#link-tarif-part', 'label': 'Tarifs', 'route': 'numeriques' },
+                { 'link': '#link-job-part', 'label': 'Jobs', 'route': 'jobs' },
+                { 'link': '#link-contact-part', 'label': 'Contact', 'route': 'contact' }
+            ] %}
 
-        <!-- Menu Burger (visible uniquement sur petits écrans) -->
-        <nav class="sidebar d-md-none navbar-expand-md fixed-top" id="navBurger">
-            <div class="container-fluid">
-                <button class="menu-toggle" id="menu-toggle"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    &#9776;
-                </button>
-                
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <div class="text-center pt-4">
-                        <a href="#link-start-part" class="text-primary nav-link">
-                            <h1 type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#navbarNav"
-                                aria-controls="navbarNav"
-                                aria-expanded="false"
-                                aria-label="Toggle navigation">
-                                Secrétaire Pro
-                            </h1>
-                        </a>
-                    </div>
-                    
-                    <ul class="mb-3" style="padding-top: 1rem !important;">
-                        <li class="text-center mb-2">
-                            <a href="#link-service-part" class='nav-link'>
-                                <h5 type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navbarNav"
-                                    aria-controls="navbarNav"
-                                    aria-expanded="false"
-                                    aria-label="Toggle navigation">
-                                    Services
-                                </h5>
-                            </a>
-                        </li>
-                        <li class="text-center mb-2">
-                            <a href="#link-tarif-part" class='nav-link'>
-                                <h5 type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navbarNav"
-                                    aria-controls="navbarNav"
-                                    aria-expanded="false"
-                                    aria-label="Toggle navigation">
-                                    Tarifs
-                                </h5>
-                            </a>
-                        </li>
-                        <li class="text-center mb-2">
-                            <a href="#link-job-part" class='nav-link'>
-                                <h5 type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navbarNav"
-                                    aria-controls="navbarNav"
-                                    aria-expanded="false"
-                                    aria-label="Toggle navigation">
-                                    Jobs
-                                </h5>
-                            </a>
-                        </li>
-                        <li class="text-center mb-2">
-                            <a href="#link-contact-part" class='nav-link'>
-                                <h5 type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navbarNav"
-                                    aria-controls="navbarNav"
-                                    aria-expanded="false"
-                                    aria-label="Toggle navigation">
-                                    Contact
-                                </h5>
-                            </a>
-                        </li>
-                        <li class="text-center mb-2">
-                            {% if is_granted('ROLE_ADMIN') %}
-                            <a class="navBarEspaceClient text-success nav-link" href="{{ path('admin') }}">
-                                <h5>
-                                    {{ app.user.email }}
-                                </h5>
-                            </a>
-                            {% elseif is_granted('ROLE_USER') %}
-                            <a class="navBarEspaceClient text-success nav-link" href="{{ path('user') }}">
-                                <h5>
-                                    {{ app.user.email }}
-                                </h5>
-                            </a>
-                            {% else %}
-                            <h5><a href="{{ path('app_login') }}" class='nav-link'>
-                                
-                                    Espace client
-                                
-                            </h5></a>
-                            {% endif %}
-                        </li>
-                    </ul>
+            {% for item in menu_items %}
+                <li class="me-4">
+                    <a href="{{ item.link }}" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == item.route ? 'text-primary' : 'text-dark' }}">{{ item.label }}</h5>
+                    </a>
+                </li>
+            {% endfor %}
+
+            <li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="navBarEspaceClient text-success" href="{{ path('dashboard') }}" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == 'dashboard' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
+                    </a>
+                {% elseif is_granted('ROLE_USER') %}
+                    <a class="navBarEspaceClient text-success" href="{{ path('user') }}" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == 'user' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == 'app_login' ? 'text-primary' : 'text-dark' }}">Espace client</h5>
+                    </a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- Menu Burger (visible uniquement sur petits écrans) -->
+    <nav class="sidebar d-md-none navbar-expand-md fixed-top" id="navBurger">
+        <div class="container-fluid">
+            <button class="menu-toggle" id="menu-toggle"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                &#9776;
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="text-center pt-4">
+                    <a href="#link-start-part" class="text-warning nav-link"><h1>Secrétaire Pro</h1></a>
                 </div>
+                
+                <ul class="mb-3" style="padding-top: 1rem !important;">
+                    {% set menu_items = [
+                        { 'link': '#link-service-part', 'label': 'Services' },
+                        { 'link': '#link-tarif-part', 'label': 'Tarifs' },
+                        { 'link': '#link-job-part', 'label': 'Jobs' },
+                        { 'link': '#link-contact-part', 'label': 'Contact' }
+                    ] %}
+
+                    {% for item in menu_items %}
+                        <li class="text-center mb-2">
+                            <a href="{{ item.link }}" class='nav-link'><h5>{{ item.label }}</h5></a>
+                        </li>
+                    {% endfor %}
+
+                    <li class="text-center mb-2">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="navBarEspaceClient text-success nav-link text-decoration-none" href="{{ path('admin') }}">
+                                <h5>{{ app.user.email }}</h5>
+                            </a>
+                        {% elseif is_granted('ROLE_USER') %}
+                            <a class="navBarEspaceClient text-success nav-link text-decoration-none" href="{{ path('user') }}">
+                                <h5>{{ app.user.email }}</h5>
+                            </a>
+                        {% else %}
+                            <h5><a href="{{ path('app_login') }}" class='nav-link'>
+                                Espace client
+                            </a></h5>
+                        {% endif %}
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
+
         
 </header>

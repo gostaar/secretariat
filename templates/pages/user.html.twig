@@ -11,75 +11,78 @@
     </div>
 </div>
 
-
 <div id="link-Acceuil" style="min-height:100vh;" class='custom-bg d-none m-0 p-0 '>
     <div class="d-flex">
         {% include 'partials/user/_header.html.twig' %}
         {% include 'partials/user/_mainContent.html.twig' %}
     </div>
 </div>
-<div id='link-Administratif' style="min-height:100vh;" class='d-none m-0 p-0 '>
-    {% include 'partials/navUser/Administratif/_documents.html.twig' %}
+<div id='link-Administratif' style="min-height:100vh;" class='custom-bg d-none m-0 p-0 '>
+    {% include 'partials/user/navUser/Administratif/_documents.html.twig' %}
 </div>
-<div id='link-Agenda' style="min-height:100vh;" class='d-none m-0 p-0 '>
-    {% include 'partials/navUser/Agenda/_agenda.html.twig' %}
+<div id='link-Agenda' style="min-height:100vh;" class='custom-bg d-none m-0 p-0 '>
+    {% include 'partials/user/navUser/Agenda/_agenda.html.twig' %}
 </div>
-<div id='link-Commercial' style="min-height:100vh;" class='d-none m-0 p-0 '>
-    {% include 'partials/navUser/Commercial/_commercial.html.twig' %}
+<div id='link-Commercial' style="min-height:100vh;" class='custom-bg d-none m-0 p-0 '>
+    {% include 'partials/user/navUser/Commercial/_commercial.html.twig' %}
 </div>
-<div id='link-Numerique' style="min-height:100vh;" class='d-none m-0 p-0 '>
-    {% include 'partials/navUser/Numerique/_numerique.html.twig' %}
+<div id='link-Numerique' style="min-height:100vh;" class='custom-bg d-none m-0 p-0 '>
+    {% include 'partials/user/navUser/Numerique/_numerique.html.twig' %}
 </div>
-<div id='link-Profile' style="m-0 p-0 container-fluid min-height:100vh;" class='d-none m-0 p-0 '>
-    {% include 'partials/navUser/Profile/_profile.html.twig' %}
+<div id='link-Profile' style="m-0 p-0 container-fluid min-height:100vh;" class='custom-bg d-none m-0 p-0 '>
+    {% include 'partials/user/navUser/Profile/_profile.html.twig' %}
 </div>
-<div id='link-Repertoire' style="min-height:100vh;" class='d-none m-0 p-0 '>
-    {% include 'partials/navUser/Profile//RepertoireBDD/_repertoire.html.twig' %}
+<div id='link-Repertoire' style="min-height:100vh;" class='custom-bg d-none m-0 p-0 '>
+    {% include 'partials/user/navUser/Profile//RepertoireBDD/_repertoire.html.twig' %}
 </div>
-<div id='link-Telephone' style="min-height:100vh;" class='d-none m-0 p-0 '>
-    {% include 'partials/navUser/Telephone/_telephone.html.twig' %}
+<div id='link-Telephone' style="min-height:100vh;" class='custom-bg d-none m-0 p-0 '>
+    {% include 'partials/user/navUser/Telephone/_telephone.html.twig' %}
 </div>
-<div id='link-Factures' style="min-height:100vh;" class='d-none m-0 p-0 '>
-    {% include 'partials/navUser/Profile/_factures.html.twig' %}
+<div id='link-Factures' style="min-height:100vh;" class='custom-bg d-none m-0 p-0 '>
+    {% include 'partials/user/navUser/Profile/_factures.html.twig' %}
 </div>
-<div id="link-MainAgenda" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Agenda/_agendaMain.html.twig' %}
+<div id="link-MainAgenda" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Agenda/_agendaMain.html.twig' %}
 </div>
-<div id="link-newRepertoire" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/RepertoireBDD/_newRepertoire.html.twig' %}
+<div id="link-newRepertoire" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/RepertoireBDD/_newRepertoire.html.twig' %}
 </div>
-<div id="link-repertoireInfo" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/RepertoireBDD/_repertoireInfo.html.twig' %}
+<div id="link-repertoireInfo" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/RepertoireBDD/_repertoireInfo.html.twig' %}
 </div>
-<div id="link-fournisseurFolder" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/repertoire/_repertoireFournisseur.html.twig' %}
+<div id="link-fournisseurFolder" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/repertoire/_repertoireFournisseur.html.twig' %}
 </div>
-<div id="link-clientFolder" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/repertoire/_repertoireClient.html.twig' %}
+<div id="link-clientFolder" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/repertoire/_repertoireClient.html.twig' %}
 </div>
-<div id="link-organismeFolder" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/repertoire/_repertoireOrganisme.html.twig' %}
+<div id="link-organismeFolder" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/repertoire/_repertoireOrganisme.html.twig' %}
 </div>
-<div id="link-contactsFolder" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/repertoire/_repertoirePersonnel.html.twig' %}
+<div id="link-contactsFolder" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/repertoire/_repertoirePersonnel.html.twig' %}
 </div>
-<div id="link-newRepertoireClient" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/repertoire/_repertoireNewClient.html.twig' %}
+<div id="link-newRepertoireClient" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/repertoire/_repertoireNewClient.html.twig' %}
 </div>
-<div id="link-newRepertoireFournisseur" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/repertoire/_repertoireNewFournisseur.html.twig' %}
+<div id="link-newRepertoireFournisseur" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/repertoire/_repertoireNewFournisseur.html.twig' %}
 </div>
-<div id="link-newRepertoireOrganisme" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/repertoire/_repertoireNewOrganisme.html.twig' %}
+<div id="link-newRepertoireOrganisme" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/repertoire/_repertoireNewOrganisme.html.twig' %}
 </div>
-<div id="link-newRepertoirePersonnel" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/repertoire/_repertoireNewPersonnel.html.twig' %}
+<div id="link-newRepertoirePersonnel" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/repertoire/_repertoireNewPersonnel.html.twig' %}
 </div>
-<div id="link-parametres" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/_parametres.html.twig' %}
+<div id="link-parametres" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/_parametres.html.twig' %}
 </div>
-<div id="link-espacepersonnel" class="d-none flex-column d-flex">
-    {% include 'partials/navUser/Profile/_espacepersonnel.html.twig' %}
+<div id="link-espacepersonnel" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Profile/_espacepersonnel.html.twig' %}
+</div>
+
+<div id="link-newDocument" class="custom-bg d-none flex-column d-flex">
+    {% include 'partials/user/navUser/Administratif/_newDocuments.html.twig' %}
 </div>
 
 {% endblock %}

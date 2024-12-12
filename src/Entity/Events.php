@@ -42,6 +42,9 @@ class Events
     #[Groups(['event:read', 'event:write'])]
     private ?array $google_calendar_event_id = [];
 
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?User $client = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +126,18 @@ class Events
     public function setGoogleCalendarEventId(?array $google_calendar_event_id): self
     {
         $this->google_calendar_event_id = $google_calendar_event_id;
+
+        return $this;
+    }
+
+    public function getClient(): ?User
+    {
+        return $this->client;
+    }
+
+    public function setClient(?User $client): static
+    {
+        $this->client = $client;
 
         return $this;
     }

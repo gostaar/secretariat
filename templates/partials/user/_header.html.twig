@@ -34,20 +34,20 @@
             <div class="text-center pb-4 pt-4">
                 <h2><a href="{{ path('app_logout') }}" class="text-warning" >Secrétaire Pro</a></h2>
             </div>
-            <div class="user-avatar d-flex mb-4 align-items-center">
-                <a href="{{ path('user_profile') }}" style="flex:1;" class="d-flex justify-content-center">
+            <div class="user-avatar d-flex mb-4 justify-content-center align-items-center gap-3">
+                <a href="{{ path('user') }}#link-Profile" class="d-flex justify-content-center align-items-center">
                     <img src="{{ asset('build/images/avatar.png') }}" alt="Avatar" class="icon-size"/>
                 </a>
-                <ul class="flex-2-ul p-0">
-                    <li class="list-unstyled text-white">{{ app.user.email }}</li>
-                    <li class="list-unstyled">
+                <div class="d-flex flex-column">
+                    <a href="{{ path('user') }}#link-Profile" class="list-unstyled text-white">{{ app.user.email }}</a>
+                    <div class="list-unstyled">
                         <a href="{{ path('app_logout') }}" class="bt w-100 text-danger">Déconnexion</a>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
-            <ul class="text-center sidebar-nav list-unstyled pt-0">
+            <div class="nav nav-pills flex-column mb-sm-auto pt-2 pb-5 ps-3 align-items-center" id="menu">
                 {% include 'partials/user/_headerMenus.html.twig' %}
-            </ul>
+            </div>
         </div>
     </div>
 </nav>

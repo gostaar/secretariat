@@ -1,0 +1,58 @@
+<div class="custom-bg d-flex w-100">
+    <!-- Sidebar -->
+    {% include 'partials/user/_header.html.twig' %}
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4 d-flex flex-column">
+        <div class="container card mb-4">
+            <div class="container card-header d-flex justify-content-between align-items-center">
+                <h4>Commercial</h4>
+            </div>
+            <div class="card-body">
+                {% set commerciaux = [] %}
+                {% if commerciaux is not empty %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom du document commercial</th>
+                                <th>Status</th>
+                                <th>Informations</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for commercial in commerciaux %}
+                                <tr>
+                                    <td>{{ commercial.name }}</td>
+                                    <td>{{ commercial.status }}</td>
+                                    <td>{{ commercial.info }}</td>
+                                    <td>
+                                        <a href="{{ path('show_commercial', {'id': commercial.id}) }}">Détails</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <!-- Aucun commercial -->
+                    <div class="text-center">
+                        <div style="position: relative; display: inline-block;">
+                            <img src="{{ asset('build/images/side1.png') }}" alt="Aucun commercial" class="" />
+                            <div style="position: absolute; 
+                                    top: 0; left: 0; 
+                                    right: 0; bottom: 0; 
+                                    background-color: rgba(255, 255, 255, 0.7); 
+                                    z-index: 1;">
+                            </div>
+                        </div>
+                        <h1 style="color: grey;">Aucun document commercial</h1>
+                        <p class="text-muted">À cet endroit, vous pourrez consulter vos documents commerciaux.</p>
+                    </div>
+                {% endif %}
+                <div class="d-flex justify-content-center">
+                    <a id="btnNewDocument" href="#link-newDocument" class="btn btn-primary">Créer un nouveau document administratif</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>   

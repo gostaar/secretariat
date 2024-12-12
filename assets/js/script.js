@@ -20,3 +20,34 @@ if(job){
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    //site
+    const navLinks = document.querySelectorAll('#navbarNav .nav-link, #navbarNav button');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const navbarCollapse = document.getElementById('navbarNav');
+            
+            if (navbarCollapse.classList.contains('show')) {
+                menuToggle.click();
+            }
+        });
+    });
+
+    //user
+    const navMenus = document.querySelectorAll('#submenu3 .nav-link, #menuAcceuil, #menuAdministratif, #btnAgenda', '#menuCommercial', '#menuNumerique', '#menuTelephone');
+
+    navMenus.forEach(link => {
+        link.addEventListener('click', function() {
+            const menuToggle = document.getElementById('submenu');
+            const navbarCollapse = document.getElementById('submenu3');
+            
+            if (navbarCollapse.classList.contains('show')) {
+                menuToggle.click();
+            }
+        });
+    });
+
+});

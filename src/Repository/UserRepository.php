@@ -33,6 +33,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function getUserId(): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return new Response('User not authenticated', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $userId = $user->getId();
+
+        return new Response($userId);
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */

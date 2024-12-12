@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\FactureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Enum\StatusEnum; 
+use App\Enum\FactureStatus;
+
 
 #[ORM\Entity(repositoryClass: FactureRepository::class)]
 class Facture
@@ -16,35 +19,37 @@ class Facture
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $montant = null;
+    private ?float $montant = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    private ?\DateTimeInterface $date_paiement = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $date_facture = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', enumType: FactureStatus::class)]
     private string $status;
 
     #[ORM\ManyToOne(inversedBy: 'factures')]
     private ?User $client = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $commentaire = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $info = null;
+    #[ORM\Column]
+    private ?bool $isActive = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $pdfFile = null;
-
-    
+    /**
+     * @var Collection<int, Paiement>
+     */
+    #[ORM\OneToMany(targetEntity: Paiement::class, mappedBy: 'facture')]
+    private Collection $paiements;
 
     public function __construct()
     {
         // Définir une valeur par défaut pour le statut, par exemple "pending"
-        $this->status = StatusEnum::PENDING;
+        $this->status = FactureStatus::NON_PAYE->value;
+        $this->paiements = new ArrayCollection();
     }
 
     public function __toString(): string{
@@ -63,26 +68,26 @@ class Facture
         return $this;
     }
 
-    public function getMontant(): ?string
+    public function getMontant(): ?float
     {
         return $this->montant;
     }
 
-    public function setMontant(string $montant): static
+    public function setMontant(float $montant): static
     {
         $this->montant = $montant;
 
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDatePaiement(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->date_paiement;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setDatePaiement(\DateTimeInterface $date_paiement): static
     {
-        $this->date = $date;
+        $this->date_paiement = $date_paiement;
 
         return $this;
     }
@@ -106,7 +111,7 @@ class Facture
 
     public function setStatus(string $status): static
     {
-        if (!in_array($status, StatusEnum::getValues())) {
+        if (!in_array($status, FactureStatus::getValues())) {
             throw new \InvalidArgumentException("Invalid status value");
         }
         $this->status = $status;
@@ -125,38 +130,56 @@ class Facture
         return $this;
     }
 
-    public function getName(): ?string
+    public function getCommentaire(): ?string
     {
-        return $this->name;
+        return $this->commentaire;
     }
 
-    public function setName(string $name): static
+    public function setCommentaire(?string $commentaire): static
     {
-        $this->name = $name;
+        $this->commentaire = $commentaire;
 
         return $this;
     }
 
-    public function getInfo(): ?string
+    public function isActive(): ?bool
     {
-        return $this->info;
+        return $this->isActive;
     }
 
-    public function setInfo(string $info): static
+    public function setActive(bool $isActive): static
     {
-        $this->info = $info;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
-    public function getPdfFile(): ?string
+    /**
+     * @return Collection<int, Paiement>
+     */
+    public function getPaiements(): Collection
     {
-        return $this->pdfFile;
+        return $this->paiements;
     }
 
-    public function setPdfFile(string $pdfFile): static
+    public function addPaiement(Paiement $paiement): static
     {
-        $this->pdfFile = $pdfFile;
+        if (!$this->paiements->contains($paiement)) {
+            $this->paiements->add($paiement);
+            $paiement->setFacture($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaiement(Paiement $paiement): static
+    {
+        if ($this->paiements->removeElement($paiement)) {
+            // set the owning side to null (unless already changed)
+            if ($paiement->getFacture() === $this) {
+                $paiement->setFacture(null);
+            }
+        }
 
         return $this;
     }

@@ -8,22 +8,21 @@
   </div>
   <h1 class="expert-title">Coordonnées</h1>
   <section id="experts" class="experts">
-      <div class="expert-item d-flex flex-column align-items-center">
-          <img src="{{ asset('build/images/contact1.png') }}" alt="Rencontre experts" class="expert-icon">
-          <h2>Adresse</h2>
-          <p>123 Rue des Entreprises, 75000 Paris, France</p>
-      </div>
-      <div class="expert-item d-flex flex-column align-items-center">
-          <img src="{{ asset('build/images/contact3.png') }}" alt="Service 360°" class="expert-icon">
-          <h2>Email</h2>
-          <p><a href="mailto:contact@secretairepro.com">contact@secretairepro.com</a></p>
-      </div>
-      <div class="expert-item d-flex flex-column align-items-center">
-          <img src="{{ asset('build/images/contact2.png') }}" alt="Support Technique" class="expert-icon">
-          <h2>Téléphone</h2>
-          <p><a href="tel:+1234567890">+123 456 7890</a></p>
-      </div>
+      {% set contacts = [
+          { 'icon': 'fas fa-home fa-3x text-danger', 'title': 'Adresse', 'content': '123 Rue des Entreprises, 75000 Paris, France' },
+          { 'icon': 'fas fa-envelope fa-3x text-danger', 'title': 'Email', 'content': '<a href="mailto:contact@secretairepro.com">contact@secretairepro.com</a>' },
+          { 'icon': 'fas fa-phone-alt fa-3x text-danger', 'title': 'Téléphone', 'content': '<a href="tel:+1234567890">+123 456 7890</a>' }
+      ] %}
+      
+      {% for contact in contacts %}
+          <div class="expert-item d-flex flex-column align-items-center">
+              <i class="{{ contact.icon }}" style="height:60px;"></i>
+              <h2>{{ contact.title }}</h2>
+              <p>{{ contact.content|raw }}</p>
+          </div>
+      {% endfor %}
   </section>
+
 
   <!-- Localisation -->
   <section class="map-section">

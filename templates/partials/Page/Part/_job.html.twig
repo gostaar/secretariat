@@ -14,19 +14,25 @@
 <h1 class="services-title">Nos offres d'emploi</h1>
 <h2 class="services-subtitle">Postes disponibles</h2>
 <section id="services" class="service-list d-flex flex-wrap justify-content-center">
-<div class="service-item d-flex flex-column align-items-center">Pas d'offre d'emploi actuellement</div>
-    {# <div class="service-item d-flex flex-column align-items-center">
-        <h3>Assistant(e) Administratif(ve)</h3>
-        <p>Rejoignez notre équipe pour gérer diverses tâches administratives pour nos clients.</p>
-    </div>
     <div class="service-item d-flex flex-column align-items-center">
-        <h3>Développeur Web</h3>
-        <p>Nous cherchons un développeur pour créer des sites internet modernes et fonctionnels.</p>
+        {% set job_offers = [] %}
+        {#{% set job_offers = [
+            { "title": "Assistant(e) Administratif(ve)", "description": "Rejoignez notre équipe pour gérer diverses tâches administratives pour nos clients." },
+            { "title": "Développeur Web", "description": "Nous cherchons un développeur pour créer des sites internet modernes et fonctionnels." },
+            { "title": "Support Technique", "description": "Fournissez un support technique pour nos services numériques et bureautiques." } 
+        ] %}#}
+
+        {% if job_offers is empty %}
+            Pas d'offre d'emploi actuellement
+        {% else %}
+            {% for job in job_offers %}
+                <div class="service-item d-flex flex-column align-items-center">
+                    <h3>{{ job.title }}</h3>
+                    <p>{{ job.description }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
-    <div class="service-item d-flex flex-column align-items-center">
-        <h3>Support Technique</h3>
-        <p>Fournissez un support technique pour nos services numériques et bureautiques.</p>
-    </div> #}
 </section>
 
 <!-- Contact Section -->

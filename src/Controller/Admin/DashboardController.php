@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Facture;
-use App\Entity\Fichier;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;

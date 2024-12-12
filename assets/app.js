@@ -3,23 +3,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const isAuthenticated = (status.textContent.trim() === 'connecté');
     if (!isAuthenticated) {clearData() };
 
-    const menuToggle = document.querySelector('#navbarNav');
-    const menuLinks = document.querySelectorAll('#navbarNav a');
-
-    // Ajouter un gestionnaire d'événements à chaque lien
-    menuLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            // Vérifier si le menu est visible
-            if (menuToggle.classList.contains('show')) {
-                // Supprimer la classe pour fermer le menu
-                const collapseElement = bootstrap.Collapse.getInstance(menuToggle);
-                if (collapseElement) {
-                    collapseElement.hide();
-                }
-            }
-        });
-    });
-
     const proButton = document.getElementById('btnPro');
     const partButton = document.getElementById('btnPart');
 
@@ -52,7 +35,9 @@ window.addEventListener('DOMContentLoaded', () => {
         { ids: ['btnNewRepertoirePersonnel'], section: 'link-newRepertoirePersonnel'},       
         { ids: ['btnParametres', 'menuParametres'], section: 'link-parametres'},       
         { ids: ['btnEspacePersonnel'], section: 'link-espacepersonnel'},       
-        { ids: [''], section: 'link-repertoireInfo'},       
+        { ids: [''], section: 'link-repertoireInfo'},
+        { ids: ['btnNewDocument'], section: 'link-newDocument'},
+
     ];
     
     if(btnProfile){
@@ -159,7 +144,8 @@ function toggleSectionUser(targetId) {
         'link-newRepertoirePersonnel',
         'link-parametres',
         'link-espacepersonnel',
-        'link-repertoireInfo'
+        'link-repertoireInfo',
+        'link-newDocument'
     ]; 
     const btnToogle = document.getElementById('btnToogle');
     if (btnToogle) {

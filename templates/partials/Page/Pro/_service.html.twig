@@ -24,78 +24,28 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-unstyled">
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdmin1" aria-expanded="false" aria-controls="gestionAdmin1">
-                                    Gestion de la paie
-                                </button>
-                                <div id="gestionAdmin1" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Externalisation du traitement des salaires, déclarations sociales et gestion des avantages en nature.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminCV" aria-expanded="false" aria-controls="gestionAdminCV">
-                                    Rédaction de documents officiels
-                                </button>
-                                <div id="gestionAdminCV" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Création de contrats, lettres de motivation, lettres de résiliation et autres documents administratifs.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminFinances" aria-expanded="false" aria-controls="gestionAdminFinances">
-                                    Gestion des factures
-                                </button>
-                                <div id="gestionAdminFinances" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Création, envoi, suivi des paiements et relance des clients pour une gestion optimale de la trésorerie.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminFiscalite" aria-expanded="false" aria-controls="gestionAdminFiscalite">
-                                    Gestion des agendas 
-                                </button>
-                                <div id="gestionAdminFiscalite" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Planification des rendez-vous, réunions et événements pour optimiser le temps de vos équipes.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminEnLigne" aria-expanded="false" aria-controls="gestionAdminEnLigne">
-                                    Externalisation de la comptabilité
-                                </button>
-                                <div id="gestionAdminEnLigne" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Suivi des écritures comptables, gestion des bilans et déclarations fiscales.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminJuridique" aria-expanded="false" aria-controls="gestionAdminJuridique">
-                                    Assistance juridique
-                                </button>
-                                <div id="gestionAdminJuridique" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Conseils sur des questions légales courantes, aide à la conformité juridique des documents et processus.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminVoyages" aria-expanded="false" aria-controls="gestionAdminVoyages">
-                                    Gestion des fournisseurs 
-                                </button>
-                                <div id="gestionAdminVoyages" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Sélection et gestion des contrats avec les fournisseurs, négociation des tarifs et suivi des livraisons.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminV" aria-expanded="false" aria-controls="gestionAdminV">
-                                    Suivi des dépenses 
-                                </button>
-                                <div id="gestionAdminV" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Élaboration de rapports de dépenses, suivi des budgets et recommandations pour une meilleure gestion financière.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionAdminVo" aria-expanded="false" aria-controls="gestionAdminVo">
-                                    Services de secrétariat
-                                </button>
-                                <div id="gestionAdminVo" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Réception des appels, gestion du courrier, organisation des archives et prise de messages.</p>
-                                </div>
-                            </li>
+                            {% set services = [
+                                { title: 'Gestion de la paie', id: 'gestionAdmin1', description: 'Externalisation du traitement des salaires, déclarations sociales et gestion des avantages en nature.' },
+                                { title: 'Rédaction de documents officiels', id: 'gestionAdminCV', description: 'Création de contrats, lettres de motivation, lettres de résiliation et autres documents administratifs.' },
+                                { title: 'Gestion des factures', id: 'gestionAdminFinances', description: 'Création, envoi, suivi des paiements et relance des clients pour une gestion optimale de la trésorerie.' },
+                                { title: 'Gestion des agendas', id: 'gestionAdminFiscalite', description: 'Planification des rendez-vous, réunions et événements pour optimiser le temps de vos équipes.' },
+                                { title: 'Externalisation de la comptabilité', id: 'gestionAdminEnLigne', description: 'Suivi des écritures comptables, gestion des bilans et déclarations fiscales.' },
+                                { title: 'Assistance juridique', id: 'gestionAdminJuridique', description: 'Conseils sur des questions légales courantes, aide à la conformité juridique des documents et processus.' },
+                                { title: 'Gestion des fournisseurs', id: 'gestionAdminVoyages', description: 'Sélection et gestion des contrats avec les fournisseurs, négociation des tarifs et suivi des livraisons.' },
+                                { title: 'Suivi des dépenses', id: 'gestionAdminV', description: 'Élaboration de rapports de dépenses, suivi des budgets et recommandations pour une meilleure gestion financière.' },
+                                { title: 'Services de secrétariat', id: 'gestionAdminVo', description: 'Réception des appels, gestion du courrier, organisation des archives et prise de messages.' }
+                            ] %}
+
+                            {% for service in services %}
+                                <li class="list-group-flush">
+                                    <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#{{ service.id }}" aria-expanded="false" aria-controls="{{ service.id }}">
+                                        {{ service.title }}
+                                    </button>
+                                    <div id="{{ service.id }}" class="collapse">
+                                        <p class="m-2 text-muted" style="font-style: italic;">{{ service.description }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -107,78 +57,28 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-unstyled">
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum1" aria-expanded="false" aria-controls="gestionNum1">
-                                    Prospection commerciale
-                                </button>
-                                <div id="gestionNum1" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Recherche et identification de nouveaux prospects, qualification des leads et génération d’opportunités.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum2" aria-expanded="false" aria-controls="gestionNum2">
-                                    Rédaction de propositions commerciales 
-                                </button>
-                                <div id="gestionNum2" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Création de devis personnalisés, propositions et offres commerciales adaptées aux besoins des clients.</p>                            
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum3" aria-expanded="false" aria-controls="gestionNum3">
-                                    Gestion de la relation client (CRM)
-                                </button>
-                                <div id="gestionNum3" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Mise en place et gestion de systèmes CRM pour suivre les interactions clients et optimiser la fidélisation.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum4" aria-expanded="false" aria-controls="gestionNum4">
-                                    Support client
-                                </button>
-                                <div id="gestionNum4" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Mise en place d'un service client pour répondre aux demandes, résoudre les problèmes et améliorer l’expérience client.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum5" aria-expanded="false" aria-controls="gestionNum5">
-                                    Stratégie de pricing
-                                </button>
-                                <div id="gestionNum5" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Analyse des prix, étude de la concurrence et mise en place d'une stratégie tarifaire compétitive.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum6" aria-expanded="false" aria-controls="gestionNum6">
-                                    Campagnes marketing ciblées
-                                </button>
-                                <div id="gestionNum6" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Élaboration de campagnes de marketing ciblées pour atteindre efficacement des segments de marché spécifiques.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum7" aria-expanded="false" aria-controls="gestionNum7">
-                                    Animation des réseaux sociaux
-                                </button>
-                                <div id="gestionNum7" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Création de contenu, gestion de l'engagement et suivi des performances sur les principales plateformes sociales.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum8" aria-expanded="false" aria-controls="gestionNum8">
-                                    Mise en place de partenariats
-                                </button>
-                                <div id="gestionNum8" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;"> Identification de partenaires stratégiques et gestion de relations commerciales bénéfiques.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum9" aria-expanded="false" aria-controls="gestionNum9">
-                                    Gestion des retours clients
-                                </button>
-                                <div id="gestionNum9" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;"> Collecte des retours clients, analyse des avis et mise en place d'actions d'amélioration continue.</p>
-                                </div>
-                            </li>
+                            {% set services = [
+                                { title: 'Prospection commerciale', description: 'Recherche et identification de nouveaux prospects, qualification des leads et génération d’opportunités.' },
+                                { title: 'Rédaction de propositions commerciales', description: 'Création de devis personnalisés, propositions et offres commerciales adaptées aux besoins des clients.' },
+                                { title: 'Gestion de la relation client (CRM)', description: 'Mise en place et gestion de systèmes CRM pour suivre les interactions clients et optimiser la fidélisation.' },
+                                { title: 'Support client', description: 'Mise en place d\'un service client pour répondre aux demandes, résoudre les problèmes et améliorer l’expérience client.' },
+                                { title: 'Stratégie de pricing', description: 'Analyse des prix, étude de la concurrence et mise en place d\'une stratégie tarifaire compétitive.' },
+                                { title: 'Campagnes marketing ciblées', description: 'Élaboration de campagnes de marketing ciblées pour atteindre efficacement des segments de marché spécifiques.' },
+                                { title: 'Animation des réseaux sociaux', description: 'Création de contenu, gestion de l\'engagement et suivi des performances sur les principales plateformes sociales.' },
+                                { title: 'Mise en place de partenariats', description: 'Identification de partenaires stratégiques et gestion de relations commerciales bénéfiques.' },
+                                { title: 'Gestion des retours clients', description: 'Collecte des retours clients, analyse des avis et mise en place d\'actions d\'amélioration continue.' }
+                            ] %}
+
+                            {% for service in services %}
+                                <li class="list-group-flush">
+                                    <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum{{ loop.index }}" aria-expanded="false" aria-controls="gestionNum{{ loop.index }}">
+                                        {{ service.title }}
+                                    </button>
+                                    <div id="gestionNum{{ loop.index }}" class="collapse">
+                                        <p class="m-2 text-muted" style="font-style: italic;">{{ service.description }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -190,70 +90,27 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-unstyled">
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionV1" aria-expanded="false" aria-controls="gestionV1">
-                                    Création de sites web
-                                </button>
-                                <div id="gestionV1" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Conception, développement et maintenance de sites internet vitrine, e-commerce ou institutionnels.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionV2" aria-expanded="false" aria-controls="gestionV2">
-                                    Développement d'applications mobiles
-                                </button>
-                                <div id="gestionV2" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Création d’applications pour Android et iOS, en fonction des besoins spécifiques de l’entreprise.</p>                            
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionV3" aria-expanded="false" aria-controls="gestionV3">
-                                    Optimisation SEO
-                                </button>
-                                <div id="gestionV3" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Amélioration de la visibilité des sites internet sur les moteurs de recherche, en optimisant le contenu et la structure.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionV4" aria-expanded="false" aria-controls="gestionV4">
-                                    Création de contenu digital
-                                </button>
-                                <div id="gestionV4" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Rédaction de contenu web, blogs, articles, et textes marketing adaptés aux exigences du SEO.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionV5" aria-expanded="false" aria-controls="gestionV5">
-                                    Audit de sécurité numérique
-                                </button>
-                                <div id="gestionV5" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Évaluation de la sécurité des systèmes informatiques et mise en place de solutions pour protéger les données sensibles.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionV6" aria-expanded="false" aria-controls="gestionV6">
-                                    Automatisation des processus
-                                </button>
-                                <div id="gestionV6" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Développement de solutions d'automatisation des tâches récurrentes pour gagner du temps et améliorer la productivité.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionV7" aria-expanded="false" aria-controls="gestionV7">
-                                    Développement de logiciels sur mesure
-                                </button>
-                                <div id="gestionV7" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Conception et développement de logiciels spécifiques pour répondre aux besoins uniques de votre entreprise.</p>
-                                </div>
-                            </li>
-                            <li class="list-group-flush">
-                                <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionV8" aria-expanded="false" aria-controls="gestionV8">
-                                    Mise en place d'une stratégie de marketing numérique
-                                </button>
-                                <div id="gestionV8" class="collapse">
-                                    <p class="m-2 text-muted" style="font-style: italic;">Planification et exécution de campagnes publicitaires en ligne (Google Ads, Facebook Ads, etc.).</p>
-                                </div>
-                            </li>
+                            {% set services = [
+                                { "id": "gestionV1", "title": "Création de sites web", "description": "Conception, développement et maintenance de sites internet vitrine, e-commerce ou institutionnels." },
+                                { "id": "gestionV2", "title": "Développement d'applications mobiles", "description": "Création d’applications pour Android et iOS, en fonction des besoins spécifiques de l’entreprise." },
+                                { "id": "gestionV3", "title": "Optimisation SEO", "description": "Amélioration de la visibilité des sites internet sur les moteurs de recherche, en optimisant le contenu et la structure." },
+                                { "id": "gestionV4", "title": "Création de contenu digital", "description": "Rédaction de contenu web, blogs, articles, et textes marketing adaptés aux exigences du SEO." },
+                                { "id": "gestionV5", "title": "Audit de sécurité numérique", "description": "Évaluation de la sécurité des systèmes informatiques et mise en place de solutions pour protéger les données sensibles." },
+                                { "id": "gestionV6", "title": "Automatisation des processus", "description": "Développement de solutions d'automatisation des tâches récurrentes pour gagner du temps et améliorer la productivité." },
+                                { "id": "gestionV7", "title": "Développement de logiciels sur mesure", "description": "Conception et développement de logiciels spécifiques pour répondre aux besoins uniques de votre entreprise." },
+                                { "id": "gestionV8", "title": "Mise en place d'une stratégie de marketing numérique", "description": "Planification et exécution de campagnes publicitaires en ligne (Google Ads, Facebook Ads, etc.)." }
+                            ] %}
+
+                            {% for service in services %}
+                                <li class="list-group-flush">
+                                    <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#{{ service.id }}" aria-expanded="false" aria-controls="{{ service.id }}">
+                                        {{ service.title }}
+                                    </button>
+                                    <div id="{{ service.id }}" class="collapse">
+                                        <p class="m-2 text-muted" style="font-style: italic;">{{ service.description }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>

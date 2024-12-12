@@ -1,0 +1,67 @@
+<div class="custom-bg d-flex">
+    <!-- Sidebar -->
+    {% include 'partials/user/_header.html.twig' %}
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4 d-flex flex-column">
+        <div class="container card mb-4">
+            <div class="container card-header d-flex justify-content-between align-items-center">
+                <h4>Liste des Fournisseurs</h4>
+            </div>
+            <div class="card-body">
+                <!-- Barre de recherche -->
+                <div class="mb-3">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un fournisseur...">
+                </div>
+                <!-- Coordonnées -->
+                <p class="text-danger pt-3"></p>
+                <!-- à faire: boucle des fournisseurs -->
+                <table class="table table-bordered table-striped" id="repertoireOrganisme">
+                    <thead>
+                        <tr>
+                            <th>Nom du Fournisseur</th>
+                            <th>Nom du contact</th>
+                            <th>Téléphone du contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bla</td>
+                            <td>Bla</td>
+                            <td>01 123 456 789</td>
+                            <td><a href="#">voir plus...</a></td>
+                        </tr>
+                        <!-- Ajouter plus de lignes ici -->
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+        <div class="d-flex justify-content-center">
+            <a id="btnNewRepertoireFournisseur" href="#link-newRepertoireFournisseur" class="btn btn-primary">Créer un nouveau fournisseur</a>
+        </div>
+    </div>
+</div>
+
+<!-- Script pour la recherche -->
+<script>
+    // Fonction de recherche
+    document.getElementById('searchInput').addEventListener('input', function() {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll('#repertoireOrganisme tbody tr');
+
+        rows.forEach(function(row) {
+            let cells = row.getElementsByTagName('td');
+            let textContent = '';
+            for (let i = 0; i < cells.length - 1; i++) { // Ignorer la dernière cellule (voir plus...)
+                textContent += cells[i].textContent.toLowerCase();
+            }
+
+            // Si le texte correspond au filtre, afficher la ligne
+            if (textContent.indexOf(filter) > -1) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>

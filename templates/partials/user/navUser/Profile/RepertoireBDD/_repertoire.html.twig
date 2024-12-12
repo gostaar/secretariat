@@ -1,0 +1,34 @@
+<div style="min-height:100vh;" class="custom-bg d-flex">
+    <!-- Sidebar -->
+    {% include 'partials/user/_header.html.twig' %}
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4 d-flex flex-column">
+        <div class="container card mb-4">
+            <div class="container card-header d-flex justify-content-between align-items-center">
+                <h4>Répertoire</h4>
+            </div>
+            <div class="card-body">
+                {% set folders = [
+                    { id: 'fournisseurFolder', link: '#link-fournisseurFolder', icon: 'fa-folder', label: 'Mes Fournisseurs' },
+                    { id: 'clientFolder', link: '#link-clientFolder', icon: 'fa-folder', label: 'Mes Clients' },
+                    { id: 'organismeFolder', link: '#link-organismeFolder', icon: 'fa-folder', label: 'Mes Organismes' },
+                    { id: 'contactsFolder', link: '#link-contactsFolder', icon: 'fa-folder', label: 'Mes Contacts Personnels' }
+                ] %}
+                <div class="flex-grow-1 p-4 d-flex justify-content-start gap-3">
+                    {% for folder in folders %}
+                        <a id="{{ folder.id }}" href="{{ folder.link }}" style="max-width:100px;" class="text-center d-flex flex-column flex-start text-decoration-none">
+                            <i class="fas {{ folder.icon }} fa-3x text-center text-warning"></i>
+                            <p class='text-black'>{{ folder.label }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    {# <a href="#" class="btn btn-primary">
+                        Créer un nouveau dossier
+                    </a> #}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

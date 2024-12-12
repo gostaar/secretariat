@@ -23,18 +23,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
-    private ?string $password = null;
-
+    #[ORM\Column(type: 'string')]
+    private string $password;
+    
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $lastActivity = null;
+    
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+    
+    #[ORM\Column(length: 255)]
+    private ?string $adresse = null;
+    
+    #[ORM\Column(length: 10)]
+    private ?string $codePostal = null;
+    
+    #[ORM\Column(length: 100)]
+    private ?string $ville = null;
+    
+    #[ORM\Column(length: 100)]
+    private ?string $pays = null;
+    
+    #[ORM\Column(length: 20)]
+    private ?string $telephone = null;
+    
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $mobile = null;
+    
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $siret = null;
+    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nomEntreprise = null;
+    
     /**
      * @var Collection<int, Facture>
      */
@@ -42,18 +66,44 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $factures;
 
     /**
-     * @var Collection<int, Fichier>
+     * @var Collection<int, Devis>
      */
-    #[ORM\OneToMany(targetEntity: Fichier::class, mappedBy: 'clients')]
-    private Collection $fichiers;
+    #[ORM\OneToMany(targetEntity: Devis::class, mappedBy: 'client')]
+    private Collection $devis;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $lastActivity = null;
+    /**
+     * @var Collection<int, Events>
+     */
+    #[ORM\OneToMany(targetEntity: Events::class, mappedBy: 'client')]
+    private Collection $events;
+
+    /**
+     * @var Collection<int, Repertoire>
+     */
+    #[ORM\OneToMany(targetEntity: Repertoire::class, mappedBy: 'client')]
+    private Collection $repertoires;
+
+    /**
+     * @var Collection<int, DocumentsUtilisateur>
+     */
+    #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'client')]
+    private Collection $documentsUtilisateurs;
+
+    /**
+     * @var Collection<int, services>
+     */
+    #[ORM\ManyToMany(targetEntity: services::class)]
+    private Collection $servicesSouscrits;
 
     public function __construct()
     {
         $this->factures = new ArrayCollection();
-        $this->fichiers = new ArrayCollection();
+        $this->devis = new ArrayCollection();
+        $this->events = new ArrayCollection();
+        $this->repertoires = new ArrayCollection();
+        $this->documentsUtilisateurs = new ArrayCollection();
+        $this->servicesSouscrits = new ArrayCollection();
+       
     }
 
     public function __toString(): string {
@@ -165,35 +215,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Fichier>
-     */
-    public function getFichiers(): Collection
-    {
-        return $this->fichiers;
-    }
-
-    public function addFichier(Fichier $fichier): static
-    {
-        if (!$this->fichiers->contains($fichier)) {
-            $this->fichiers->add($fichier);
-            $fichier->setClients($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFichier(Fichier $fichier): static
-    {
-        if ($this->fichiers->removeElement($fichier)) {
-            // set the owning side to null (unless already changed)
-            if ($fichier->getClients() === $this) {
-                $fichier->setClients(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getLastActivity(): ?\DateTimeInterface
     {
@@ -203,6 +224,234 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastActivity(?\DateTimeInterface $lastActivity): static
     {
         $this->lastActivity = $lastActivity;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): static
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(string $codePostal): static
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): static
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(string $pays): static
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getMobile(): ?string
+    {
+        return $this->mobile;
+    }
+
+    public function setMobile(?string $mobile): static
+    {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Devis>
+     */
+    public function getDevis(): Collection
+    {
+        return $this->devis;
+    }
+
+    public function addDevi(Devis $devi): static
+    {
+        if (!$this->devis->contains($devi)) {
+            $this->devis->add($devi);
+            $devi->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevi(Devis $devi): static
+    {
+        if ($this->devis->removeElement($devi)) {
+            // set the owning side to null (unless already changed)
+            if ($devi->getClient() === $this) {
+                $devi->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Events>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Events $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Events $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getClient() === $this) {
+                $event->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Repertoire>
+     */
+    public function getRepertoires(): Collection
+    {
+        return $this->repertoires;
+    }
+
+    public function addRepertoire(Repertoire $repertoire): static
+    {
+        if (!$this->repertoires->contains($repertoire)) {
+            $this->repertoires->add($repertoire);
+            $repertoire->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRepertoire(Repertoire $repertoire): static
+    {
+        if ($this->repertoires->removeElement($repertoire)) {
+            // set the owning side to null (unless already changed)
+            if ($repertoire->getClient() === $this) {
+                $repertoire->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DocumentsUtilisateur>
+     */
+    public function getDocumentsUtilisateurs(): Collection
+    {
+        return $this->documentsUtilisateurs;
+    }
+
+    public function addDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    {
+        if (!$this->documentsUtilisateurs->contains($documentsUtilisateur)) {
+            $this->documentsUtilisateurs->add($documentsUtilisateur);
+            $documentsUtilisateur->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    {
+        if ($this->documentsUtilisateurs->removeElement($documentsUtilisateur)) {
+            // set the owning side to null (unless already changed)
+            if ($documentsUtilisateur->getClient() === $this) {
+                $documentsUtilisateur->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, services>
+     */
+    public function getServicesSouscrits(): Collection
+    {
+        return $this->servicesSouscrits;
+    }
+
+    public function addServicesSouscrit(services $servicesSouscrit): static
+    {
+        if (!$this->servicesSouscrits->contains($servicesSouscrit)) {
+            $this->servicesSouscrits->add($servicesSouscrit);
+        }
+
+        return $this;
+    }
+
+    public function removeServicesSouscrit(services $servicesSouscrit): static
+    {
+        $this->servicesSouscrits->removeElement($servicesSouscrit);
 
         return $this;
     }
