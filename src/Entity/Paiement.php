@@ -12,54 +12,54 @@ class Paiement
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $paiementId = null;
+    private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'paiements')]
-    private ?Facture $paiementFacture = null;
+    private ?Facture $facture = null;
 
     #[ORM\Column]
-    private ?float $paiementMontantPaye = null;
+    private ?float $montant_paye = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $paiementDatePaiement = null;
+    private ?\DateTimeInterface $date_paiement = null;
 
     public function getPaiementId(): ?int
     {
-        return $this->paiementId;
+        return $this->id;
     }
 
-    public function getPaiementFacture(): ?Facture
+    public function getFacture(): ?Facture
     {
-        return $this->paiementFacture;
+        return $this->facture;
     }
 
-    public function setPaiementFacture(?Facture $paiementFacture): static
+    public function setFacture(?Facture $facture): static
     {
-        $this->paiementFacture = $paiementFacture;
+        $this->facture = $facture;
 
         return $this;
     }
 
-    public function getPaiementMontantPaye(): ?float
+    public function getMontantPaye(): ?float
     {
-        return $this->paiementMontantPaye;
+        return $this->montant_paye;
     }
 
-    public function setPaiementMontantPaye(float $paiementMontantPaye): static
+    public function setMontantPaye(float $montant_paye): static
     {
-        $this->paiementMontantPaye = $paiementMontantPaye;
+        $this->montant_paye = $montant_paye;
 
         return $this;
     }
 
-    public function getPaiementDatePaiement(): ?\DateTimeInterface
+    public function getDatePaiement(): ?\DateTimeInterface
     {
-        return $this->paiementDatePaiement;
+        return $this->date_paiement;
     }
 
-    public function setPaiementDatePaiement(\DateTimeInterface $paiementDatePaiement): static
+    public function setDatePaiement(\DateTimeInterface $date_paiement): static
     {
-        $this->paiementDatePaiement = $paiementDatePaiement;
+        $this->date_paiement = $date_paiement;
 
         return $this;
     }

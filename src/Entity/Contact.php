@@ -11,99 +11,99 @@ class Contact
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $contactId = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $contactNom = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 20, nullable: true)]
-    private ?string $contactTelephone = null;
+    private ?string $telephone = null;
 
     #[ORM\Column(length: 180, nullable: true)]
-    private ?string $contactEmail = null;
+    private ?string $email = null;
 
     #[ORM\Column(length: 100, nullable: true)]
-    private ?string $contactRole = null;
+    private ?string $role = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $contactCommentaire = null;
+    private ?string $commentaire = null;
 
     #[ORM\ManyToOne(inversedBy: 'contact')]
-    private ?Repertoire $contactRepertoire = null;
+    private ?Repertoire $repertoire = null;
 
-    public function getContactId(): ?int
+    public function getId(): ?int
     {
-        return $this->contactId;
+        return $this->id;
     }
 
-    public function getContactNom(): ?string
+    public function getNom(): ?string
     {
-        return $this->contactNom;
+        return $this->nom;
     }
 
-    public function setContactNom(string $contactNom): static
+    public function setNom(string $nom): static
     {
-        $this->contactNom = $contactNom;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getContactTelephone(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->contactTelephone;
+        return $this->telephone;
     }
 
-    public function setContactTelephone(?string $contactTelephone): static
+    public function setTelephone(?string $telephone): static
     {
-        $this->contactTelephone = $contactTelephone;
+        $this->telephone = $telephone;
 
         return $this;
     }
 
-    public function getContactEmail(): ?string
+    public function getEmail(): ?string
     {
-        return $this->contactEmail;
+        return $this->email;
     }
 
-    public function setContactEmail(?string $contactEmail): static
+    public function setEmail(?string $email): static
     {
-        $this->contactEmail = $contactEmail;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getContactRole(): ?string
+    public function getRole(): ?string
     {
-        return $this->contactRole;
+        return $this->role;
     }
 
-    public function setContactRole(?string $contactRole): static
+    public function setRole(?string $role): static
     {
-        $this->contactRole = $contactRole;
+        $this->role = $role;
 
         return $this;
     }
 
-    public function getContactCommentaire(): ?string
+    public function getCommentaire(): ?string
     {
-        return $this->contactCommentaire;
+        return $this->commentaire;
     }
 
-    public function setContactCommentaire(?string $contactCommentaire): static
+    public function setCommentaire(?string $commentaire): static
     {
-        $this->contactCommentaire = $contactCommentaire;
+        $this->commentaire = $commentaire;
 
         return $this;
     }
 
-    public function getContactRepertoire(): ?Repertoire
+    public function getRepertoire(): ?Repertoire
     {
-        return $this->contactRepertoire;
+        return $this->repertoire;
     }
 
-    public function setContactRepertoire(?Repertoire $contactRepertoire): static
+    public function setRepertoire(?Repertoire $repertoire): static
     {
-        $this->contactRepertoire = $contactRepertoire;
+        $this->repertoire = $repertoire;
 
         return $this;
     }

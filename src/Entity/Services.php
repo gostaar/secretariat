@@ -13,35 +13,42 @@ class Services
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $serviceId = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $serviceName = null;
+    private ?string $name = null;
 
     /**
      * @var Collection<int, DocumentsUtilisateur>
      */
     #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'service')]
-    private Collection $serviceDocumentsUtilisateurs;
+    private Collection $documentsUtilisateurs;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'servicesSouscrits')]
+    private Collection $users;
 
     public function __construct()
     {
-        $this->serviceDocumentsUtilisateurs = new ArrayCollection();
+        $this->documentsUtilisateurs = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
-    public function getServiceId(): ?int
+    public function getId(): ?int
     {
-        return $this->serviceId;
+        return $this->id;
     }
 
-    public function getServiceName(): ?string
+    public function getName(): ?string
     {
-        return $this->serviceName;
+        return $this->name;
     }
 
-    public function setServiceName(string $serviceName): static
+    public function setName(string $name): static
     {
-        $this->serviceName = $serviceName;
+        $this->name = $name;
 
         return $this;
     }
@@ -49,28 +56,55 @@ class Services
     /**
      * @return Collection<int, DocumentsUtilisateur>
      */
-    public function getServiceDocumentsUtilisateurs(): Collection
+    public function getDocumentsUtilisateurs(): Collection
     {
-        return $this->serviceDocumentsUtilisateurs;
+        return $this->documentsUtilisateurs;
     }
 
-    public function addServiceDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function addDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
     {
-        if (!$this->serviceDocumentsUtilisateurs->contains($documentsUtilisateur)) {
-            $this->serviceDocumentsUtilisateurs->add($documentsUtilisateur);
+        if (!$this->documentsUtilisateurs->contains($documentsUtilisateur)) {
+            $this->documentsUtilisateurs->add($documentsUtilisateur);
             $documentsUtilisateur->setService($this);
         }
 
         return $this;
     }
 
-    public function removeServiceDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function removeDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
     {
-        if ($this->serviceDocumentsUtilisateurs->removeElement($documentsUtilisateur)) {
+        if ($this->documentsUtilisateurs->removeElement($documentsUtilisateur)) {
             // set the owning side to null (unless already changed)
             if ($documentsUtilisateur->getService() === $this) {
                 $documentsUtilisateur->setService(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addServicesSouscrit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeServicesSouscrit($this);
         }
 
         return $this;

@@ -18,22 +18,22 @@ class FactureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('factureMontant', NumberType::class, [
+            ->add('montant', NumberType::class, [
                 'label' => 'Montant',
                 'required' => true,
                 'scale' => 2,
             ])
-            ->add('factureDateFacture', DateTimeType::class, [
+            ->add('date_facture', DateTimeType::class, [
                 'label' => 'Date de la facture',
                 'widget' => 'single_text',
                 'required' => true,
             ])
-            ->add('factureDatePaiement', DateTimeType::class, [
+            ->add('date_paiement', DateTimeType::class, [
                 'label' => 'Date de paiement',
                 'widget' => 'single_text',
                 'required' => false,
             ])
-            ->add('factureStatus', ChoiceType::class, [
+            ->add('status', ChoiceType::class, [
                 'label' => 'Statut',
                 'choices' => array_combine(
                     array_map(fn($case) => $case->name, FactureStatus::cases()), // Utilisation de `name` comme clé
@@ -41,11 +41,11 @@ class FactureType extends AbstractType
                 ),
                 'required' => true,
             ])
-            ->add('factureCommentaire', TextareaType::class, [
+            ->add('commentaire', TextareaType::class, [
                 'label' => 'Commentaire',
                 'required' => false,
             ])
-            ->add('factureIsActive', CheckboxType::class, [
+            ->add('is_active', CheckboxType::class, [
                 'label' => 'Active',
                 'required' => false,
             ]);

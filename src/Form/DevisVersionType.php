@@ -18,28 +18,32 @@ class DevisVersionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('devisVersionMontant', MoneyType::class, [
+            ->add('montant', MoneyType::class, [
                 'currency' => 'EUR',
                 'label' => 'Montant de la version du devis',
                 'required' => true,
             ])
-            ->add('devisVersionDateDevis', DateTimeType::class, [
+            ->add('date_modification', DateTimeType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de la version du devis',
                 'required' => true,
             ])
-            ->add('devisVersionCommentaire', TextareaType::class, [
+            ->add('commentaire', TextareaType::class, [
                 'label' => 'Commentaire',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Ajoutez un commentaire...',
                 ],
             ])
-            ->add('devisVersionIsActive', CheckboxType::class, [
+            ->add('is_active', CheckboxType::class, [
                 'label' => 'Actif',
                 'required' => false,
             ])
-            ->add('devisVersionStatus', ChoiceType::class, [
+            ->add('version', CheckboxType::class, [
+                'label' => 'Version',
+                'required' => true,
+            ])
+            ->add('status', ChoiceType::class, [
                 'label' => 'Statut',
                 'choices' => array_combine(
                     array_map(fn($case) => $case->name, DevisStatus::cases()), // Utilisation de `name` comme clé

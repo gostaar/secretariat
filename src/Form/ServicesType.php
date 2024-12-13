@@ -14,18 +14,26 @@ class ServicesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('servicesName', TextType::class, [
+            ->add('name', TextType::class, [
                 'label' => 'Service Name',
                 'required' => true,
                 'attr' => ['placeholder' => 'Enter the name of the service']
             ])
-            ->add('servicesDocumentsUtilisateurs', CollectionType::class, [
-                'entry_type' => DocumentsUtilisateurType::class, // Vous devez définir ce formulaire pour DocumentsUtilisateur
+            ->add('documentsUtilisateurs', CollectionType::class, [
+                'entry_type' => DocumentsUtilisateurType::class, 
                 'allow_add' => true,
                 'by_reference' => false,
                 'required' => false,
                 'label' => 'Documents Utilisateurs',
                 'attr' => ['class' => 'documents-utilisateurs-collection'],
+            ])
+            ->add('users', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'name', // Ou tout autre champ pour représenter l'utilisateur
+                'multiple' => true,
+                'expanded' => false, // Utilisez true pour des cases à cocher
+                'required' => false,
+                'label' => 'Users',
             ]);
     }
 

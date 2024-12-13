@@ -21,59 +21,59 @@ class RepertoireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('repertoireNom', TextType::class, [
+            ->add('nom', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,
             ])
-            ->add('repertoireAdresse', TextType::class, [
+            ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'required' => true,
             ])
-            ->add('repertoireCodePostal', TextType::class, [
+            ->add('code_postal', TextType::class, [
                 'label' => 'Code postal',
                 'required' => true,
             ])
-            ->add('repertoireVille', TextType::class, [
+            ->add('ville', TextType::class, [
                 'label' => 'Ville',
                 'required' => true,
             ])
-            ->add('repertoirePays', TextType::class, [
+            ->add('pays', TextType::class, [
                 'label' => 'Pays',
                 'required' => true,
             ])
-            ->add('repertoireTelephone', TelType::class, [
+            ->add('telephone', TelType::class, [
                 'label' => 'Téléphone',
                 'required' => true,
             ])
-            ->add('repertoireMobile', TelType::class, [
+            ->add('mobile', TelType::class, [
                 'label' => 'Mobile',
                 'required' => false,
             ])
-            ->add('repertoireEmail', EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => true,
             ])
-            ->add('repertoireSiret', TextType::class, [
+            ->add('siret', TextType::class, [
                 'label' => 'SIRET',
                 'required' => true,
             ])
-            ->add('repertoireNomEntreprise', TextType::class, [
+            ->add('nom_entreprise', TextType::class, [
                 'label' => 'Nom de l\'entreprise',
                 'required' => false,
             ])
-            ->add('repertoireClient', null, [
+            ->add('client', null, [
                 'label' => 'Client',
                 'required' => true,
                 'class' => User::class,
                 'choice_label' => 'nom',  // Afficher le nom d'utilisateur du client
             ])
-            ->add('repertoireDossier', null, [
+            ->add('dossier', null, [
                 'label' => 'Dossier',
                 'required' => false,
                 'class' => Dossier::class,
                 'choice_label' => 'id', // Afficher l'ID ou un autre champ du dossier
             ])
-            ->add('repertoireContact', CollectionType::class, [
+            ->add('contact', CollectionType::class, [
                 'label' => 'Contacts',
                 'entry_type' => ContactType::class,  // Utilisez un formulaire ContactType pour gérer l'ajout de contacts
                 'allow_add' => true,

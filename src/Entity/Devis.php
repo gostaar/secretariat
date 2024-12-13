@@ -2,183 +2,131 @@
 
 namespace App\Entity;
 
-use App\Repository\FactureRepository;
+use App\Repository\DevisRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Enum\FactureStatus;
+use App\Enum\DevisStatus;
 
 
 #[ORM\Entity(repositoryClass: FactureRepository::class)]
-class Facture
+class Devis
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $devisId = null;
+    private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $devisMontant = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $devisDatePaiement = null;
+    private ?float $montant = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $devisDateFacture = null;
+    private ?\DateTimeImmutable $date_devis = null;
 
-    #[ORM\Column(type: 'string', enumType: FactureStatus::class)]
-    private string $devisStatus;
+    #[ORM\Column(type: 'string', enumType: DevisStatus::class)]
+    private string $status;
 
     #[ORM\ManyToOne(inversedBy: 'factures')]
-    private ?User $devisClient = null;
+    private ?User $client = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $devisCommentaire = null;
+    private ?string $commentaire = null;
 
     #[ORM\Column]
-    private ?bool $devisIsActive = null;
-
-    /**
-     * @var Collection<int, Paiement>
-     */
-    #[ORM\OneToMany(targetEntity: Paiement::class, mappedBy: 'facture')]
-    private Collection $devisPaiements;
+    private ?bool $is_active = null;
 
     public function __construct()
     {
-        $this->devisStatus = FactureStatus::NON_PAYE->value;
-        $this->devisPaiements = new ArrayCollection();
+        $this->status = DevisStatus::EN_ATTENTE->value;
     }
 
     public function __toString(): string{
-        return $this->devisId.' '.$this->devisStatus;
+        return $this->id.' '.$this->status;
     }
 
-    public function getDevisId(): ?int
+    public function getId(): ?int
     {
-        return $this->devisId;
+        return $this->id;
     }
 
-    public function setDevisId(int $devisId): static
+    public function setId(int $id): static
     {
-        $this->devisId = $devisId;
+        $this->id = $id;
 
         return $this;
     }
 
-    public function getDevisMontant(): ?float
+    public function getMontant(): ?float
     {
-        return $this->devisMontant;
+        return $this->montant;
     }
 
-    public function setDevisMontant(float $devisMontant): static
+    public function setMontant(float $montant): static
     {
-        $this->devisMontant = $devisMontant;
+        $this->montant = $montant;
 
         return $this;
     }
 
-    public function getDevisDatePaiement(): ?\DateTimeInterface
+    public function getDateDevis(): ?\DateTimeInterface
     {
-        return $this->devisDatePaiement;
+        return $this->date_devis;
     }
 
-    public function setDevisDatePaiement(\DateTimeInterface $devisDatePaiement): static
+    public function setDateDevis(\DateTimeInterface $date_devis): static
     {
-        $this->devisDatePaiement = $devisDatePaiement;
+        $this->date_devis = $date_devis;
 
         return $this;
     }
 
-    public function getDevisDateFacture(): ?\DateTimeImmutable
+    public function getStatus(): ?string
     {
-        return $this->devisDateFacture;
+        return $this->status;
     }
 
-    public function setDevisDateFacture(\DateTimeImmutable $devisDateFacture): static
+    public function setStatus(string $status): static
     {
-        $this->devisDateFacture = $devisDateFacture;
-
-        return $this;
-    }
-
-    public function getDevisStatus(): ?string
-    {
-        return $this->devisStatus;
-    }
-
-    public function setDevisStatus(string $devisStatus): static
-    {
-        if (!in_array($devisStatus, FactureStatus::getValues())) {
+        if (!in_array($status, DevisStatus::getValues())) {
             throw new \InvalidArgumentException("Invalid status value");
         }
-        $this->devisStatus = $devisStatus;
+        $this->status = $status;
         return $this;
     }
 
-    public function getDevisClient(): ?User
+    public function getClient(): ?User
     {
-        return $this->devisClient;
+        return $this->client;
     }
 
-    public function setDevisClient(?User $devisClient): static
+    public function setClient(?User $client): static
     {
-        $this->devisClient = $devisClient;
-
-        return $this;
-    }
-
-    public function getDevisCommentaire(): ?string
-    {
-        return $this->devisCommentaire;
-    }
-
-    public function setDevisCommentaire(?string $devisCommentaire): static
-    {
-        $this->devisCommentaire = $devisCommentaire;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getDevisIsActive(): ?bool
+    public function getCommentaire(): ?string
     {
-        return $this->devisIsActive;
+        return $this->commentaire;
     }
 
-    public function setDevisIsActive(bool $devisIsActive): static
+    public function setCommentaire(?string $commentaire): static
     {
-        $this->devisIsActive = $devisIsActive;
+        $this->commentaire = $commentaire;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Paiement>
-     */
-    public function getDevisPaiements(): Collection
+    public function isActive(): ?bool
     {
-        return $this->devisPaiements;
+        return $this->is_active;
     }
 
-    public function addDevisPaiement(Paiement $paiement): static
+    public function setIsActive(bool $is_active): static
     {
-        if (!$this->devisPaiements->contains($paiement)) {
-            $this->devisPaiements->add($paiement);
-            $paiement->setFacture($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDevisPaiement(Paiement $paiement): static
-    {
-        if ($this->devisPaiements->removeElement($paiement)) {
-            // set the owning side to null (unless already changed)
-            if ($paiement->getFacture() === $this) {
-                $paiement->setFacture(null);
-            }
-        }
+        $this->is_active = $is_active;
 
         return $this;
     }

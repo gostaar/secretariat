@@ -20,35 +20,35 @@ class DevisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('devisMontant', MoneyType::class, [
+            ->add('montant', MoneyType::class, [
                 'currency' => 'EUR',
                 'label' => 'Montant du devis',
                 'required' => true,
             ])
-            ->add('devisDate', DateTimeType::class, [
+            ->add('date', DateTimeType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date du devis',
                 'required' => true,
             ])
-            ->add('devisClient', EntityType::class, [
+            ->add('client', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'nom', // Modifier en fonction de l'attribut à afficher
                 'label' => 'Client',
                 'placeholder' => 'Sélectionnez un client',
                 'required' => true,
             ])
-            ->add('devisCommentaire', TextareaType::class, [
+            ->add('commentaire', TextareaType::class, [
                 'label' => 'Commentaire',
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'Ajouter un commentaire (facultatif)',
                 ],
             ])
-            ->add('devisIsActive', CheckboxType::class, [
+            ->add('is_active', CheckboxType::class, [
                 'label' => 'Actif',
                 'required' => false,
             ])
-            ->add('devisStatus', ChoiceType::class, [
+            ->add('status', ChoiceType::class, [
                 'label' => 'Statut',
                 'choices' => array_combine(
                     array_map(fn($case) => $case->name, DevisStatus::cases()), // Utilisation de `name` comme clé

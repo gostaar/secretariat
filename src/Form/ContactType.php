@@ -18,22 +18,22 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('contactNom', TextType::class, [
+            ->add('nom', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,
                 'attr' => ['placeholder' => 'Entrez le nom du contact'],
             ])
-            ->add('contactTelephone', TextType::class, [
+            ->add('telephone', TextType::class, [
                 'label' => 'Téléphone',
                 'required' => false,
                 'attr' => ['placeholder' => 'Entrez le numéro de téléphone'],
             ])
-            ->add('contactEmail', EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => false,
                 'attr' => ['placeholder' => 'Entrez l\'adresse email'],
             ])
-            ->add('contactRole', ChoiceType::class, [
+            ->add('role', ChoiceType::class, [
                 'label' => 'Rôle',
                 'required' => false,
                 'choices' => [
@@ -44,12 +44,12 @@ class ContactType extends AbstractType
                 ],
                 'placeholder' => 'Sélectionnez un rôle',
             ])
-            ->add('contactCommentaire', TextareaType::class, [
+            ->add('commentaire', TextareaType::class, [
                 'label' => 'Commentaire',
                 'required' => false,
                 'attr' => ['placeholder' => 'Ajoutez un commentaire'],
             ])
-            ->add('contactRepertoire', EntityType::class, [
+            ->add('repertoire', EntityType::class, [
                 'class' => Repertoire::class,
                 'choice_label' => 'nom',
                 'label' => 'Répertoire',

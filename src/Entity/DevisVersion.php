@@ -13,99 +13,114 @@ class DevisVersion
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $devisVersionId = null;
+    private ?int $id = null;
 
     #[ORM\Column]
-    private ?float $devisVersionMontant = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $devisVersionDateDevis = null;
+    private ?float $montant = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $devisVersionCommentaire = null;
+    private ?string $commentaire = null;
 
     #[ORM\Column]
-    private ?bool $devisVersionIsActive = null;
+    private ?bool $is_active = null;
 
     #[ORM\Column(type: 'string', enumType: DevisStatus::class)]
-    private ?string $devisVersionStatus = null;
+    private ?string $status = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $version = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date_modification = null;
 
     public function __construct()
     {
         // Définir une valeur par défaut pour le statut, par exemple "pending"
-        $this->devisVersionStatus = DevisStatus::EN_ATTENTE->value;
+        $this->status = DevisStatus::EN_ATTENTE->value;
     }
 
-    public function getDevisVersionId(): ?int
+    public function getId(): ?int
     {
-        return $this->devisVersionId;
+        return $this->id;
     }
 
-    public function setDevisVersionId(int $devisVersionId): static
+    public function setId(int $id): static
     {
-        $this->devisVersionId = $devisVersionId;
+        $this->id = $id;
 
         return $this;
     }
 
-    public function getDevisVersionMontant(): ?float
+    public function getMontant(): ?float
     {
-        return $this->devisVersionMontant;
+        return $this->montant;
     }
 
-    public function setDevisVersionMontant(float $devisVersionMontant): static
+    public function setMontant(float $montant): static
     {
-        $this->devisVersionMontant = $devisVersionMontant;
+        $this->montant = $montant;
 
         return $this;
     }
 
-    public function getDevisVersionDateDevis(): ?\DateTimeInterface
+    public function getStatus(): ?string
     {
-        return $this->devisVersionDateDevis;
+        return $this->status;
     }
 
-    public function setDevisVersionDateDevis(\DateTimeInterface $devisVersionDateDevis): static
+    public function setStatus(string $status): static
     {
-        $this->devisVersionDateDevis = $devisVersionDateDevis;
-
-        return $this;
-    }
-
-    public function getDevisVersionStatus(): ?string
-    {
-        return $this->devisVersionStatus;
-    }
-
-    public function setDevisVersionStatus(string $devisVersionStatus): static
-    {
-        if (!in_array($devisVersionStatus, DevisStatus::getValues())) {
+        if (!in_array($status, DevisStatus::getValues())) {
             throw new \InvalidArgumentException("Invalid status value");
         }
-        $this->devisVersionStatus = $devisVersionStatus;
+        $this->status = $status;
         return $this;
     }
 
-    public function getDevisVersionCommentaire(): ?string
+    public function getCommentaire(): ?string
     {
-        return $this->devisVersionCommentaire;
+        return $this->commentaire;
     }
 
-    public function setDevisVersionCommentaire(string $devisVersionCommentaire): static
+    public function setCommentaire(string $commentaire): static
     {
-        $this->devisVersionCommentaire = $devisVersionCommentaire;
+        $this->commentaire = $commentaire;
 
         return $this;
     }
 
-    public function isDevisVersionActive(): ?bool
+    public function isActive(): ?bool
     {
-        return $this->devisVersionIsActive;
+        return $this->is_active;
     }
 
-    public function setDevisVersionActive(bool $devisVersionIsActive): static
+    public function setActive(bool $is_active): static
     {
-        $this->devisVersionIsActive = $devisVersionIsActive;
+        $this->IsActivis_activee = $is_active;
+
+        return $this;
+    }
+
+    public function getVersion(): ?string
+    {
+        return $this->version;
+    }
+
+    public function setVersion(string $version): static
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    public function getDateModification(): ?\DateTimeInterface
+    {
+        return $this->date_modification;
+    }
+
+    public function setDateModification(\DateTimeInterface $date_modification): static
+    {
+        $this->date_modification = $date_modification;
 
         return $this;
     }

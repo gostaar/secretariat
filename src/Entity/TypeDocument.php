@@ -13,35 +13,35 @@ class TypeDocument
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $typeDocumentId = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $typeDocumentName = null;
+    private ?string $name = null;
 
     /**
      * @var Collection<int, DocumentsUtilisateur>
      */
     #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'type_document')]
-    private Collection $typeDocumentDocumentsUtilisateurs;
+    private Collection $documentsUtilisateurs;
 
     public function __construct()
     {
-        $this->typeDocumentDocumentsUtilisateurs = new ArrayCollection();
+        $this->documentsUtilisateurs = new ArrayCollection();
     }
 
-    public function getTypeDocumentId(): ?int
+    public function getId(): ?int
     {
-        return $this->typeDocumentId;
+        return $this->id;
     }
 
-    public function getTypeDocumentName(): ?string
+    public function getName(): ?string
     {
-        return $this->typeDocumentName;
+        return $this->name;
     }
 
-    public function setTypeDocumentName(string $typeDocumentName): static
+    public function setName(string $name): static
     {
-        $this->typeDocumentName = $typeDocumentName;
+        $this->name = $name;
 
         return $this;
     }
@@ -49,24 +49,24 @@ class TypeDocument
     /**
      * @return Collection<int, DocumentsUtilisateur>
      */
-    public function getTypeDocumentDocumentsUtilisateurs(): Collection
+    public function getDocumentsUtilisateurs(): Collection
     {
-        return $this->typeDocumentDocumentsUtilisateurs;
+        return $this->documentsUtilisateurs;
     }
 
-    public function addTypeDocumentDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function addDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
     {
-        if (!$this->typeDocumentDocumentsUtilisateurs->contains($documentsUtilisateur)) {
-            $this->typeDocumentDocumentsUtilisateurs->add($documentsUtilisateur);
+        if (!$this->documentsUtilisateurs->contains($documentsUtilisateur)) {
+            $this->documentsUtilisateurs->add($documentsUtilisateur);
             $documentsUtilisateur->setTypeDocument($this);
         }
 
         return $this;
     }
 
-    public function removeTypeDocumentDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function removeDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
     {
-        if ($this->typeDocumentDocumentsUtilisateurs->removeElement($documentsUtilisateur)) {
+        if ($this->documentsUtilisateurs->removeElement($documentsUtilisateur)) {
             // set the owning side to null (unless already changed)
             if ($documentsUtilisateur->getTypeDocument() === $this) {
                 $documentsUtilisateur->setTypeDocument(null);

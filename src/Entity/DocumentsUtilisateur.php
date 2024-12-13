@@ -1,96 +1,171 @@
 <?php
 
-namespace App\Form;
+namespace App\Entity;
 
-use App\Entity\DocumentsUtilisateur;
-use App\Entity\TypeDocument;
-use App\Entity\Dossier;
-use App\Entity\Services;
-use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Repository\DocumentsUtilisateurRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
-class DocumentsUtilisateurType extends AbstractType
+#[ORM\Entity(repositoryClass: DocumentsUtilisateurRepository::class)]
+class DocumentsUtilisateur
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
+    private ?TypeDocument $type_document = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date_document = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
+    private ?Dossier $dossier = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $expediteur = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $destinataire = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
+    private ?Services $service = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $file_path = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
+    private ?User $client = null;
+
+    #[ORM\Column]
+    private ?bool $is_active = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $details = null;
+
+    public function getId(): ?int
     {
-        $builder
-            ->add('documentsUtilisateurTypeDocument', EntityType::class, [
-                'class' => TypeDocument::class,
-                'choice_label' => 'name', // Adaptez à la propriété du typeDocument à afficher
-                'label' => 'Type de document',
-                'required' => true,
-                'placeholder' => 'Sélectionnez un type de document',
-            ])
-            ->add('documentsUtilisateurDate', DateTimeType::class, [
-                'widget' => 'single_text',
-                'label' => 'Date',
-                'required' => false,
-            ])
-            ->add('documentsUtilisateurDossier', EntityType::class, [
-                'class' => Dossier::class,
-                'choice_label' => 'name', // Adaptez à la propriété du Dossier à afficher
-                'label' => 'Dossier',
-                'required' => false,
-                'placeholder' => 'Sélectionnez un dossier',
-            ])
-            ->add('documentsUtilisateurDetails', TextareaType::class, [
-                'label' => 'Détails',
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'Ajoutez des détails...',
-                ],
-            ])
-            ->add('documentsUtilisateurExpediteur', TextType::class, [
-                'label' => 'Expéditeur',
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'Nom de l\'expéditeur',
-                ],
-            ])
-            ->add('documentsUtilisateurDestinataire', TextType::class, [
-                'label' => 'Destinataire',
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'Nom du destinataire',
-                ],
-            ])
-            ->add('documentsUtilisateurService', EntityType::class, [
-                'class' => Services::class,
-                'choice_label' => 'name', // Adaptez à la propriété du Service à afficher
-                'label' => 'Service',
-                'required' => false,
-                'placeholder' => 'Sélectionnez un service',
-            ])
-            ->add('documentsUtilisateurFilePath', FileType::class, [
-                'label' => 'Fichier',
-                'mapped' => false, // Si le fichier n'est pas persisté automatiquement
-                'required' => false,
-            ])
-            ->add('documentsUtilisateurClient', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom', // Adaptez à la propriété de l'utilisateur à afficher
-                'label' => 'Client',
-                'required' => false,
-                'placeholder' => 'Sélectionnez un client',
-            ])
-            ->add('documentsUtilisateurIsActive', CheckboxType::class, [
-                'label' => 'Actif',
-                'required' => false,
-            ]);
+        return $this->id;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function getTypeDocument(): ?TypeDocument
     {
-        $resolver->setDefaults([
-            'data_class' => DocumentsUtilisateur::class,
-        ]);
+        return $this->type_document;
+    }
+
+    public function setTypeDocument(?TypeDocument $type_document): static
+    {
+        $this->type_document = $type_document;
+
+        return $this;
+    }
+
+    public function getDateDocument(): ?\DateTimeInterface
+    {
+        return $this->date_document;
+    }
+
+    public function setDateDocument(\DateTimeInterface $date_document): static
+    {
+        $this->date_document = $date_document;
+
+        return $this;
+    }
+
+    public function getDossier(): ?Dossier
+    {
+        return $this->dossier;
+    }
+
+    public function setDossier(?Dossier $dossier): static
+    {
+        $this->dossier = $dossier;
+
+        return $this;
+    }
+
+    public function getExpediteur(): ?string
+    {
+        return $this->expediteur;
+    }
+
+    public function setExpediteur(string $expediteur): static
+    {
+        $this->expediteur = $expediteur;
+
+        return $this;
+    }
+
+    public function getDestinataire(): ?string
+    {
+        return $this->destinataire;
+    }
+
+    public function setDestinataire(string $destinataire): static
+    {
+        $this->destinataire = $destinataire;
+
+        return $this;
+    }
+
+    public function getService(): ?Services
+    {
+        return $this->service;
+    }
+
+    public function setService(?Services $service): static
+    {
+        $this->service = $service;
+
+        return $this;
+    }
+
+    public function getFilePath(): ?string
+    {
+        return $this->file_path;
+    }
+
+    public function setFilePath(string $file_path): static
+    {
+        $this->file_path = $file_path;
+
+        return $this;
+    }
+
+    public function getClient(): ?User
+    {
+        return $this->client;
+    }
+
+    public function setClient(?User $client): static
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->is_active;
+    }
+
+    public function setActiv(bool $is_active): static
+    {
+        $this->is_active = $is_active;
+
+        return $this;
+    }
+
+    public function getDetails(): ?string
+    {
+        return $this->details;
+    }
+
+    public function setDetails(string $details): static
+    {
+        $this->details = $details;
+
+        return $this;
     }
 }

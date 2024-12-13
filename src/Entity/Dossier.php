@@ -13,13 +13,10 @@ class Dossier
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $dossierId = null;  // Remplacement de id par dossierId
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $dossierName = null;  // Remplacement de name par dossierName
-
-    #[ORM\Column(length: 255)]
-    private ?string $dossier = null;  // Champ dossier ajouté
+    private ?string $name = null;
 
     /**
      * @var Collection<int, Repertoire>
@@ -41,36 +38,24 @@ class Dossier
 
     public function getDossierId(): ?int
     {
-        return $this->dossierId;
+        return $this->dossierid;
     }
 
-    public function setDossierId(int $dossierId): static
+    public function setDossierId(int $id): static
     {
-        $this->dossierId = $dossierId;
+        $this->dossierid = $id;
 
         return $this;
     }
 
     public function getDossierName(): ?string
     {
-        return $this->dossierName;
+        return $this->name;
     }
 
-    public function setDossierName(string $dossierName): static
+    public function setDossierName(string $name): static
     {
-        $this->dossierName = $dossierName;
-
-        return $this;
-    }
-
-    public function getDossier(): ?string
-    {
-        return $this->dossier;
-    }
-
-    public function setDossier(string $dossier): static
-    {
-        $this->dossier = $dossier;
+        $this->name = $name;
 
         return $this;
     }
@@ -134,4 +119,5 @@ class Dossier
 
         return $this;
     }
+
 }

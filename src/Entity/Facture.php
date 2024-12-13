@@ -37,7 +37,7 @@ class Facture
     private ?string $commentaire = null;
 
     #[ORM\Column]
-    private ?bool $isActive = null;
+    private ?bool $is_active = null;
 
     /**
      * @var Collection<int, Paiement>
@@ -142,14 +142,14 @@ class Facture
         return $this;
     }
 
-    public function isActive(): ?bool
+    public function is_active(): ?bool
     {
-        return $this->isActive;
+        return $this->is_active;
     }
 
-    public function setActive(bool $isActive): static
+    public function setActive(bool $is_active): static
     {
-        $this->isActive = $isActive;
+        $this->is_active = $is_active;
 
         return $this;
     }

@@ -13,200 +13,200 @@ class Repertoire
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $repertoireId = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $repertoireNom = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $repertoireAdresse = null;
+    private ?string $adresse = null;
 
     #[ORM\Column(length: 10)]
-    private ?string $repertoireCodePostal = null;
+    private ?string $code_postal = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $repertoireVille = null;
+    private ?string $ville = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $repertoirePays = null;
+    private ?string $pays = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $repertoireTelephone = null;
+    private ?string $telephone = null;
 
     #[ORM\Column(length: 20, nullable: true)]
-    private ?string $repertoireMobile = null;
+    private ?string $mobile = null;
 
     #[ORM\Column(length: 180)]
-    private ?string $repertoireEmail = null;
+    private ?string $email = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $repertoireSiret = null;
+    private ?string $siret = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $repertoireNomEntreprise = null;
+    private ?string $nom_entreprise = null;
 
     #[ORM\ManyToOne(inversedBy: 'repertoires')]
-    private ?User $repertoireClient = null;
+    private ?User $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'repertoires')]
-    private ?Dossier $repertoireDossier = null;
+    private ?Dossier $dossier = null;
 
     /**
      * @var Collection<int, Contact>
      */
-    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'repertoireContact')]
-    private Collection $repertoireContact;
+    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'contact')]
+    private Collection $contact;
 
     public function __construct()
     {
-        $this->repertoireContact = new ArrayCollection();
+        $this->contact = new ArrayCollection();
+    }    
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
-    public function getRepertoireId(): ?int
+    public function getNom(): ?string
     {
-        return $this->repertoireId;
+        return $this->nom;
     }
 
-    public function getRepertoireNom(): ?string
+    public function setNom(string $nom): static
     {
-        return $this->repertoireNom;
-    }
-
-    public function setRepertoireNom(string $repertoireNom): static
-    {
-        $this->repertoireNom = $repertoireNom;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getRepertoireAdresse(): ?string
+    public function getAdresse(): ?string
     {
-        return $this->repertoireAdresse;
+        return $this->adresse;
     }
 
-    public function setRepertoireAdresse(string $repertoireAdresse): static
+    public function setAdresse(string $adresse): static
     {
-        $this->repertoireAdresse = $repertoireAdresse;
+        $this->adresse = $adresse;
 
         return $this;
     }
 
-    public function getRepertoireCodePostal(): ?string
+    public function getCodePostal(): ?string
     {
-        return $this->repertoireCodePostal;
+        return $this->code_postal;
     }
 
-    public function setRepertoireCodePostal(string $repertoireCodePostal): static
+    public function setCodePostal(string $code_postal): static
     {
-        $this->repertoireCodePostal = $repertoireCodePostal;
+        $this->code_postal = $code_postal;
 
         return $this;
     }
 
-    public function getRepertoireVille(): ?string
+    public function getVille(): ?string
     {
-        return $this->repertoireVille;
+        return $this->ville;
     }
 
-    public function setRepertoireVille(string $repertoireVille): static
+    public function setVille(string $ville): static
     {
-        $this->repertoireVille = $repertoireVille;
+        $this->ville = $ville;
 
         return $this;
     }
 
-    public function getRepertoirePays(): ?string
+    public function getPays(): ?string
     {
-        return $this->repertoirePays;
+        return $this->pays;
     }
 
-    public function setRepertoirePays(string $repertoirePays): static
+    public function setPays(string $pays): static
     {
-        $this->repertoirePays = $repertoirePays;
+        $this->pays = $pays;
 
         return $this;
     }
 
-    public function getRepertoireTelephone(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->repertoireTelephone;
+        return $this->telephone;
     }
 
-    public function setRepertoireTelephone(string $repertoireTelephone): static
+    public function setTelephone(string $telephone): static
     {
-        $this->repertoireTelephone = $repertoireTelephone;
+        $this->telephone = $telephone;
 
         return $this;
     }
 
-    public function getRepertoireMobile(): ?string
+    public function getMobile(): ?string
     {
-        return $this->repertoireMobile;
+        return $this->mobile;
     }
 
-    public function setRepertoireMobile(?string $repertoireMobile): static
+    public function setMobile(?string $mobile): static
     {
-        $this->repertoireMobile = $repertoireMobile;
+        $this->mobile = $mobile;
 
         return $this;
     }
 
-    public function getRepertoireEmail(): ?string
+    public function getEmail(): ?string
     {
-        return $this->repertoireEmail;
+        return $this->email;
     }
 
-    public function setRepertoireEmail(string $repertoireEmail): static
+    public function setEmail(string $email): static
     {
-        $this->repertoireEmail = $repertoireEmail;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getRepertoireSiret(): ?string
+    public function getSiret(): ?string
     {
-        return $this->repertoireSiret;
+        return $this->siret;
     }
 
-    public function setRepertoireSiret(string $repertoireSiret): static
+    public function setSiret(string $siret): static
     {
-        $this->repertoireSiret = $repertoireSiret;
+        $this->siret = $siret;
 
         return $this;
     }
 
-    public function getRepertoireNomEntreprise(): ?string
+    public function getNomEntreprise(): ?string
     {
-        return $this->repertoireNomEntreprise;
+        return $this->nom_entreprise;
     }
 
-    public function setRepertoireNomEntreprise(?string $repertoireNomEntreprise): static
+    public function setNomEntreprise(?string $nom_entreprise): static
     {
-        $this->repertoireNomEntreprise = $repertoireNomEntreprise;
+        $this->nom_entreprise = $nom_entreprise;
 
         return $this;
     }
 
-    public function getRepertoireClient(): ?User
+    public function getClient(): ?User
     {
-        return $this->repertoireClient;
+        return $this->client;
     }
 
-    public function setRepertoireClient(?User $repertoireClient): static
+    public function setClient(?User $client): static
     {
-        $this->repertoireClient = $repertoireClient;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getRepertoireDossier(): ?Dossier
+    public function getDossier(): ?Dossier
     {
-        return $this->repertoireDossier;
+        return $this->dossier;
     }
 
-    public function setRepertoireDossier(?Dossier $repertoireDossier): static
+    public function setDossier(?Dossier $dossier): static
     {
-        $this->repertoireDossier = $repertoireDossier;
+        $this->dossier = $dossier;
 
         return $this;
     }
@@ -214,16 +214,16 @@ class Repertoire
     /**
      * @return Collection<int, Contact>
      */
-    public function getRepertoireContact(): Collection
+    public function getContact(): Collection
     {
-        return $this->repertoireContact;
+        return $this->contact;
     }
 
     public function addRepertoireContact(Contact $contact): static
     {
-        if (!$this->repertoireContact->contains($contact)) {
-            $this->repertoireContact->add($contact);
-            $contact->setRepertoire($this);
+        if (!$this->contact->contains($contact)) {
+            $this->contact->add($contact);
+            $contact->set($this);
         }
 
         return $this;
@@ -231,10 +231,10 @@ class Repertoire
 
     public function removeRepertoireContact(Contact $contact): static
     {
-        if ($this->repertoireContact->removeElement($contact)) {
+        if ($this->Contact->removeElement($contact)) {
             // set the owning side to null (unless already changed)
-            if ($contact->getRepertoire() === $this) {
-                $contact->setRepertoire(null);
+            if ($contact->get() === $this) {
+                $contact->set(null);
             }
         }
 

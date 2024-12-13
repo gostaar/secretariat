@@ -90,10 +90,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $documentsUtilisateurs;
 
     /**
-     * @var Collection<int, services>
+     * @var Collection<int, Services>
      */
-    #[ORM\ManyToMany(targetEntity: services::class)]
+    #[ORM\ManyToMany(targetEntity: Services::class, inversedBy: 'users')]
     private Collection $servicesSouscrits;
+
 
     public function __construct()
     {
@@ -433,14 +434,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, services>
+     * @return Collection<int, Services>
      */
     public function getServicesSouscrits(): Collection
     {
         return $this->servicesSouscrits;
     }
 
-    public function addServicesSouscrit(services $servicesSouscrit): static
+    public function addServicesSouscrit(Services $servicesSouscrit): static
     {
         if (!$this->servicesSouscrits->contains($servicesSouscrit)) {
             $this->servicesSouscrits->add($servicesSouscrit);
@@ -449,7 +450,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeServicesSouscrit(services $servicesSouscrit): static
+    public function removeServicesSouscrit(Services $servicesSouscrit): static
     {
         $this->servicesSouscrits->removeElement($servicesSouscrit);
 
