@@ -25,7 +25,7 @@ class DevisType extends AbstractType
                 'label' => 'Montant du devis',
                 'required' => true,
             ])
-            ->add('date', DateTimeType::class, [
+            ->add('date_devis', DateTimeType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date du devis',
                 'required' => true,

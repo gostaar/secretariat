@@ -145,12 +145,12 @@ class DocumentsUtilisateur
         return $this;
     }
 
-    public function getIsActive(): ?bool
+    public function isActive(): ?bool
     {
         return $this->is_active;
     }
 
-    public function setActiv(bool $is_active): static
+    public function setIsActive(bool $is_active): static
     {
         $this->is_active = $is_active;
 

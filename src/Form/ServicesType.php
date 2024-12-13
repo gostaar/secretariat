@@ -3,11 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Services;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ServicesType extends AbstractType
 {
@@ -29,7 +31,7 @@ class ServicesType extends AbstractType
             ])
             ->add('users', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'name', // Ou tout autre champ pour représenter l'utilisateur
+                'choice_label' => 'nom', // Ou tout autre champ pour représenter l'utilisateur
                 'multiple' => true,
                 'expanded' => false, // Utilisez true pour des cases à cocher
                 'required' => false,

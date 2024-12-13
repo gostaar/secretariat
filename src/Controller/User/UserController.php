@@ -35,7 +35,7 @@ class UserController extends AbstractController
     
         // Créer un objet Facture et son formulaire
         $facture = new Facture();
-        $factureStatus->setStatus(FactureStatus::NON_PAYE->value);
+        $facture->setStatus(FactureStatus::NON_PAYE->value);
         $factureForm = $this->createForm(FactureType::class, $facture);
         
         // Traitement du formulaire Facture
