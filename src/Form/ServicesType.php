@@ -28,15 +28,15 @@ class ServicesType extends AbstractType
                 'required' => false,
                 'label' => 'Documents Utilisateurs',
                 'attr' => ['class' => 'documents-utilisateurs-collection'],
-            ])
-            ->add('users', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom', // Ou tout autre champ pour représenter l'utilisateur
-                'multiple' => true,
-                'expanded' => false, // Utilisez true pour des cases à cocher
-                'required' => false,
-                'label' => 'Users',
             ]);
+            // ->add('users', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'nom', // Ou tout autre champ pour représenter l'utilisateur
+            //     'multiple' => true,
+            //     'expanded' => false, // Utilisez true pour des cases à cocher
+            //     'required' => false,
+            //     'label' => 'Users',
+            // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

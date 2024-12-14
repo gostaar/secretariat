@@ -74,13 +74,13 @@ class DocumentsUtilisateurType extends AbstractType
                 'mapped' => false, // Si le fichier n'est pas persisté automatiquement
                 'required' => false,
             ])
-            ->add('client', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom', // Adaptez à la propriété de l'utilisateur à afficher
-                'label' => 'Client',
-                'required' => false,
-                'placeholder' => 'Sélectionnez un client',
-            ])
+            // ->add('client', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'nom', // Adaptez à la propriété de l'utilisateur à afficher
+            //     'label' => 'Client',
+            //     'required' => false,
+            //     'placeholder' => 'Sélectionnez un client',
+            // ])
             ->add('is_active', CheckboxType::class, [
                 'label' => 'Actif',
                 'required' => false,

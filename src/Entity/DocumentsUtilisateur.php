@@ -13,36 +13,39 @@ class DocumentsUtilisateur
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
-    private ?TypeDocument $type_document = null;
-
+    
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_document = null;
 
-    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
-    private ?Dossier $dossier = null;
-
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+    
     #[ORM\Column(length: 255)]
     private ?string $expediteur = null;
-
+    
     #[ORM\Column(length: 255)]
     private ?string $destinataire = null;
-
-    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
-    private ?Services $service = null;
-
+    
     #[ORM\Column(length: 255)]
     private ?string $file_path = null;
-
-    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
-    private ?User $client = null;
 
     #[ORM\Column]
     private ?bool $is_active = null;
 
     #[ORM\Column(length: 255)]
     private ?string $details = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
+    private ?TypeDocument $type_document = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
+    private ?Dossier $dossier = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
+    private ?Services $service = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
+    private ?User $client = null;
 
     public function getId(): ?int
     {
@@ -165,6 +168,18 @@ class DocumentsUtilisateur
     public function setDetails(string $details): static
     {
         $this->details = $details;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

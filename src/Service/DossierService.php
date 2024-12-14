@@ -24,10 +24,46 @@ class DossierService
             return false;
         }
 
+        
         $user->addDossier($dossier);
         $this->em->persist($dossier);
         $this->em->flush();
 
         return true;
+    }
+
+    public function deleteDossier(int $id, User $user)
+    {
+        $existingDossier = $this->em
+            ->getRepository(Dossier::class)
+            ->findOneBy(['id' => $id, 'user' => $user]);
+
+        if (!$existingDossier) {
+            return false; 
+        }
+
+        $this->em->remove($existingDossier);
+        $this->em->flush();
+
+        return true; 
+    }
+
+    public function updateDossier(int $id, User $user, ?string $name)
+    {
+        $existingDossier = $this->em
+            ->getRepository(Dossier::class)
+            ->findOneBy(['id' => $id, 'user' => $user]);
+
+        if (!$existingDossier) {
+            return false; 
+        }
+
+        if ($name !== null) {
+            $existingDossier->setName($name);
+        }
+
+        $this->em->flush();
+
+        return true; 
     }
 }

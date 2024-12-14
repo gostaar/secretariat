@@ -61,12 +61,12 @@ class RepertoireType extends AbstractType
                 'label' => 'Nom de l\'entreprise',
                 'required' => false,
             ])
-            ->add('client', null, [
-                'label' => 'Client',
-                'required' => true,
-                'class' => User::class,
-                'choice_label' => 'nom',  // Afficher le nom d'utilisateur du client
-            ])
+            // ->add('client', null, [
+            //     'label' => 'Client',
+            //     'required' => true,
+            //     'class' => User::class,
+            //     'choice_label' => 'nom',  // Afficher le nom d'utilisateur du client
+            // ])
             ->add('dossier', null, [
                 'label' => 'Dossier',
                 'required' => false,

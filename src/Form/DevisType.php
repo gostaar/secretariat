@@ -30,13 +30,6 @@ class DevisType extends AbstractType
                 'label' => 'Date du devis',
                 'required' => true,
             ])
-            ->add('client', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom', // Modifier en fonction de l'attribut à afficher
-                'label' => 'Client',
-                'placeholder' => 'Sélectionnez un client',
-                'required' => true,
-            ])
             ->add('commentaire', TextareaType::class, [
                 'label' => 'Commentaire',
                 'required' => false,
