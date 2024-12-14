@@ -972,13 +972,13 @@ body .sidebar.d-none.d-md-block {
   border-left: 3px solid #007bff; /* Bordure bleue à gauche pour accentuer l'élément sélectionné */
 }
 
-.btn-link::after {
-  content: '\2C5'; /* Unicode pour flèche bas */
+.btn-link .fa-chevron-down {
   margin-left: auto;
   transition: transform 0.3s ease;
 }
-.btn-link[aria-expanded="true"]::after {
-  transform: rotate(180deg); /* Pivote la flèche vers le haut */
+
+.btn-link[aria-expanded="true"] .fa-chevron-down {
+  transform: rotate(180deg); 
 }
 
 .truncate-text {

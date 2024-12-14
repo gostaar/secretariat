@@ -50,4 +50,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    document.getElementById('btnAjouterRepertoire').addEventListener('click', function() {
+        this.classList.add('d-none');
+        document.getElementById('formAjouterRepertoire').classList.remove('d-none');
+    });
+
+    document.getElementById('hideAjouterRepertoire').addEventListener('click', function() {
+        document.getElementById('formAjouterRepertoire').classList.add('d-none');
+        document.getElementById('btnAjouterRepertoire').classList.remove('d-none');
+    }); 
+    
+    // document.getElementById('formDossier').addEventListener('submit', function(event) {
+    //     event.preventDefault();
+    //     this.reset();
+    // });
+
 });
+

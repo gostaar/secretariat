@@ -9,24 +9,45 @@
                 <h4>Répertoire</h4>
             </div>
             <div class="card-body">
-                {% set folders = [
-                    { id: 'fournisseurFolder', link: '#link-fournisseurFolder', icon: 'fa-folder', label: 'Mes Fournisseurs' },
-                    { id: 'clientFolder', link: '#link-clientFolder', icon: 'fa-folder', label: 'Mes Clients' },
-                    { id: 'organismeFolder', link: '#link-organismeFolder', icon: 'fa-folder', label: 'Mes Organismes' },
-                    { id: 'contactsFolder', link: '#link-contactsFolder', icon: 'fa-folder', label: 'Mes Contacts Personnels' }
-                ] %}
-                <div class="flex-grow-1 p-4 d-flex justify-content-start gap-3">
-                    {% for folder in folders %}
-                        <a id="{{ folder.id }}" href="{{ folder.link }}" style="max-width:100px;" class="text-center d-flex flex-column flex-start text-decoration-none">
-                            <i class="fas {{ folder.icon }} fa-3x text-center text-warning"></i>
-                            <p class='text-black'>{{ folder.label }}</p>
-                        </a>
-                    {% endfor %}
-                </div>
+                {% if dossiers is empty %}
+                    <div class="text-center">
+                        <p>Aucun dossier.</p>
+                    </div>
+                {% else %}
+                    <div class="flex-grow-1 p-4 d-flex justify-content-start gap-3 flex-wrap">
+                        {% for dossier in dossiers %}
+                            <a id="{{ dossier.id }}" href="#link-repertoireInfo" style="max-width:100px;" class="text-center d-flex flex-column flex-start text-decoration-none">
+                                <i class="fas fa-folder fa-3x text-center text-warning"></i>
+                                <p class='text-black'>{{ dossier.name }}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
                 <div class="d-flex justify-content-center mt-4">
-                    {# <a href="#" class="btn btn-primary">
-                        Créer un nouveau dossier
-                    </a> #}
+                    <!-- Bouton Ajouter -->
+                    <button id="btnAjouterRepertoire" class="btn btn-success">Ajouter</button>
+
+                    <!-- Formulaire caché -->
+                    <div id="formAjouterRepertoire" class="d-none">
+                        {{ form_start(dossierForm, {'attr': {'id': 'formDossier', 'class': 'form-horizontal'}, 'method': 'POST'}) }}
+                            <div class="form-group row">
+                                <div class="col-sm-6 text-end">
+                                    {{ form_label(dossierForm.name, 'Nom du dossier', {'label_attr': {'class': 'col-form-label'}}) }}
+                                </div>
+                                <div class="col-sm-6">
+                                    {{ form_widget(dossierForm.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom du dossier', value:""}}) }}
+                                    {{ form_errors(dossierForm.name) }}
+                                </div>
+                            </div>
+                            <div class="form-group row text-center mt-4">
+                                <div class="col-sm-12">
+                                    {{ form_widget(dossierForm.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                                    <button id="hideAjouterRepertoire" class="btn btn-danger">Annuler</button>
+                                </div>
+                            </div>
+                        {{ form_end(dossierForm) }}
+                    </div>
                 </div>
             </div>
         </div>

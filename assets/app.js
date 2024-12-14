@@ -3,6 +3,14 @@ window.addEventListener('DOMContentLoaded', () => {
     const isAuthenticated = (status.textContent.trim() === 'connecté');
     if (!isAuthenticated) {clearData() };
 
+    if (window.location.href === "http://localhost:8080" ||
+        window.location.href === "http://localhost:8080/" ||
+        window.location.href === "http://localhost:8080/#link-start-part" ||
+        window.location.href === "http://localhost:8080/#link-start-pro"
+    ) {
+        clearData();
+    }
+
     const proButton = document.getElementById('btnPro');
     const partButton = document.getElementById('btnPart');
 
@@ -206,3 +214,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+

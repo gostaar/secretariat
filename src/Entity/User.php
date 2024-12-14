@@ -95,6 +95,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Services::class, inversedBy: 'users')]
     private Collection $servicesSouscrits;
 
+    /**
+     * @var Collection<int, Dossier>
+     */
+    #[ORM\OneToMany(targetEntity: Dossier::class, mappedBy: 'user')]
+    private Collection $dossier;
+
 
     public function __construct()
     {
@@ -104,6 +110,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->repertoires = new ArrayCollection();
         $this->documentsUtilisateurs = new ArrayCollection();
         $this->servicesSouscrits = new ArrayCollection();
+        $this->dossier = new ArrayCollection();
        
     }
 
@@ -453,6 +460,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeServicesSouscrit(Services $servicesSouscrit): static
     {
         $this->servicesSouscrits->removeElement($servicesSouscrit);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dossier>
+     */
+    public function getDossier(): Collection
+    {
+        return $this->dossier;
+    }
+
+    public function addDossier(Dossier $dossier): static
+    {
+        if (!$this->dossier->contains($dossier)) {
+            $this->dossier->add($dossier);
+            $dossier->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDossier(Dossier $dossier): static
+    {
+        if ($this->dossier->removeElement($dossier)) {
+            // set the owning side to null (unless already changed)
+            if ($dossier->getUser() === $this) {
+                $dossier->setUser(null);
+            }
+        }
 
         return $this;
     }

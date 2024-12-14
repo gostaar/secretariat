@@ -30,30 +30,33 @@ class Dossier
     #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'dossier')]
     private Collection $documentsUtilisateurs;
 
+    #[ORM\ManyToOne(inversedBy: 'dossier')]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->repertoires = new ArrayCollection();
         $this->documentsUtilisateurs = new ArrayCollection();
     }
 
-    public function getDossierId(): ?int
+    public function getId(): ?int
     {
-        return $this->dossierid;
+        return $this->id;
     }
 
-    public function setDossierId(int $id): static
+    public function setId(int $id): static
     {
-        $this->dossierid = $id;
+        $this->id = $id;
 
         return $this;
     }
 
-    public function getDossierName(): ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setDossierName(string $name): static
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -116,6 +119,18 @@ class Dossier
                 $documentsUtilisateur->setDossier(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

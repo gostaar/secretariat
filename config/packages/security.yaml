@@ -26,7 +26,8 @@ security:
 
             logout:
                 path: /logout
-                target: / 
+                target: /
+                invalidate_session: true 
 
 
         api:

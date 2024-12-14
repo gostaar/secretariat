@@ -39,7 +39,7 @@
                             {% for service in services %}
                                 <li class="list-group-flush">
                                     <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#{{ service.id }}" aria-expanded="false" aria-controls="{{ service.id }}">
-                                        {{ service.title }}
+                                        {{ service.title }}<i class="fas fa-chevron-down"></i>
                                     </button>
                                     <div id="{{ service.id }}" class="collapse">
                                         <p class="m-2 text-muted" style="font-style: italic;">{{ service.description }}</p>
@@ -73,6 +73,7 @@
                                 <li class="list-group-flush">
                                     <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#gestionNum{{ loop.index }}" aria-expanded="false" aria-controls="gestionNum{{ loop.index }}">
                                         {{ service.title }}
+                                        <i class="fas fa-chevron-down"></i>
                                     </button>
                                     <div id="gestionNum{{ loop.index }}" class="collapse">
                                         <p class="m-2 text-muted" style="font-style: italic;">{{ service.description }}</p>
@@ -105,6 +106,7 @@
                                 <li class="list-group-flush">
                                     <button class="btn btn-link d-block w-100 text-left text-decoration-none text-dark d-flex justify-content-between" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#{{ service.id }}" aria-expanded="false" aria-controls="{{ service.id }}">
                                         {{ service.title }}
+                                        <i class="fas fa-chevron-down"></i>
                                     </button>
                                     <div id="{{ service.id }}" class="collapse">
                                         <p class="m-2 text-muted" style="font-style: italic;">{{ service.description }}</p>
