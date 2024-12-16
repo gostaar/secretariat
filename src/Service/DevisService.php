@@ -14,11 +14,16 @@ class DevisService
         $this->em = $em;
     }
 
+    public function getDevis($id)
+    {
+        return $this->em->getRepository(Devis::class)->find($id);
+    }
+
     public function addDevis(Devis $devis, User $user)
     {
         $existingDevis = $this->em
             ->getRepository(Devis::class)
-            ->findOneBy(['id' => $devis->getId(), 'user' => $user]);
+            ->findOneBy(['id' => $devis->getId(), 'client' => $user]);
 
         if ($existingDevis) {
             return false;
@@ -35,7 +40,7 @@ class DevisService
     {
         $existingDevis = $this->em
             ->getRepository(Devis::class)
-            ->findOneBy(['id' => $id, 'user' => $user]);
+            ->findOneBy(['id' => $id, 'client' => $user]);
 
         if (!$existingDevis) {
             return false; 
@@ -58,7 +63,7 @@ class DevisService
     ){
         $existingDevis = $this->em
             ->getRepository(Devis::class)
-            ->findOneBy(['id' => $id, 'user' => $user]);
+            ->findOneBy(['id' => $id, 'client' => $user]);
 
         if (!$existingDevis) {
             return false; 

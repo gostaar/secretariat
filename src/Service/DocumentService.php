@@ -17,6 +17,11 @@ class DocumentService
         $this->em = $em;
     }
 
+    public function getDocument($id)
+    {
+        return $this->em->getRepository(DocumentsUtilisateur::class)->find($id);
+    }
+
     public function addDocumentsUtilisateur(DocumentsUtilisateur $document, User $user)
     {
         $existingDocumentsUtilisateur = $this->em

@@ -20,8 +20,8 @@
 
             <li>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a class="navBarEspaceClient text-success" href="{{ path('dashboard') }}" style="text-decoration: none;">
-                        <h5 class="{{ app.request.attributes.get('_route') == 'dashboard' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
+                    <a class="navBarEspaceClient text-success" href="{{ path('home_index') }}" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == 'home_index' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
                     </a>
                 {% elseif is_granted('ROLE_USER') %}
                     <a class="navBarEspaceClient text-success" href="{{ path('user') }}" style="text-decoration: none;">
@@ -71,7 +71,7 @@
 
                     <li class="text-center mb-2">
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a class="navBarEspaceClient text-success nav-link text-decoration-none" href="{{ path('dashboard') }}">
+                            <a class="navBarEspaceClient text-success nav-link text-decoration-none" href="{{ path('admin') }}">
                                 <h5>{{ app.user.email }}</h5>
                             </a>
                         {% elseif is_granted('ROLE_USER') %}

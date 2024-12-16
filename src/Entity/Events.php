@@ -43,7 +43,15 @@ class Events
     private ?array $google_calendar_event_id = [];
 
     #[ORM\ManyToOne(inversedBy: 'events')]
-    private ?User $client = null;
+    private ?Services $services = null;
+
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?User $user = null;
+
+    public function __toString()
+    {
+        return $this->title;
+    }  
 
     public function getId(): ?int
     {
@@ -130,14 +138,26 @@ class Events
         return $this;
     }
 
-    public function getClient(): ?User
+    public function getServices(): ?Services
     {
-        return $this->client;
+        return $this->services;
     }
 
-    public function setClient(?User $client): static
+    public function setServices(?Services $services): static
     {
-        $this->client = $client;
+        $this->services = $services;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

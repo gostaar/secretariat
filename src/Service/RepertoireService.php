@@ -16,6 +16,11 @@ class RepertoireService
         $this->em = $em;
     }
 
+    public function getRepertoire($id)
+    {
+        return $this->em->getRepository(Repertoire::class)->find($id);
+    }
+
     public function addRepertoire(Repertoire $repertoire, User $user)
     {
         $existingRepertoire = $this->em

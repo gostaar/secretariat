@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Services;
 use App\Entity\User;
+use App\Form\DossierType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -21,13 +22,13 @@ class ServicesType extends AbstractType
                 'required' => true,
                 'attr' => ['placeholder' => 'Enter the name of the service']
             ])
-            ->add('documentsUtilisateurs', CollectionType::class, [
-                'entry_type' => DocumentsUtilisateurType::class, 
+            ->add('dossiers', CollectionType::class, [
+                'entry_type' => DossierType::class, 
                 'allow_add' => true,
                 'by_reference' => false,
                 'required' => false,
-                'label' => 'Documents Utilisateurs',
-                'attr' => ['class' => 'documents-utilisateurs-collection'],
+                'label' => 'Dossiers',
+                'attr' => ['class' => 'dossiers-collection'],
             ]);
             // ->add('users', EntityType::class, [
             //     'class' => User::class,

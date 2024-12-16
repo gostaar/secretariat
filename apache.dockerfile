@@ -14,7 +14,9 @@ RUN apt-get update && apt-get install -y \
     php-curl \
     php-mbstring \
     php-xml \
-    php-zip
+    php-zip \
+    php-intl \
+    icu-devtools
 
 # Créer notre dossier de code pour le serveur
 RUN mkdir -p /var/www/html/public
@@ -48,3 +50,4 @@ RUN chmod 775 /var/www/html/var/log/dev.log
 
 RUN apt update && apt install ca-certificates -y && update-ca-certificates
 
+CMD ["apache2ctl", "-D", "FOREGROUND"]

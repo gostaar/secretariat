@@ -22,8 +22,8 @@
 
             <li>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a class="navBarEspaceClient text-success" href="{{ path('dashboard') }}" style="text-decoration: none;">
-                        <h5 class="{{ app.request.attributes.get('_route') == 'dashboard' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
+                    <a class="navBarEspaceClient text-success" href="{{ path('admin') }}" style="text-decoration: none;">
+                        <h5 class="{{ app.request.attributes.get('_route') == 'admin' ? 'text-primary' : 'text-dark' }}">{{ app.user.email }}</h5>
                     </a>
                 {% elseif is_granted('ROLE_USER') %}
                     <a class="navBarEspaceClient text-success" href="{{ path('user') }}" style="text-decoration: none;">

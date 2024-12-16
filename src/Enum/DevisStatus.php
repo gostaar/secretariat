@@ -15,4 +15,14 @@ enum DevisStatus: string
     {
         return array_map(fn($case) => $case->value, self::cases());
     }
+
+    public function getLabel(): ?string
+    {
+        return match ($this) {
+            self::ACCEPTE => "accepté",
+            self::REFUSE => "refusé",
+            self::EXIPRE => "expiré",
+            self::EN_ATTENTE => "en attente de paiement",
+        };
+    }
 }

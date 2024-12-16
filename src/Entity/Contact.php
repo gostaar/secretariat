@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
@@ -28,8 +30,10 @@ class Contact
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $commentaire = null;
 
-    #[ORM\ManyToOne(inversedBy: 'contact')]
+    #[ORM\ManyToOne(inversedBy: 'contacts')]
     private ?Repertoire $repertoire = null;
+
+
 
     public function getId(): ?int
     {
@@ -107,4 +111,5 @@ class Contact
 
         return $this;
     }
+
 }

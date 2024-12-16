@@ -29,7 +29,7 @@ class RepertoireType extends AbstractType
                 'label' => 'Adresse',
                 'required' => true,
             ])
-            ->add('code_postal', TextType::class, [
+            ->add('codePostal', TextType::class, [
                 'label' => 'Code postal',
                 'required' => true,
             ])
@@ -57,7 +57,7 @@ class RepertoireType extends AbstractType
                 'label' => 'SIRET',
                 'required' => true,
             ])
-            ->add('nom_entreprise', TextType::class, [
+            ->add('nomEntreprise', TextType::class, [
                 'label' => 'Nom de l\'entreprise',
                 'required' => false,
             ])
@@ -70,10 +70,11 @@ class RepertoireType extends AbstractType
             ->add('dossier', null, [
                 'label' => 'Dossier',
                 'required' => false,
+                'data' => $options['dossier'] ?? null,
                 'class' => Dossier::class,
                 'choice_label' => 'id', // Afficher l'ID ou un autre champ du dossier
             ])
-            ->add('contact', CollectionType::class, [
+            ->add('contacts', CollectionType::class, [
                 'label' => 'Contacts',
                 'entry_type' => ContactType::class,  // Utilisez un formulaire ContactType pour gérer l'ajout de contacts
                 'allow_add' => true,
@@ -89,6 +90,9 @@ class RepertoireType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Repertoire::class,
+            'dossier' => null,
         ]);
+        $resolver->setDefined(['dossier']);
+
     }
 }

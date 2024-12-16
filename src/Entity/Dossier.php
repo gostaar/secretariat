@@ -18,6 +18,12 @@ class Dossier
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\ManyToOne(inversedBy: 'dossiers')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'dossiers')]
+    private ?Services $services = null;
+
     /**
      * @var Collection<int, Repertoire>
      */
@@ -28,15 +34,18 @@ class Dossier
      * @var Collection<int, DocumentsUtilisateur>
      */
     #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'dossier')]
-    private Collection $documentsUtilisateurs;
-
-    #[ORM\ManyToOne(inversedBy: 'dossier')]
-    private ?User $user = null;
+    private Collection $documents;
 
     public function __construct()
     {
         $this->repertoires = new ArrayCollection();
-        $this->documentsUtilisateurs = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+    }
+
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -59,6 +68,30 @@ class Dossier
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getServices(): ?Services
+    {
+        return $this->services;
+    }
+
+    public function setServices(?Services $services): static
+    {
+        $this->services = $services;
 
         return $this;
     }
@@ -96,43 +129,32 @@ class Dossier
     /**
      * @return Collection<int, DocumentsUtilisateur>
      */
-    public function getDocumentsUtilisateurs(): Collection
+    public function getDocuments(): Collection
     {
-        return $this->documentsUtilisateurs;
+        return $this->documents;
     }
 
-    public function addDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function addDocument(DocumentsUtilisateur $document): static
     {
-        if (!$this->documentsUtilisateurs->contains($documentsUtilisateur)) {
-            $this->documentsUtilisateurs->add($documentsUtilisateur);
-            $documentsUtilisateur->setDossier($this);
+        if (!$this->documents->contains($document)) {
+            $this->documents->add($document);
+            $document->setDossier($this);
         }
 
         return $this;
     }
 
-    public function removeDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function removeDocument(DocumentsUtilisateur $document): static
     {
-        if ($this->documentsUtilisateurs->removeElement($documentsUtilisateur)) {
+        if ($this->documents->removeElement($document)) {
             // set the owning side to null (unless already changed)
-            if ($documentsUtilisateur->getDossier() === $this) {
-                $documentsUtilisateur->setDossier(null);
+            if ($document->getDossier() === $this) {
+                $document->setDossier(null);
             }
         }
 
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
 }

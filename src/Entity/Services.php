@@ -6,6 +6,7 @@ use App\Repository\ServicesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ServicesRepository::class)]
 class Services
@@ -19,21 +20,33 @@ class Services
     private ?string $name = null;
 
     /**
-     * @var Collection<int, DocumentsUtilisateur>
-     */
-    #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'service')]
-    private Collection $documentsUtilisateurs;
-
-    /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'servicesSouscrits')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'services')]
     private Collection $users;
+
+    /**
+     * @var Collection<int, Events>
+     */
+    #[ORM\OneToMany(targetEntity: Events::class, mappedBy: 'services')]
+    private Collection $events;
+
+    /**
+     * @var Collection<int, Dossier>
+     */
+    #[ORM\OneToMany(targetEntity: Dossier::class, mappedBy: 'services')]
+    private Collection $dossiers;
 
     public function __construct()
     {
-        $this->documentsUtilisateurs = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->events = new ArrayCollection();
+        $this->dossiers = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name; // Retourne le nom du dossier par exemple
     }
 
     public function getId(): ?int
@@ -53,34 +66,19 @@ class Services
         return $this;
     }
 
-    /**
-     * @return Collection<int, DocumentsUtilisateur>
-     */
-    public function getDocumentsUtilisateurs(): Collection
+    public const AVAILABLE_SERVICES = [
+        'Administratif',
+        'Commercial',
+        'Numérique',
+        'Agenda',
+        'Téléphonique',
+        'Repertoire',
+        'Espace Personnel'
+    ];
+
+    public static function getAvailableServices(): array
     {
-        return $this->documentsUtilisateurs;
-    }
-
-    public function addDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
-    {
-        if (!$this->documentsUtilisateurs->contains($documentsUtilisateur)) {
-            $this->documentsUtilisateurs->add($documentsUtilisateur);
-            $documentsUtilisateur->setService($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
-    {
-        if ($this->documentsUtilisateurs->removeElement($documentsUtilisateur)) {
-            // set the owning side to null (unless already changed)
-            if ($documentsUtilisateur->getService() === $this) {
-                $documentsUtilisateur->setService(null);
-            }
-        }
-
-        return $this;
+        return array_combine(self::AVAILABLE_SERVICES, self::AVAILABLE_SERVICES);
     }
 
     /**
@@ -95,7 +93,7 @@ class Services
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->addServicesSouscrit($this);
+            $user->addService($this);
         }
 
         return $this;
@@ -104,9 +102,70 @@ class Services
     public function removeUser(User $user): static
     {
         if ($this->users->removeElement($user)) {
-            $user->removeServicesSouscrit($this);
+            $user->removeService($this);
         }
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Events>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Events $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setServices($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Events $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getServices() === $this) {
+                $event->setServices(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dossier>
+     */
+    public function getDossiers(): Collection
+    {
+        return $this->dossiers;
+    }
+
+    public function addDossier(Dossier $dossier): static
+    {
+        if (!$this->dossiers->contains($dossier)) {
+            $this->dossiers->add($dossier);
+            $dossier->setServices($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDossier(Dossier $dossier): static
+    {
+        if ($this->dossiers->removeElement($dossier)) {
+            // set the owning side to null (unless already changed)
+            if ($dossier->getServices() === $this) {
+                $dossier->setServices(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

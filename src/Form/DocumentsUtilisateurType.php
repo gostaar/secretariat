@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\DocumentsUtilisateur;
 use App\Entity\TypeDocument;
 use App\Entity\Dossier;
-use App\Entity\Services;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -36,10 +35,12 @@ class DocumentsUtilisateurType extends AbstractType
             ])
             ->add('dossier', EntityType::class, [
                 'class' => Dossier::class,
-                'choice_label' => 'name', // Adaptez à la propriété du Dossier à afficher
+                'choice_label' => 'name', 
                 'label' => 'Dossier',
                 'required' => false,
+                'data' => $options['dossier'] ?? null,
                 'placeholder' => 'Sélectionnez un dossier',
+                'disabled' => true,
             ])
             ->add('details', TextareaType::class, [
                 'label' => 'Détails',
@@ -62,12 +63,12 @@ class DocumentsUtilisateurType extends AbstractType
                     'placeholder' => 'Nom du destinataire',
                 ],
             ])
-            ->add('service', EntityType::class, [
-                'class' => Services::class,
+            ->add('dossier', EntityType::class, [
+                'class' => Dossier::class,
                 'choice_label' => 'name', // Adaptez à la propriété du Service à afficher
-                'label' => 'Service',
+                'label' => 'Dossier',
                 'required' => false,
-                'placeholder' => 'Sélectionnez un service',
+                'placeholder' => 'Sélectionnez un dossier',
             ])
             ->add('file_path', FileType::class, [
                 'label' => 'Fichier',
@@ -91,6 +92,8 @@ class DocumentsUtilisateurType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => DocumentsUtilisateur::class,
+            'dossier' => null,
         ]);
+        $resolver->setDefined(['dossier']);
     }
 }

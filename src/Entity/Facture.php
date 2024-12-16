@@ -28,7 +28,7 @@ class Facture
     private ?\DateTimeImmutable $date_facture = null;
 
     #[ORM\Column(type: 'string', enumType: FactureStatus::class)]
-    private string $status;
+    private FactureStatus $status = FactureStatus::EN_ATTENTE;
 
     #[ORM\ManyToOne(inversedBy: 'factures')]
     private ?User $client = null;
@@ -37,7 +37,7 @@ class Facture
     private ?string $commentaire = null;
 
     #[ORM\Column]
-    private ?bool $is_active = null;
+    private ?bool $is_active = false;
 
     /**
      * @var Collection<int, Paiement>
@@ -48,12 +48,27 @@ class Facture
     public function __construct()
     {
         // Définir une valeur par défaut pour le statut, par exemple "pending"
-        $this->status = FactureStatus::NON_PAYE->value;
+        // $this->status = FactureStatus::NON_PAYE->value;
         $this->paiements = new ArrayCollection();
     }
 
     public function __toString(): string{
-        return $this->id.' '.$this->status;
+        return 'Facture n° '.$this->id.' '.number_format($this->montant, 2, ',', ' ') . ' €';;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'montant' => $this->getMontant(),
+            'date_paiement' => $this->getDatePaiement(),
+            'date_facture' => $this->getDateFacture(),
+            'client' => $this->getClient(),
+            'commentaire' => $this->getCommentaire(),
+            'is_active' => $this->isActive(),
+            'paiements' => $this->getPaiements(),
+            'status' => $this->getStatusLabel(),
+        ];
     }
 
     public function getId(): ?int
@@ -104,16 +119,18 @@ class Facture
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): FactureStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function getStatusLabel(): string
     {
-        if (!in_array($status, FactureStatus::getValues())) {
-            throw new \InvalidArgumentException("Invalid status value");
-        }
+        return $this->status->value;
+    }
+
+    public function setStatus(FactureStatus $status): self
+    {
         $this->status = $status;
         return $this;
     }

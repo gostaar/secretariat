@@ -14,6 +14,11 @@ class DossierService
         $this->em = $em;
     }
 
+    public function getDossier($id)
+    {
+        return $this->em->getRepository(Dossier::class)->find($id);
+    }
+
     public function addDossier(Dossier $dossier, User $user)
     {
         $existingDossier = $this->em

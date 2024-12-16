@@ -9,6 +9,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Services;
+use App\Entity\Facture;
+use App\Entity\Devis;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -72,46 +75,44 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $devis;
 
     /**
-     * @var Collection<int, Events>
-     */
-    #[ORM\OneToMany(targetEntity: Events::class, mappedBy: 'client')]
-    private Collection $events;
-
-    /**
-     * @var Collection<int, Repertoire>
-     */
-    #[ORM\OneToMany(targetEntity: Repertoire::class, mappedBy: 'client')]
-    private Collection $repertoires;
-
-    /**
-     * @var Collection<int, DocumentsUtilisateur>
-     */
-    #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'client')]
-    private Collection $documentsUtilisateurs;
-
-    /**
      * @var Collection<int, Services>
      */
     #[ORM\ManyToMany(targetEntity: Services::class, inversedBy: 'users')]
-    private Collection $servicesSouscrits;
+    private Collection $services;
 
     /**
      * @var Collection<int, Dossier>
      */
     #[ORM\OneToMany(targetEntity: Dossier::class, mappedBy: 'user')]
-    private Collection $dossier;
+    private Collection $dossiers;
 
+    /**
+     * @var Collection<int, Repertoire>
+     */
+    #[ORM\OneToMany(targetEntity: Repertoire::class, mappedBy: 'user')]
+    private Collection $repertoires;
+
+    /**
+     * @var Collection<int, DocumentsUtilisateur>
+     */
+    #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'user')]
+    private Collection $documents;
+
+    /**
+     * @var Collection<int, Events>
+     */
+    #[ORM\OneToMany(targetEntity: Events::class, mappedBy: 'user')]
+    private Collection $events;
 
     public function __construct()
     {
         $this->factures = new ArrayCollection();
         $this->devis = new ArrayCollection();
-        $this->events = new ArrayCollection();
+        $this->services = new ArrayCollection();
+        $this->dossiers = new ArrayCollection();
         $this->repertoires = new ArrayCollection();
-        $this->documentsUtilisateurs = new ArrayCollection();
-        $this->servicesSouscrits = new ArrayCollection();
-        $this->dossier = new ArrayCollection();
-       
+        $this->documents = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function __toString(): string {
@@ -192,37 +193,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-
-    /**
-     * @return Collection<int, Facture>
-     */
-    public function getFactures(): Collection
-    {
-        return $this->factures;
-    }
-
-    public function addFacture(Facture $facture): static
-    {
-        if (!$this->factures->contains($facture)) {
-            $this->factures->add($facture);
-            $facture->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFacture(Facture $facture): static
-    {
-        if ($this->factures->removeElement($facture)) {
-            // set the owning side to null (unless already changed)
-            if ($facture->getClient() === $this) {
-                $facture->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
 
     public function getLastActivity(): ?\DateTimeInterface
     {
@@ -320,6 +290,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(?string $siret): static
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getNomEntreprise(): ?string
+    {
+        return $this->nomEntreprise;
+    }
+
+    public function setNomEntreprise(?string $nomEntreprise): static
+    {
+        $this->nomEntreprise = $nomEntreprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Facture>
+     */
+    public function getFactures(): Collection
+    {
+        return $this->factures;
+    }
+
+    public function addFacture(Facture $facture): static
+    {
+        if (!$this->factures->contains($facture)) {
+            $this->factures->add($facture);
+            $facture->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFacture(Facture $facture): static
+    {
+        if ($this->factures->removeElement($facture)) {
+            // set the owning side to null (unless already changed)
+            if ($facture->getClient() === $this) {
+                $facture->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Devis>
      */
@@ -351,29 +375,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Events>
+     * @return Collection<int, Services>
      */
-    public function getEvents(): Collection
+    public function getServices(): Collection
     {
-        return $this->events;
+        return $this->services;
     }
 
-    public function addEvent(Events $event): static
+    public function addService(Services $service): static
     {
-        if (!$this->events->contains($event)) {
-            $this->events->add($event);
-            $event->setClient($this);
+        if (!$this->services->contains($service)) {
+            $this->services->add($service);
         }
 
         return $this;
     }
 
-    public function removeEvent(Events $event): static
+    public function removeService(Services $service): static
     {
-        if ($this->events->removeElement($event)) {
+        $this->services->removeElement($service);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dossier>
+     */
+    public function getDossiers(): Collection
+    {
+        return $this->dossiers;
+    }
+
+    public function addDossier(Dossier $dossier): static
+    {
+        if (!$this->dossiers->contains($dossier)) {
+            $this->dossiers->add($dossier);
+            $dossier->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDossier(Dossier $dossier): static
+    {
+        if ($this->dossiers->removeElement($dossier)) {
             // set the owning side to null (unless already changed)
-            if ($event->getClient() === $this) {
-                $event->setClient(null);
+            if ($dossier->getUser() === $this) {
+                $dossier->setUser(null);
             }
         }
 
@@ -392,7 +440,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->repertoires->contains($repertoire)) {
             $this->repertoires->add($repertoire);
-            $repertoire->setClient($this);
+            $repertoire->setUser($this);
         }
 
         return $this;
@@ -402,8 +450,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->repertoires->removeElement($repertoire)) {
             // set the owning side to null (unless already changed)
-            if ($repertoire->getClient() === $this) {
-                $repertoire->setClient(null);
+            if ($repertoire->getUser() === $this) {
+                $repertoire->setUser(null);
             }
         }
 
@@ -413,27 +461,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, DocumentsUtilisateur>
      */
-    public function getDocumentsUtilisateurs(): Collection
+    public function getDocuments(): Collection
     {
-        return $this->documentsUtilisateurs;
+        return $this->documents;
     }
 
-    public function addDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function addDocument(DocumentsUtilisateur $document): static
     {
-        if (!$this->documentsUtilisateurs->contains($documentsUtilisateur)) {
-            $this->documentsUtilisateurs->add($documentsUtilisateur);
-            $documentsUtilisateur->setClient($this);
+        if (!$this->documents->contains($document)) {
+            $this->documents->add($document);
+            $document->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function removeDocument(DocumentsUtilisateur $document): static
     {
-        if ($this->documentsUtilisateurs->removeElement($documentsUtilisateur)) {
+        if ($this->documents->removeElement($document)) {
             // set the owning side to null (unless already changed)
-            if ($documentsUtilisateur->getClient() === $this) {
-                $documentsUtilisateur->setClient(null);
+            if ($document->getUser() === $this) {
+                $document->setUser(null);
             }
         }
 
@@ -441,58 +489,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Services>
+     * @return Collection<int, Events>
      */
-    public function getServicesSouscrits(): Collection
+    public function getEvents(): Collection
     {
-        return $this->servicesSouscrits;
+        return $this->events;
     }
 
-    public function addServicesSouscrit(Services $servicesSouscrit): static
+    public function addEvent(Events $event): static
     {
-        if (!$this->servicesSouscrits->contains($servicesSouscrit)) {
-            $this->servicesSouscrits->add($servicesSouscrit);
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeServicesSouscrit(Services $servicesSouscrit): static
+    public function removeEvent(Events $event): static
     {
-        $this->servicesSouscrits->removeElement($servicesSouscrit);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Dossier>
-     */
-    public function getDossier(): Collection
-    {
-        return $this->dossier;
-    }
-
-    public function addDossier(Dossier $dossier): static
-    {
-        if (!$this->dossier->contains($dossier)) {
-            $this->dossier->add($dossier);
-            $dossier->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDossier(Dossier $dossier): static
-    {
-        if ($this->dossier->removeElement($dossier)) {
+        if ($this->events->removeElement($event)) {
             // set the owning side to null (unless already changed)
-            if ($dossier->getUser() === $this) {
-                $dossier->setUser(null);
+            if ($event->getUser() === $this) {
+                $event->setUser(null);
             }
         }
 
         return $this;
     }
-
-   
 }

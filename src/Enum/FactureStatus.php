@@ -16,4 +16,15 @@ enum FactureStatus: string
     {
         return array_map(fn($case) => $case->value, self::cases());
     }
+
+    public function getLabel(): ?string
+    {
+        return match ($this) {
+            self::PAYE => "payé",
+            self::NON_PAYE => "non-payé",
+            self::ANNULE => "annulé",
+            self::PAYE_PARTIELLEMENT => "payé partiellement",
+            self::EN_ATTENTE => "en attente de paiement",
+        };
+    }
 }

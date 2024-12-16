@@ -14,11 +14,16 @@ class FactureService
         $this->em = $em;
     }
 
+    public function getFacture($id)
+    {
+        return $this->em->getRepository(Facture::class)->find($id);
+    }
+
     public function addFacture(Facture $facture, User $user)
     {
         $existingFacture = $this->em
             ->getRepository(Facture::class)
-            ->findOneBy(['id' => $facture->getId(), 'user' => $user]);
+            ->findOneBy(['id' => $facture->getId(), 'client' => $user]);
 
         if ($existingFacture) {
             return false;
@@ -35,7 +40,7 @@ class FactureService
     {
         $existingFacture = $this->em
             ->getRepository(Facture::class)
-            ->findOneBy(['id' => $id, 'user' => $user]);
+            ->findOneBy(['id' => $id, 'client' => $user]);
 
         if (!$existingFacture) {
             return false; 
@@ -59,7 +64,7 @@ class FactureService
     ){
         $existingFacture = $this->em
             ->getRepository(Facture::class)
-            ->findOneBy(['id' => $id, 'user' => $user]);
+            ->findOneBy(['id' => $id, 'client' => $user]);
 
         if (!$existingFacture) {
             return false; 

@@ -23,10 +23,10 @@
                             {% for document in documents %}
                                 <tr>
                                     <td>{{ document.name }}</td>
-                                    <td>{{ document.status }}</td>
-                                    <td>{{ document.info }}</td>
+                                    <td>{{ document.isActive }}</td>
+                                    <td>{{ document.details }}</td>
                                     <td>
-                                        <a href="{{ path('show_document', {'id': document.id}) }}">Détails</a>
+                                        <a href="{{ path('document', {'id': document.id}) }}">Détails</a>
                                     </td>
                                 </tr>
                             {% endfor %}

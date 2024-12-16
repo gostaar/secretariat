@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Enum\DevisStatus;
 
 
-#[ORM\Entity(repositoryClass: FactureRepository::class)]
+#[ORM\Entity(repositoryClass: DevisRepository::class)]
 class Devis
 {
     #[ORM\Id]
@@ -25,7 +25,7 @@ class Devis
     private ?\DateTimeImmutable $date_devis = null;
 
     #[ORM\Column(type: 'string', enumType: DevisStatus::class)]
-    private string $status;
+    private DevisStatus $status = DevisStatus::EN_ATTENTE;
 
     #[ORM\ManyToOne(inversedBy: 'factures')]
     private ?User $client = null;
@@ -34,15 +34,28 @@ class Devis
     private ?string $commentaire = null;
 
     #[ORM\Column]
-    private ?bool $is_active = null;
+    private ?bool $is_active = false;
 
     public function __construct()
     {
-        $this->status = DevisStatus::EN_ATTENTE->value;
+        // $this->status = DevisStatus::EN_ATTENTE->value;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'montant' => $this->getMontant(),
+            'date_devis' => $this->getDateDevis(),
+            'client' => $this->getClient(),
+            'commentaire' => $this->getCommentaire(),
+            'is_active' => $this->isActive(),
+            'status' => $this->getStatusLabel(),
+        ];
     }
 
     public function __toString(): string{
-        return $this->id.' '.$this->status;
+        return 'Devis n° '.$this->id.' '.number_format($this->montant, 2, ',', ' ') . ' €';;
     }
 
     public function getId(): ?int
@@ -81,16 +94,18 @@ class Devis
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): DevisStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function getStatusLabel(): string
     {
-        if (!in_array($status, DevisStatus::getValues())) {
-            throw new \InvalidArgumentException("Invalid status value");
-        }
+        return $this->status->value;
+    }
+
+    public function setStatus(DevisStatus $status): self
+    {
         $this->status = $status;
         return $this;
     }

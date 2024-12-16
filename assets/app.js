@@ -3,7 +3,6 @@ window.addEventListener('DOMContentLoaded', () => {
     initializeButtons();
     handlePageLoad();
     handleGoogleEventButton();
-    handleHashChange();
 });
 
 window.addEventListener('hashchange', function () {
@@ -56,24 +55,14 @@ function initializeButtons() {
         { ids: ['btnProfile','menuProfile'], section: 'link-Profile' },
         //section Profile -> repertoire
         { ids: ['btnRepertoire','menuRepertoire'], section: 'link-Repertoire' },
-        { ids: ['btnNewRepertoire'], section: 'link-newRepertoire'},
-        { ids: ['fournisseurFolder', "btnFournisseurFolder"], section: 'link-fournisseurFolder'},
-        { ids: ['clientFolder', "btnclientFolder"], section: 'link-clientFolder'},
-        { ids: ['organismeFolder', 'organismeFolder'], section: 'link-organismeFolder'},
-        { ids: ['contactsFolder', 'contactsFolder'], section: 'link-contactsFolder'},
-        { ids: ['btnNewRepertoireClient'], section: 'link-newRepertoireClient'},
-        { ids: ['btnTelephone','menuTelephone'], section: 'link-Telephone' },
-        { ids: ['btnNewRepertoireFournisseur'], section: 'link-newRepertoireFournisseur'},
-        { ids: ['btnNewRepertoireOrganisme'], section: 'link-newRepertoireOrganisme'},
-        { ids: ['btnNewRepertoirePersonnel'], section: 'link-newRepertoirePersonnel'},
-        { ids: ['btnRepertoireInfo'], section: 'link-repertoireInfo'},
+        // { ids: ['btnRepertoireInfo'], section: 'link-repertoireInfo'},
         //section Profile -> facture
         { ids: ['btnFactures','menuFactures'], section: 'link-Factures' },
         { ids: ['btnEspacePersonnel'], section: 'link-espacepersonnel'},
         //section Profile -> parametres
         { ids: ['btnParametres', 'menuParametres'], section: 'link-parametres'},
         //section Telephone
-        { ids: [''], section: 'link-repertoireInfo'},
+        { ids: ['btnTelephone','menuTelephone'], section: 'link-Telephone' },
     ];
 
     buttons.forEach(button => {
@@ -152,6 +141,7 @@ function toggleSection(targetId) {
 function toggleSectionUser(targetId) {
     const sections = [
         //section acceuil
+        'link-Acceuil',
         //section Administratif
         'link-Administratif', 
         'link-newDocument',
@@ -167,16 +157,7 @@ function toggleSectionUser(targetId) {
         'link-espacepersonnel', 
         //section Profile -> repertoire
         'link-Repertoire', 
-        'link-newRepertoire', 
-        'link-fournisseurFolder', 
-        'link-clientFolder', 
-        'link-organismeFolder', 
-        'link-contactsFolder', 
-        'link-newRepertoireClient', 
-        'link-newRepertoireFournisseur', 
-        'link-newRepertoireOrganisme', 
-        'link-newRepertoirePersonnel', 
-        'link-repertoireInfo', 
+        // 'link-repertoireInfo', 
         //section Profile -> facture
         'link-Factures',
         //section Profile -> parametres
@@ -192,10 +173,12 @@ function toggleSectionUser(targetId) {
 
     sections.forEach(sectionId => {
         const section = document.getElementById(sectionId);
-        if (sectionId === targetId) {
-            section.classList.remove('d-none');
-        } else {
-            section.classList.add('d-none');
+        if(section){
+            if (sectionId === targetId) {
+                section.classList.remove('d-none');
+            } else {
+                section.classList.add('d-none');
+            }
         }
     });
 }

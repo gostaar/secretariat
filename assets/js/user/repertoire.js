@@ -13,28 +13,34 @@ export function repertoire(){
             menu.style.top = e.pageY + 'px';  
 
             document.getElementById('openDossier').onclick = function() {
-                window.location.href = '/dossier/' + dossierId; 
+                window.location.href = '/repertoire/' + dossierId; 
             };
 
             document.getElementById('renameDossier').onclick = function() {
-                var newName = prompt('Entrez le nouveau nom du dossier:', dossier.querySelector('p').textContent);
+                $('#renameDossierModal').modal('show');
+              };
+              
+              document.getElementById('submitNewDossierName').onclick = function() {
+                var newName = document.getElementById('newDossierName').value;
+              
                 if (newName) {
-                    fetch('/update_dossier/' + dossierId, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ name: newName })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            dossier.querySelector('p').textContent = newName; 
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+                  fetch('/update_dossier/' + dossierId, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name: newName })
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                    if (data.success) {
+                      dossier.querySelector('p').textContent = newName;
+                      $('#renameDossierModal').modal('hide');
+                    }
+                  })
+                  .catch(error => console.error('Error:', error));
                 }
-            };
+              };
 
             document.getElementById('deleteDossier').onclick = function() {
                 if (confirm('Êtes-vous sûr de vouloir supprimer ce dossier ?')) {
@@ -67,7 +73,10 @@ export function repertoire(){
     });
 
     document.addEventListener('click', function() {
-        document.getElementById('contextMenu').style.display = 'none';
+        const contextMenu = document.getElementById('contextMenu');
+        if (contextMenu) {
+            contextMenu.style.display = 'none';
+        }
     });
 
 }

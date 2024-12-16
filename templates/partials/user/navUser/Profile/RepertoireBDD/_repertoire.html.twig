@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal pour créer le dossier-->
 <div class="modal fade" id="dossierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -41,7 +41,6 @@
         <h5 class="modal-title" id="exampleModalLabel">Créer un nouveau Dossier</h5>
       </div>
       <div class="modal-body">
-        <!-- Formulaire pour ajouter un dossier -->
         {{ form_start(addDossier, {'action': path('add_dossier'), 'method': 'POST'}) }}
         <div class="form-group">
           {{ form_label(addDossier.name, 'Nom du dossier', {'label_attr': {'class': 'col-form-label'}}) }}
@@ -57,6 +56,28 @@
   </div>
 </div>
 
+<!-- Modale pour renommer le dossier -->
+<div class="modal fade" id="renameDossierModal" tabindex="-1" role="dialog" aria-labelledby="renameDossierModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="renameDossierModalLabel">Renommer le Dossier</h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="newDossierName" class="col-form-label">Entrez le nouveau nom du dossier :</label>
+          <input type="text" class="form-control" id="newDossierName" placeholder="Nouveau nom du dossier">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" id="submitNewDossierName">Renommer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Menu Conextuel -->
 <div id="contextMenu" class="dropdown-menu" style="display: none; position: absolute;">
     <a class="dropdown-item" href="javascript:void(0)" id="openDossier">Ouvrir le dossier</a>
     <a class="dropdown-item" href="javascript:void(0)" id="renameDossier">Renommer le dossier</a>

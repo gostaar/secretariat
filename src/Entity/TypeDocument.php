@@ -21,12 +21,17 @@ class TypeDocument
     /**
      * @var Collection<int, DocumentsUtilisateur>
      */
-    #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'type_document')]
-    private Collection $documentsUtilisateurs;
+    #[ORM\OneToMany(targetEntity: DocumentsUtilisateur::class, mappedBy: 'typeDocument')]
+    private Collection $documents;
 
     public function __construct()
     {
-        $this->documentsUtilisateurs = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -49,30 +54,31 @@ class TypeDocument
     /**
      * @return Collection<int, DocumentsUtilisateur>
      */
-    public function getDocumentsUtilisateurs(): Collection
+    public function getDocuments(): Collection
     {
-        return $this->documentsUtilisateurs;
+        return $this->documents;
     }
 
-    public function addDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function addDocument(DocumentsUtilisateur $document): static
     {
-        if (!$this->documentsUtilisateurs->contains($documentsUtilisateur)) {
-            $this->documentsUtilisateurs->add($documentsUtilisateur);
-            $documentsUtilisateur->setTypeDocument($this);
+        if (!$this->documents->contains($document)) {
+            $this->documents->add($document);
+            $document->setTypeDocument($this);
         }
 
         return $this;
     }
 
-    public function removeDocumentsUtilisateur(DocumentsUtilisateur $documentsUtilisateur): static
+    public function removeDocument(DocumentsUtilisateur $document): static
     {
-        if ($this->documentsUtilisateurs->removeElement($documentsUtilisateur)) {
+        if ($this->documents->removeElement($document)) {
             // set the owning side to null (unless already changed)
-            if ($documentsUtilisateur->getTypeDocument() === $this) {
-                $documentsUtilisateur->setTypeDocument(null);
+            if ($document->getTypeDocument() === $this) {
+                $document->setTypeDocument(null);
             }
         }
 
         return $this;
     }
+
 }

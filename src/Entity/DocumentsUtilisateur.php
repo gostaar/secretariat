@@ -35,33 +35,23 @@ class DocumentsUtilisateur
     #[ORM\Column(length: 255)]
     private ?string $details = null;
 
-    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
-    private ?TypeDocument $type_document = null;
+    #[ORM\ManyToOne(inversedBy: 'documents')]
+    private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
+    #[ORM\ManyToOne(inversedBy: 'documents')]
     private ?Dossier $dossier = null;
 
-    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
-    private ?Services $service = null;
+    #[ORM\ManyToOne(inversedBy: 'documents')]
+    private ?TypeDocument $typeDocument = null;
 
-    #[ORM\ManyToOne(inversedBy: 'documentsUtilisateurs')]
-    private ?User $client = null;
+    public function __toString(): string
+    {
+        return $this->name;
+    }   
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTypeDocument(): ?TypeDocument
-    {
-        return $this->type_document;
-    }
-
-    public function setTypeDocument(?TypeDocument $type_document): static
-    {
-        $this->type_document = $type_document;
-
-        return $this;
     }
 
     public function getDateDocument(): ?\DateTimeInterface
@@ -72,18 +62,6 @@ class DocumentsUtilisateur
     public function setDateDocument(\DateTimeInterface $date_document): static
     {
         $this->date_document = $date_document;
-
-        return $this;
-    }
-
-    public function getDossier(): ?Dossier
-    {
-        return $this->dossier;
-    }
-
-    public function setDossier(?Dossier $dossier): static
-    {
-        $this->dossier = $dossier;
 
         return $this;
     }
@@ -112,18 +90,6 @@ class DocumentsUtilisateur
         return $this;
     }
 
-    public function getService(): ?Services
-    {
-        return $this->service;
-    }
-
-    public function setService(?Services $service): static
-    {
-        $this->service = $service;
-
-        return $this;
-    }
-
     public function getFilePath(): ?string
     {
         return $this->file_path;
@@ -132,18 +98,6 @@ class DocumentsUtilisateur
     public function setFilePath(string $file_path): static
     {
         $this->file_path = $file_path;
-
-        return $this;
-    }
-
-    public function getClient(): ?User
-    {
-        return $this->client;
-    }
-
-    public function setClient(?User $client): static
-    {
-        $this->client = $client;
 
         return $this;
     }
@@ -183,4 +137,41 @@ class DocumentsUtilisateur
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDossier(): ?Dossier
+    {
+        return $this->dossier;
+    }
+
+    public function setDossier(?Dossier $dossier): static
+    {
+        $this->dossier = $dossier;
+
+        return $this;
+    }
+
+    public function getTypeDocument(): ?TypeDocument
+    {
+        return $this->typeDocument;
+    }
+
+    public function setTypeDocument(?TypeDocument $typeDocument): static
+    {
+        $this->typeDocument = $typeDocument;
+
+        return $this;
+    }
+
 }

@@ -46,7 +46,7 @@ class Repertoire
     private ?string $nom_entreprise = null;
 
     #[ORM\ManyToOne(inversedBy: 'repertoires')]
-    private ?User $client = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'repertoires')]
     private ?Dossier $dossier = null;
@@ -54,13 +54,18 @@ class Repertoire
     /**
      * @var Collection<int, Contact>
      */
-    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'contact')]
-    private Collection $contact;
+    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'repertoire')]
+    private Collection $contacts;
 
     public function __construct()
     {
-        $this->contact = new ArrayCollection();
-    }    
+        $this->contacts = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
+    }
 
     public function getId(): ?int
     {
@@ -187,14 +192,14 @@ class Repertoire
         return $this;
     }
 
-    public function getClient(): ?User
+    public function getUser(): ?User
     {
-        return $this->client;
+        return $this->user;
     }
 
-    public function setClient(?User $client): static
+    public function setUser(?User $user): static
     {
-        $this->client = $client;
+        $this->user = $user;
 
         return $this;
     }
@@ -214,30 +219,32 @@ class Repertoire
     /**
      * @return Collection<int, Contact>
      */
-    public function getContact(): Collection
+    public function getContacts(): Collection
     {
-        return $this->contact;
+        return $this->contacts;
     }
 
-    public function addRepertoireContact(Contact $contact): static
+    public function addContact(Contact $contact): static
     {
-        if (!$this->contact->contains($contact)) {
-            $this->contact->add($contact);
-            $contact->set($this);
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts->add($contact);
+            $contact->setRepertoire($this);
         }
 
         return $this;
     }
 
-    public function removeRepertoireContact(Contact $contact): static
+    public function removeContact(Contact $contact): static
     {
-        if ($this->Contact->removeElement($contact)) {
+        if ($this->contacts->removeElement($contact)) {
             // set the owning side to null (unless already changed)
-            if ($contact->get() === $this) {
-                $contact->set(null);
+            if ($contact->getRepertoire() === $this) {
+                $contact->setRepertoire(null);
             }
         }
 
         return $this;
     }
+
+   
 }

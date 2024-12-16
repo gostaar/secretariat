@@ -5,13 +5,14 @@ namespace App\Form;
 use App\Entity\Facture;
 use App\Enum\FactureStatus;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class FactureType extends AbstractType
 {
@@ -33,13 +34,9 @@ class FactureType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
             ])
-            ->add('status', ChoiceType::class, [
-                'label' => 'Statut',
-                'choices' => array_combine(
-                    array_map(fn($case) => $case->name, FactureStatus::cases()), // Utilisation de `name` comme clé
-                    array_map(fn($case) => (string) $case->value, FactureStatus::cases()) // Convertir la valeur de l'énumération en string
-                ),
-                'required' => true,
+            ->add('status', EnumType::class, [
+                'class' => FactureStatus::class,
+                'choice_label' => fn (FactureStatus $choice) => new TranslatableMessage('status.'.$choice->name, [], 'post_216'),
             ])
             ->add('commentaire', TextareaType::class, [
                 'label' => 'Commentaire',

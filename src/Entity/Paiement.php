@@ -23,7 +23,12 @@ class Paiement
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_paiement = null;
 
-    public function getPaiementId(): ?int
+    public function __toString()
+    {
+        return 'Paiement n° '.$this->id.' '.number_format($this->montant_paye, 2, ',', ' ') . ' €';
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }

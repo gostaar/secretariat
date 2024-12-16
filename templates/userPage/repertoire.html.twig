@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard utilisateur{% endblock %}
+
+{% block body %}
+<div class="custom-bg d-flex" style="min-height:100vh;">
+    <!-- Sidebar -->
+    {% include 'userPage/_header.html.twig' %}
+    
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4 d-flex flex-column">
+        <div class="container">
+            <h5>Dossier : {{ dossier.name }}</h5>
+
+            {% if repertoires is not empty %}
+                <div class="row">
+                    {% for repertoire in repertoires %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow rounded border-0" style="width: 100%; transition: transform 0.3s;">
+                                <div class="card-header text-center text-secondary py-4">
+                                    <i class="fas fa-address-book fa-4x"></i>
+                                    <h5 class="card-title mt-2">{{ repertoire.nom }}</h5>
+                                </div>
+
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                                <div class="d-flex justify-content-center mb-2">
+                                                    <a href="mailto:{{ repertoire.email }}" class="p-3 btn btn-outline-secondary btn-sm mx-2 rounded-circle">
+                                                        <i class="fas fa-at fa-2x"></i>
+                                                    </a>
+                                                    <a href="tel:{{ repertoire.telephone }}" class="p-3 btn btn-outline-secondary btn-sm mx-2 rounded-circle">
+                                                        <i class="fas fa-phone-alt fa-2x"></i>
+                                                    </a>
+                                                    <button type="button" class="p-3 btn btn-outline-secondary btn-sm mx-2 rounded-circle" data-bs-toggle="modal" data-bs-target="#contactsModal{{ repertoire.id }}">
+                                                    <i class="fas fa-users fa-2x"></i>
+            
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Email :</strong> {{ repertoire.email }}<br>
+                                            <strong>Téléphone :</strong>{{ repertoire.telephone }}<br>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Adresse :</strong> {{ repertoire.adresse }}<br>
+                                            {{ repertoire.codePostal }} {{ repertoire.ville }}<br>
+                                            {{ repertoire.pays }}
+                                        </li>
+                                        <li class="list-group-item"><strong>Mobile :</strong> {{ repertoire.mobile }}</li>
+                                        <li class="list-group-item"><strong>Entreprise :</strong> {{ repertoire.nomEntreprise }} | <strong>Siret:</strong> {{ repertoire.siret }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Modal pour voir les contacts -->
+                            <div class="modal fade" id="contactsModal{{ repertoire.id }}" tabindex="-1" aria-labelledby="contactsModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="contactsModalLabel">Contacts de {{ repertoire.nom }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul class="list-group">
+                                                {% for contact in repertoire.contacts %}
+                                                    <li class="list-group-item">
+                                                        <strong>{{ contact.nom }}</strong><br>
+                                                        Téléphone : {{ contact.telephone }}<br>
+                                                        Email : {{ contact.email }}<br>
+                                                        Rôle : {{ contact.role }}<br>
+                                                        Commentaire : {{ contact.commentaire }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center" style="font-size: 1.2rem; color: #888;">Aucun répertoire trouvé</p>
+            {% endif %}
+
+            <!-- Bouton Ajouter un contact -->
+            <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#addRepertoireModal">
+                Ajouter un contact
+            </button>
+        </div>
+    </div>
+</div>
+ 
+<!-- Modal pour créer le répertoire -->
+<div class="modal fade" id="addRepertoireModal" tabindex="-1" role="dialog" aria-labelledby="repertoireModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="repertoire">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="repertoireModalLabel">Créer un nouveau contact</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ form_start(addRepertoire, {'action': path('add_repertoire'), 'method': 'POST'}) }}
+                
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.nom, 'Nom du contact') }}
+                    {{ form_widget(addRepertoire.nom, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.adresse, 'Adresse') }}
+                    {{ form_widget(addRepertoire.adresse, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.codePostal, 'Code postal') }}
+                    {{ form_widget(addRepertoire.codePostal, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.ville, 'Ville') }}
+                    {{ form_widget(addRepertoire.ville, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.pays, 'Pays') }}
+                    {{ form_widget(addRepertoire.pays, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.telephone, 'Téléphone fixe') }}
+                    {{ form_widget(addRepertoire.telephone, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.mobile, 'Téléphone mobile') }}
+                    {{ form_widget(addRepertoire.mobile, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.email, 'Email') }}
+                    {{ form_widget(addRepertoire.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.nomEntreprise, 'Nom de l\'entreprise') }}
+                    {{ form_widget(addRepertoire.nomEntreprise, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(addRepertoire.siret, 'Siret') }}
+                    {{ form_widget(addRepertoire.siret, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <!-- Bouton pour afficher le formulaire du contact -->
+                <button type="button" class="btn btn-secondary" id="showContactFormBtn">Ajouter un nouveau contact</button>
+
+                <!-- Formulaire pour le contact (initialement masqué) -->
+                <div id="contactForm" class="mt-3" style="display: none;">
+                    <div class="mb-3">
+                        <label for="contact_nom">Nom du contact</label>
+                        <input type="text" id="contact_nom" name="contact_nom" class="form-control" placeholder="Nom du contact">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact_email">Email du contact</label>
+                        <input type="email" id="contact_email" name="contact_email" class="form-control" placeholder="Email du contact">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact_telephone">Téléphone du contact</label>
+                        <input type="text" id="contact_telephone" name="contact_telephone" class="form-control" placeholder="Téléphone du contact">
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+                
+                {{ form_end(addRepertoire) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

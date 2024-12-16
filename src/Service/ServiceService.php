@@ -15,11 +15,16 @@ class ServiceService
         $this->em = $em;
     }
 
+    public function getService($id)
+    {
+        return $this->em->getRepository(Services::class)->find($id);
+    }
+
     public function addServices(Services $service, User $user)
     {
         $existingServices = $this->em
             ->getRepository(Services::class)
-            ->findOneBy(['name' => $service->getName(), 'user' => $user]);
+            ->findOneBy(['users' => $user]);
 
         if ($existingServices) {
             return false;
@@ -36,7 +41,7 @@ class ServiceService
     {
         $existingService = $this->em
             ->getRepository(Service::class)
-            ->findOneBy(['id' => $id, 'user' => $user]);
+            ->findOneBy(['id' => $id, 'users' => $user]);
 
         if (!$existingService) {
             return false; 
@@ -56,7 +61,7 @@ class ServiceService
     ){
         $existingService = $this->em
             ->getRepository(Service::class)
-            ->findOneBy(['id' => $id, 'user' => $user]);
+            ->findOneBy(['id' => $id, 'users' => $user]);
 
         if (!$existingService) {
             return false; 
