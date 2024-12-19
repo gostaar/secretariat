@@ -12,7 +12,7 @@ Encore
     .setPublicPath('/build')
     .addEntry('app', './assets/app.js')
     .addEntry('script', './assets/js/script.js')
-    .addEntry('google', './assets/js/google/main.js')
+    // .addEntry('google', './assets/js/google/main.js')
     .addEntry('styles', './assets/styles/app.css')
     .enableSassLoader()
     .enableSourceMaps(!Encore.isProduction())

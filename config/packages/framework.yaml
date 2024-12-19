@@ -7,6 +7,13 @@ framework:
     session:
         enabled: true
         name: PHPSESSID
+        #SESSION AVEC REDIS
+        # handler_id: 'snc_redis.session.handler'
+        # save_path: '%env(REDIS_URL)%/sessions'
+    
+    cache:
+        app: 'cache.adapter.redis'
+        default_redis_provider: 'redis://localhost:6379'
 
     #esi: true
     #fragments: true
