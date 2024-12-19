@@ -3,42 +3,49 @@
     <!-- Conteneur des icônes et textes -->
     <div class="menu-items d-flex flex-column">
         {% set menuItems = [
-            { icon: 'home', text: 'Accueil', link: '#link-Acceuil', color: 'white' },
-            { icon: 'file-alt', text: 'Administratif', link: '#link-Administratif', color: 'white' },
-            { icon: 'calendar-alt', text: 'Agenda', link: '#link-Agenda', color: 'white' },
-            { icon: 'briefcase', text: 'Commercial', link: '#link-Commercial', color: 'white' },
-            { icon: 'laptop-code', text: 'Numérique', link: '#link-Numerique', color: 'white' },
-            { icon: 'phone-alt', text: 'Téléphone', link: '#link-Telephone', color: 'white' },
+            { icon: 'home', text: 'Accueil', link: 'link-Acceuil', color: 'white', service: 'Espace Personnel' },
+            { icon: 'file-alt', text: 'Administratif', link: 'link-Administratif', color: 'white', service: 'Administratif' },
+            { icon: 'calendar-alt', text: 'Agenda', link: 'link-Agenda', color: 'white', service: 'Agenda' },
+            { icon: 'briefcase', text: 'Commercial', link: 'link-Commercial', color: 'white', service: 'Commercial' },
+            { icon: 'laptop-code', text: 'Numérique', link: 'link-Numerique', color: 'white', service: 'Numérique' },
+            { icon: 'phone-alt', text: 'Téléphone', link: 'link-Telephone', color: 'white', service: 'Téléphonique' },
         ] %}
 
         <div class="menu">
             {% for item in menuItems %}
-                <div class="d-flex align-items-center mb-1">
-                    <i class="text-{{ item.color }} fas fa-{{ item.icon }} fa-2x text-center" style="width: 50px;"></i>
-                    <a href="{{ path('user') }}{{ item.link }}" class="nav-link text-{{ item.color }}" style='max-heigh:123px;'>{{ item.text }}</a>
-                </div>
+                {% if item.service in services %}
+                    <div class="d-flex align-items-center mb-1">
+                        <i class="text-{{ item.color }} fas fa-{{ item.icon }} text-center" style="width: 50px; font-size: 1.5rem;"></i>
+                        <button data-fragment={{item.link}} class="change-fragment btn bg-transparent nav-link text-{{ item.color }}" style='max-heigh:123px;'>{{ item.text }}</button>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
-        <div>
-            <div class="d-flex align-items-center mb-1">
-                <i class="text-white fas fa-user-circle fa-2x text-center" style="width: 50px;"></i>
-                <button aria-expanded="false" data-bs-toggle="collapse" href="#submenu3" class="menu-toggle nav-link text-white text-start d-none d-md-block" style='max-heigh:123px;'>Espace personnel</button>
-                <a href="{{ path('user') }}#link-espacepersonnel" class="nav-link text-white d-block d-md-none" style='max-heigh:123px;'>Espace personnel</a>
+
+        {% if 'Espace Personnel' in services %}
+            <div>
+                <div class="d-flex align-items-center mb-1">
+                    <i class="text-white fas fa-user-circle text-center" style="width: 50px; font-size: 1.5rem;"></i>
+                    <button aria-expanded="false" data-bs-toggle="collapse" href="#submenu3" class="menu-toggle nav-link text-white text-start d-none d-md-block" style='max-heigh:123px;'>Espace personnel</button>
+                    <button data-fragment='link-espacepersonnel' class="change-fragment btn bg-transparent text-white d-block d-md-none" style='max-heigh:123px;'>Espace personnel</button>
+                </div>
+                <div id="submenu3" class="collapse navbar-collapse">
+                    {% set submenuItems = [
+                        { link: 'link-Profile', icon: 'fa-user-circle', label: 'Profil', color: 'warning' },
+                        { link: 'link-Factures', icon: 'fa-file-invoice', label: 'Factures', color: 'warning' },
+                        { link: 'link-Repertoire', icon: 'fa-folder', label: 'Répertoire', color: 'warning', service:'Repertoire' },
+                        { link: 'link-parametres', icon: 'fa-cogs', label: 'Paramètres', color: 'warning' }
+                    ] %}
+                    {% for submenu in submenuItems %}
+                        {% if submenu.service is not defined or submenu.service in services %}
+                            <div class="d-flex align-items-center mb-1">
+                                <i class="fas {{ submenu.icon }} text-center text-{{ submenu.color }}" style="width: 50px; font-size: 1.5rem;"></i>
+                                <button data-fragment={{submenu.link}} class="change-fragment btn bg-transparent nav-link text-{{ submenu.color }}">{{ submenu.label }}</a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
-            <div id="submenu3" class="collapse navbar-collapse">
-                {% set submenuItems = [
-                    { link: '#link-Profile', icon: 'fa-user-circle', label: 'Profil', color: 'warning' },
-                    { link: '#link-Factures', icon: 'fa-file-invoice', label: 'Factures', color: 'warning' },
-                    { link: '#link-Repertoire', icon: 'fa-folder', label: 'Répertoire', color: 'warning' },
-                    { link: '#link-parametres', icon: 'fa-cogs', label: 'Paramètres', color: 'warning' }
-                ] %}
-                {% for submenu in submenuItems %}
-                    <div class="d-flex align-items-center mb-1">
-                        <i class="fas {{ submenu.icon }} fa-2x text-center text-{{ submenu.color }}" style="width: 50px;"></i>
-                        <a href="{{ path('user') }}{{ submenu.link }}" class="nav-link text-{{ submenu.color }}">{{ submenu.label }}</a>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+        {% endif %}
     </div>
 </div>

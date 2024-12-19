@@ -29,12 +29,9 @@ class RepertoireController extends AbstractController
     private function getUserData(): array
     {
         $user = $this->getUser();
-
         return [
-            'user' => $user,
             'services' => $user->getServices(),
-            'repertoire' => $user->getRepertoires(),
-            'dossiers' => $user->getDossiers(),
+            'repertoires' => $user->getRepertoires(),
         ];
     }
 
@@ -42,17 +39,16 @@ class RepertoireController extends AbstractController
     public function getRepertoire($id)
     {
         $dossier = $this->dossierService->getDossier($id);
-        $repertoires = $dossier->getRepertoires();
+        $userData = $this->getUserData();
 
         $repertoireForm = $this->createForm(RepertoireType::class, new Repertoire(), [
             'dossier' => $dossier,
         ]);
-
-        return $this->render('userPage/repertoire.html.twig', [
+      
+        return $this->render('partials/user/Profile/repertoire.html.twig',  array_merge($userData, [
             'dossier' => $dossier,
-            'repertoires' => $repertoires,
             'addRepertoire' => $repertoireForm,
-        ]);
+        ]));
     }
 
     #[Route('/add_repertoire', name: 'add_repertoire', methods: ['POST'])]
@@ -63,11 +59,11 @@ class RepertoireController extends AbstractController
         $repertoire = new Repertoire();
         $repertoireForm = $this->createForm(RepertoireType::class, $repertoire);
         $repertoireForm->handleRequest($request);
-        
+
         if ($repertoireForm->isSubmitted() && $repertoireForm->isValid()) {
-            $this->repertoireService->addService($repertoire, $user);
+            $this->repertoireService->addRepertoire($repertoire, $user);
     
-            $url = $this->generateUrl('user') . '#link-Repertoire';
+            $url = $this->generateUrl('user') . '?fragment=Repertoire';
             return new RedirectResponse($url);
         }
         return new Response();

@@ -31,6 +31,7 @@ export function page(){
             
             if (navbarCollapse.classList.contains('show')) {
                 menuToggle.click();
+                
             }
         });
     });

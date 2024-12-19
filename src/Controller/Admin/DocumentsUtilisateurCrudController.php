@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\DocumentsUtilisateur;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -55,7 +54,7 @@ class DocumentsUtilisateurCrudController extends AbstractCrudController
                 ->onlyOnForms(),
 
             // Détails du document
-            TextEditorField::new('details')
+            TextField::new('details')
                 ->onlyOnForms(),
 
             FormField::addPanel('Relations avec d\'autres entités')->setIcon('fa fa-link'),

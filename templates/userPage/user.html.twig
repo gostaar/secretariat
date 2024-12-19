@@ -3,90 +3,12 @@
 {% block title %}Dashboard utilisateur{% endblock %}
 
 {% block body %}
-    <!-- Conteneur principal -->
-    <div id="btnToogle" class="custom-bg m-0 p-0 container-fluid">
-        <div class="d-flex">
-            {% include 'partials/user/_header.html.twig' %}
-            {% include 'partials/user/_mainContent.html.twig' %}
+    <div class="custom-bg d-flex ">
+        {% include 'userPage/_header.html.twig' %}
+        
+        {# Afficher uniquement la section correspondant au fragment #}
+        <div id="fragmentContent" class="custom-bg full-height m-0 p-0 w-100">
+            {% include 'userPage/_fragmentContent.html.twig' %}
         </div>
     </div>
-
-    <!-- Section Acceuil -->
-    <div id="link-Acceuil" class="custom-bg full-height d-none m-0 p-0">
-        <div class="d-flex">
-            {% include 'partials/user/_header.html.twig' %}
-            {% include 'partials/user/_mainContent.html.twig' %}
-        </div>
-    </div>
-
-    <!-- Section Administratif -->
-
-    <div id="link-Administratif" class="custom-bg full-height d-none m-0 p-0">
-        {% include 'partials/user/navUser/Administratif/_documents.html.twig' %}
-    </div>
-
-    <div id="link-newDocument" class="custom-bg d-none flex-column d-flex">
-        {% include 'partials/user/navUser/Administratif/_newDocuments.html.twig' %}
-    </div>
-
-    <!-- Section Agenda -->
-
-    <div id="link-Agenda" class="custom-bg full-height d-none m-0 p-0">
-        {% include 'partials/user/navUser/Agenda/_agenda.html.twig' %}
-    </div>
-
-    <div id="link-MainAgenda" class="custom-bg d-none flex-column d-flex">
-        {% include 'partials/user/navUser/Agenda/_agendaMain.html.twig' %}
-    </div>
-
-    <!-- Section Commercial -->
-
-    <div id="link-Commercial" class="custom-bg full-height d-none m-0 p-0">
-        {% include 'partials/user/navUser/Commercial/_commercial.html.twig' %}
-    </div>
-
-    <!-- Section Numerique -->
-
-    <div id="link-Numerique" class="custom-bg full-height d-none m-0 p-0">
-        {% include 'partials/user/navUser/Numerique/_numerique.html.twig' %}
-    </div>
-
-    <!-- Section Profile -->
-
-    <div id="link-Profile" class="custom-bg full-height d-none m-0 p-0">
-        {% include 'partials/user/navUser/Profile/_profile.html.twig' %}
-    </div>
-
-    <div id="link-espacepersonnel" class="custom-bg d-none flex-column d-flex">
-        {% include 'partials/user/navUser/Profile/_espacepersonnel.html.twig' %}
-    </div>
-
-    <!-- Section Profile -> repertoire -->
-
-    <div id="link-Repertoire" class="custom-bg full-height d-none m-0 p-0">
-        {% include 'partials/user/navUser/Profile/RepertoireBDD/_repertoire.html.twig' %}
-    </div>
-
-    {# <div id="link-repertoireInfo" class="custom-bg d-none flex-column d-flex">
-        {% include 'partials/user/navUser/Profile/RepertoireBDD/_repertoireInfo.html.twig' %}
-    </div> #}
-
-    <!-- Sections Profile -> Facture -->
-
-    <div id="link-Factures" class="custom-bg full-height d-none m-0 p-0">
-        {% include 'partials/user/navUser/Profile/_factures.html.twig' %}
-    </div>
-    
-    <!-- Sections Profile -> Parametres -->
-
-    <div id="link-parametres" class="custom-bg d-none flex-column d-flex">
-        {% include 'partials/user/navUser/Profile/_parametres.html.twig' %}
-    </div>
-
-    <!-- Section Telephone -->
-
-    <div id="link-Telephone" class="custom-bg full-height d-none m-0 p-0">
-        {% include 'partials/user/navUser/Telephone/_telephone.html.twig' %}
-    </div>
-    
 {% endblock %}

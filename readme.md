@@ -10,7 +10,7 @@ composer install
 npm install
 docker-compose up -d
 php bin/console make:migration
-docker-compose exec php php bin/console doctrine:migrations:migrate --no-interaction
+docker-compose exec apache_php php bin/console doctrine:migrations:migrate --no-interaction
 npm run dev
 docker-compose exec mysql mysql -u root -p
 USE symfony;

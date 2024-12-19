@@ -22,38 +22,18 @@ class DocumentsUtilisateurController extends AbstractController
         $this->documentService = $documentService;
     }
 
-    private function getUserData(): array
-    {
-        $user = $this->getUser();
-
-        return [
-            'user' => $user,
-            'factures' => $user->getFactures(),
-            'devis' => $user->getDevis(),
-            'services' => $user->getServices(),
-            'repertoire' => $user->getRepertoires(),
-            'documents' => $user->getDocuments(),
-            'dossiers' => $user->getDossiers(),
-        ];
-    }
-
     #[Route('/document/{id}', name: 'document', methods: ['GET'])]
     public function getDocument($id)
     {
         $dossier = $this->dossierService->getDossier($id);
-        $documents = $dossier->getDocumentsUtilisateurs();
 
-        $documentForm = $this->createForm(DocumentsUtilisateurType::class, new DocumentsUtilisateur(), [
-            'dossier' => $dossier,  // Pass the dossier here as a custom option
-        ]);
-        $typeDocumentForm = $this->createForm(TypeDocumentType::class, new TypeDocument());
-
-        return $this->render('userPage/document.html.twig', [
+        $this->createForm(DocumentsUtilisateurType::class, new DocumentsUtilisateur(), [
             'dossier' => $dossier,
-            'documents' => $documents,
-            'addDocument' => $documentForm,
-            'addTypeDocument' => $typeDocumentForm
         ]);
+
+        return $this->redirectToRoute('user', [
+            'dossier' => $dossier,
+        ], 302, ['fragment' => 'link-PageDocument']);
     }
 
     #[Route('/add_document', name: 'add_document', methods: ['POST'])]

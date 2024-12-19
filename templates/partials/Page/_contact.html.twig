@@ -1,13 +1,31 @@
 
-   <section class="hero  d-flex justify-content-center flex-column flex-grow-1">
+{% set fragmentValue = '' %}
+{% set fragmentButtonValue = '' %}
+{% set buttonValue = '' %}
+{% if app.request.query.get('fragment') == 'part' %}
+    {% set fragmentValue = 'part' %}
+    {% set fragmentButtonValue = 'pro' %}
+    {% set buttonValue = 'Vers les pros' %}
+{% elseif app.request.query.get('fragment') == 'pro' %}
+    {% set fragmentValue = 'pro' %}
+    {% set fragmentButtonValue = 'part' %}
+    {% set buttonValue = 'Vers les particuliers' %}
+{% endif %}
+<section class='background-contact d-flex flex-column flex-fill'>
+  {% include 'partials/Page/_navBar.html.twig' %}
+   <section class="hero d-flex justify-content-center flex-column flex-grow-1 position-relative">
         <div class="heroContent">
             <h1>Contactez-nous</h1>
             <p class='d-flex flex-wrap'>Nous sommes à votre écoute pour répondre à toutes vos questions.</p>
         </div>
-    </section>
-  </div>
+      <div class="position-absolute bottom-0 end-0 mb-3 me-3">
+          <button type="button" class="change-fragment-site btn btn-primary fs-5" data-fragment={{fragmentButtonValue}} data-subFragment="acceuil">{{buttonValue}}</button>
+      </div>
+  </section>
+</section>
+<section class='bg-white'>
   <h1 class="expert-title">Coordonnées</h1>
-  <section id="experts" class="experts">
+  <div id="experts" class="experts">
       {% set contacts = [
           { 'icon': 'fas fa-home fa-3x text-danger', 'title': 'Adresse', 'content': '123 Rue des Entreprises, 75000 Paris, France' },
           { 'icon': 'fas fa-envelope fa-3x text-danger', 'title': 'Email', 'content': '<a href="mailto:contact@secretairepro.com">contact@secretairepro.com</a>' },
@@ -21,41 +39,42 @@
               <p>{{ contact.content|raw }}</p>
           </div>
       {% endfor %}
-  </section>
+  </div>
+</section>
 
 
-  <!-- Localisation -->
-  <section class="map-section">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9905714016033!2d2.294481115674639!3d48.85884407928795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d8771a6b55%3A0x40b82c3688c9460!2sTour%20Eiffel!5e0!3m2!1sfr!2sfr!4v1690300507201!5m2!1sfr!2sfr" 
-      width="100%" 
-      height="400" 
-      style="border:0;" 
-      allowfullscreen="" 
-      loading="lazy" 
-      sandbox="allow-scripts"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </section>
+<!-- Localisation -->
+<section class="map-section bg-white">
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9905714016033!2d2.294481115674639!3d48.85884407928795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d8771a6b55%3A0x40b82c3688c9460!2sTour%20Eiffel!5e0!3m2!1sfr!2sfr!4v1690300507201!5m2!1sfr!2sfr" 
+    width="100%" 
+    height="400" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    sandbox="allow-scripts"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</section>
 
-  <section class="contact-section">
-    <div class="contact-container">
-      <!-- Formulaire de Contact -->
-      <div class="contact-form">
-        <h2>Envoyez-nous un message</h2>
-        <form class="contact-form-content" action="{{ path('contact_handler') }}" method="post">
-            <div class="conte-form-e1">
-                <input type="text" id="name" name="name" required placeholder="Nom">
-                <input type="email" id="email" name="email" required placeholder="Email">
-                <input type="text" id="subject" name="subject" placeholder="Objet">
-            </div>
-            
-            <div class="conte-form-e2">
-                <textarea id="message" name="message" rows="5" required placeholder="Message"></textarea>
-            </div>
-            
-            <button type="submit" class="btn">Envoyer</button>
-        </form>        
-      </div>
+<section class="contact-section bg-white">
+  <div class="contact-container">
+    <!-- Formulaire de Contact -->
+    <div class="contact-form">
+      <h2>Envoyez-nous un message</h2>
+      <form class="contact-form-content" action="{{ path('contact_handler') }}" method="post">
+          <div class="conte-form-e1">
+              <input type="text" id="name" name="name" required placeholder="Nom">
+              <input type="email" id="email" name="email" required placeholder="Email">
+              <input type="text" id="subject" name="subject" placeholder="Objet">
+          </div>
+          
+          <div class="conte-form-e2">
+              <textarea id="message" name="message" rows="5" required placeholder="Message"></textarea>
+          </div>
+          
+          <button type="submit" class="btn">Envoyer</button>
+      </form>        
     </div>
-  </section>
+  </div>
+</section>

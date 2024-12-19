@@ -21,14 +21,14 @@ class DocumentsUtilisateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('type_document', EntityType::class, [
+            ->add('typeDocument', EntityType::class, [
                 'class' => TypeDocument::class,
                 'choice_label' => 'name', // Adaptez à la propriété du typeDocument à afficher
                 'label' => 'Type de document',
                 'required' => true,
                 'placeholder' => 'Sélectionnez un type de document',
             ])
-            ->add('date_document', DateTimeType::class, [
+            ->add('dateDocument', DateTimeType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date',
                 'required' => false,
@@ -82,7 +82,7 @@ class DocumentsUtilisateurType extends AbstractType
             //     'required' => false,
             //     'placeholder' => 'Sélectionnez un client',
             // ])
-            ->add('is_active', CheckboxType::class, [
+            ->add('isActive', CheckboxType::class, [
                 'label' => 'Actif',
                 'required' => false,
             ]);

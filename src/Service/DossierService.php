@@ -3,6 +3,7 @@ namespace App\Service;
 
 use App\Entity\Dossier;
 use App\Entity\User;
+use App\Entity\Services;
 use Doctrine\ORM\EntityManagerInterface;
 
 class DossierService
@@ -23,7 +24,7 @@ class DossierService
     {
         $existingDossier = $this->em
             ->getRepository(Dossier::class)
-            ->findOneBy(['name' => $dossier->getName(), 'user' => $user]);
+            ->findOneBy(['name' => $dossier->getName(), 'user' => $user, 'services' => $dossier->getServices()]);
 
         if ($existingDossier) {
             return false;

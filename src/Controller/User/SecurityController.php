@@ -22,7 +22,7 @@ class SecurityController extends AbstractController
             return new RedirectResponse($this->generateUrl('app_logout'));
         }
 
-        return $this->render('userPage/login.html.twig', [
+        return $this->render('pages/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);

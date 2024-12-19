@@ -3,23 +3,11 @@
 {% block title %}Secrétaire{% endblock %}
 
 {% block body %}
-<div id="btnPartPro-container" class="d-flex flex-column min-vh-100">
-    <div id="btnPartPro" class="bg-image">
-        
-        <h1 class="m-0 text-center">Bienvenue sur Secrétaire Pro</h1>
-        <div class="d-flex">
-            <button id="btnPart" class="btn btn-lg btn-primary"><h1>Vous êtes un particulier</h1></button>
-            <button id="btnPro" class="btn btn-lg btn-secondary"><h1>Vous êtes un professionnel</h1></button>
-        </div>
+    <div id="fragmentContent" class="d-flex min-vh-100">
+        {% include 'pages/_fragmentContent.html.twig' with {
+            'sections': sections,
+            'currentFragment': currentFragment,
+            'currentSubFragment': currentSubFragment
+        } %}
     </div>
-    <div id="pro" class="d-none flex-column d-flex  flex-grow-1">
-        {% include 'partials/Page/Pro/index.html.twig' %}
-    </div>
-    <div id="part" class="d-none flex-column d-flex  flex-grow-1">
-        {% include 'partials/Page/Part/index.html.twig' %}
-    </div>
-         
-</div>
 {% endblock %}
-
-    

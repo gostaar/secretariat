@@ -27,9 +27,9 @@ class ServicesController extends AbstractController
     {
         $serviceS= $this->serviceService->getService($id);
 
-        return $this->render('userPage/service.html.twig', [
-            'service' => $serviceS        
-        ]);
+        return $this->redirectToRoute('user', [
+            'service' => $serviceS  
+        ], 302, ['fragment' => 'link-PageServices']);
     }
 
     #[Route('/add_service', name: 'add_service', methods: ['POST'])]

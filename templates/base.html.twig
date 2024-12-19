@@ -13,9 +13,9 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.15/index.global.min.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales/fr.global.min.js"></script>
-    {{ encore_entry_script_tags('google') }}
+    {# {{ encore_entry_script_tags('google') }}
     <script src="https://apis.google.com/js/api.js" onload="gapiLoaded()" async defer></script>
-    <script src="https://accounts.google.com/gsi/client" onload="gisLoaded()" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" onload="gisLoaded()" async defer></script> #}
     <link rel="icon" type="image/x-icon" href="/favicon.ico">    
     {{ encore_entry_script_tags('app') }}
     <div class='d-none' id='session.status'>{{ app.user ? 'connecté' : 'Non connecté' }}</div>

@@ -25,7 +25,7 @@ class RepertoireService
     {
         $existingRepertoire = $this->em
             ->getRepository(Repertoire::class)
-            ->findOneBy(['name' => $repertoire->getName(), 'user' => $user]);
+            ->findOneBy(['nom' => $repertoire->getNom(), 'user' => $user]);
 
         if ($existingRepertoire) {
             return false;

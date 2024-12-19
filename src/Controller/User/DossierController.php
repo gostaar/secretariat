@@ -26,38 +26,18 @@ class DossierController extends AbstractController
         $this->dossierService = $dossierService;
     }
 
-    private function getUserData(): array
-    {
-        $user = $this->getUser();
-
-        return [
-            'user' => $user,
-            'factures' => $user->getFactures(),
-            'devis' => $user->getDevis(),
-            'services' => $user->getServices(),
-            'repertoire' => $user->getRepertoires(),
-            'documents' => $user->getDocuments(),
-            'dossiers' => $user->getDossiers(),
-        ];
-    }
-
     #[Route('/dossier/{id}', name: 'dossier', methods: ['GET', 'POST'])]
     public function getDossier($id)
     {
         $dossier = $this->dossierService->getDossier($id);
-        $documents = $dossier->getDocumentsUtilisateurs();
 
-        $documentForm = $this->createForm(DocumentsUtilisateurType::class, new DocumentsUtilisateur(), [
+        $this->createForm(DocumentsUtilisateurType::class, new DocumentsUtilisateur(), [
             'dossier' => $dossier,
         ]);
-        $typeDocumentForm = $this->createForm(TypeDocumentType::class, new TypeDocument());
 
-        return $this->render('userPage/dossier.html.twig', [
+        return $this->redirectToRoute('user', [
             'dossier' => $dossier,
-            'documents' => $documents,
-            'addDocument' => $documentForm,
-            'addTypeDocument' => $typeDocumentForm
-        ]);
+        ], 302, ['fragment' => 'link-PageDossier']);
     }
         
     #[Route('/add_dossier', name: 'add_dossier', methods: ['POST'])]
@@ -72,7 +52,7 @@ class DossierController extends AbstractController
         if ($dossierForm->isSubmitted() && $dossierForm->isValid()) {
             $this->dossierService->addDossier($dossier, $user);
             
-            $url = $this->generateUrl('user') . '#link-Repertoire';
+            $url = $this->generateUrl('user') . '?fragment=Repertoire';
             return new RedirectResponse($url);
         }
         return new Response();

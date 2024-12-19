@@ -28,10 +28,9 @@ class FactureController extends AbstractController
     public function getFacture($id)
     {
         $facture = $this->factureService->getFacture($id);
-
-        return $this->render('userPage/facture.html.twig', [
+        return $this->redirectToRoute('user', [
             'facture' => $facture
-        ]);
+        ], 302, ['fragment' => 'link-PageFacture']);
     }
 
     #[Route('/add_facture', name: 'add_facture', methods: ['POST'])]

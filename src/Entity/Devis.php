@@ -19,7 +19,7 @@ class Devis
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $montant = null;
+    private ?string $montant = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $date_devis = null;
@@ -27,7 +27,7 @@ class Devis
     #[ORM\Column(type: 'string', enumType: DevisStatus::class)]
     private DevisStatus $status = DevisStatus::EN_ATTENTE;
 
-    #[ORM\ManyToOne(inversedBy: 'factures')]
+    #[ORM\ManyToOne(inversedBy: 'devis')]
     private ?User $client = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

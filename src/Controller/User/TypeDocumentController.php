@@ -24,34 +24,14 @@ class TypeDocumentController extends AbstractController
         $this->TypeDocumentService = $TypeDocumentService;
     }
 
-    private function getUserData(): array
-    {
-        $user = $this->getUser();
-
-        return [
-            'user' => $user,
-            'factures' => $user->getFactures(),
-            'devis' => $user->getDevis(),
-            'services' => $user->getServices(),
-            'repertoire' => $user->getRepertoires(),
-            'documents' => $user->getDocuments(),
-            'dossiers' => $user->getDossiers(),
-        ];
-    }
-
     #[Route('/TypeDocument/{id}', name: 'TypeDocument', methods: ['GET'])]
     public function getTypeDocument($id)
-    {
+    {       
         $TypeDocument = $this->TypeDocumentService->getTypeDocument($id);
-        $documents = $TypeDocument->getDocumentsUtilisateurs();
 
-        $documentForm = $this->createForm(DocumentsUtilisateurType::class, new DocumentsUtilisateur());
-
-        return $this->render('userPage/TypeDocument.html.twig', [
+        return $this->redirectToRoute('user', [
             'TypeDocument' => $TypeDocument,
-            'documents' => $documents,
-            'addDocument' => $documentForm,
-        ]);
+        ], 302, ['fragment' => 'link-PageDocument']);
     }
         
     #[Route('/add_TypeDocument/{id}', name: 'add_TypeDocument', methods: ['POST'])]

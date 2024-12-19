@@ -27,9 +27,9 @@ class DevisController extends AbstractController
     {
         $devis = $this->devisService->getDevis($id);
 
-        return $this->render('userPage/devis.html.twig', [
+        return $this->redirectToRoute('user', [
             'devis' => $devis
-        ]);
+        ], 302, ['fragment' => 'link-PageDevis']);
     }
 
     #[Route('/add_devis', name: 'add_devis', methods: ['POST'])]

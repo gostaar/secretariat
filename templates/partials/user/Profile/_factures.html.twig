@@ -1,0 +1,55 @@
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4 d-flex flex-column">
+        <div class="container card mb-4">
+            <div class="container card-header d-flex justify-content-between align-items-center">
+                <h4>Factures</h4>
+            </div>
+            <div class="card-body">
+            {% if factures is not empty %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nom de la facture</th>
+                            <th>ID</th>
+                            <th>Status</th>
+                            <th>Informations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for facture in factures %}
+                            <tr>
+                                 <td>{{ facture.id }}</td>
+                                <td>{{ facture.status }}</td>
+                                <td>{{ facture.commentaire }}</td>
+                                <td>{{ facture.is_active }}</td>
+                                <td>
+                                    <a href="{{ path('facture', {'id': facture.id}) }}">Détails</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <!-- Aucun document -->
+                <div class="text-center">
+                    <div style="position: relative; display: inline-block;">
+                        <i class="fas fa-file-alt fa-5x text-center m-5"></i>
+                        <div style="position: absolute; 
+                                top: 0; left: 0; 
+                                right: 0; bottom: 0; 
+                                background-color: rgba(255, 255, 255, 0.7); 
+                                z-index: 1;">
+                        </div>
+                    </div>
+                    <h1 style="color: grey;">Aucune Facture</h1>
+                    <p class="text-muted">À cet endroit, vous pourrez consulter vos factures.</p>
+                </div>
+            {% endif %}
+            <div class="d-flex justify-content-center">
+                    <a id="btnNewDocument" href="{{ path('user', {fragment: 'link-newDocument'}) }}" class="btn btn-primary">Créer un nouveau document administratif</a>
+                </div>
+            </div>
+        </div>
+    </div>
+

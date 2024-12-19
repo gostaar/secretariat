@@ -1,5 +1,4 @@
 export function repertoire(){
-
     document.querySelectorAll('.dossier').forEach(function(dossier) {
         dossier.addEventListener('click', function(e) {
             e.preventDefault();
@@ -78,5 +77,29 @@ export function repertoire(){
             contextMenu.style.display = 'none';
         }
     });
+
+
+    const searchBar = document.getElementById('searchBarRepertoire');
+    const dossierList = document.getElementById('dossierRepertoireList');
+
+    // Fonction de filtrage des dossiers
+    function filterDossiers() {
+        const searchInput = searchBar.value.toLowerCase();
+        const dossiers = dossierList.querySelectorAll('.repertoire');
+
+        dossiers.forEach(dossier => {
+            const dossierName = dossier.querySelector('p').textContent.toLowerCase();
+            if (dossierName.includes(searchInput)) {
+              dossier.classList.remove('d-none'); 
+              dossier.classList.add('d-flex');
+            } else {
+              dossier.classList.remove('d-flex');
+              dossier.classList.add('d-none');
+            }
+        });
+    }
+
+    // Attache l'événement à la barre de recherche
+    if(searchBar){searchBar.addEventListener('keyup', filterDossiers)};
 
 }

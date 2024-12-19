@@ -1,0 +1,160 @@
+<!-- Main Content -->
+<div class="flex-grow-1 p-4 d-flex flex-column">
+    <div class="container">
+        <!-- Informations Dossier -->
+        {% if dossier is not null %}
+            <h5>Dossier : {{ dossier.name }}</h5>
+        {% endif %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Expéditeur</th>
+                    <th scope="col">Destinataire</th>
+                    <th scope="col">Actif</th>
+                    <th scope="col">Détails</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Service</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in documents %}
+                    <tr>
+                        <td>{{ document.name }}</td>
+                        <td>{{ document.dateDocument ? document.dateDocument|date('d/m/Y') : 'N/A' }}</td> 
+                        <td>{{ document.expediteur ? document.expediteur : 'Non spécifié' }}</td>
+                        <td>{{ document.destinataire ? document.destinataire : 'Non spécifié' }}</td>
+                        <td>
+                            {% if document.isActive %}
+                                <span class="badge bg-success">Oui</span>
+                            {% else %}
+                                <span class="badge bg-danger">Non</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ document.details ? document.details : 'N/A' }}</td>
+                        <td>{{ document.typeDocument.name ? document.typeDocument.name : 'Non spécifié' }}</td>
+                    </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">Aucun fichier trouvé</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDocumentModal">
+            Ajouter un fichier
+        </button>
+    </div>
+</div>
+
+
+<!-- Modal our créer le document -->
+<div class="modal fade" id="addDocumentModal" tabindex="-1" role="dialog" aria-labelledby="documentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="documentModalLabel">Créer un nouveau document</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            {{ form_start(addDocument, {'action': path('add_document'), 'method': 'POST'}) }}
+            
+            <!-- Type de document -->
+            <div class="form-group">
+            {{ form_label(addDocument.typeDocument, 'Type de document', {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget(addDocument.typeDocument, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(addDocument.typeDocument) }}
+            <!-- Bouton pour ouvrir la modal -->
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addTypeDocumentModal">
+                Ajouter un nouveau type de document
+            </button>
+            </div>
+            
+            <!-- Date -->
+            <div class="form-group">
+            {{ form_label(addDocument.dateDocument, 'Date', {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget(addDocument.dateDocument, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(addDocument.dateDocument) }}
+            </div>
+            
+            <!-- Dossier -->
+            {% if dossier is not null %}
+            <div class="form-group">
+                {{ form_label(addDocument.dossier, 'Dossier', {'label_attr': {'class': 'col-form-label'}}) }}
+                {{ form_widget(addDocument.dossier, {'attr': {'class': 'form-control', 'value': dossier.name}}) }}  <!-- Make it readonly -->
+                {{ form_errors(addDocument.dossier) }}
+            </div>
+            {% endif %}
+            
+            <!-- Détails -->
+            <div class="form-group">
+            {{ form_label(addDocument.details, 'Détails', {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget(addDocument.details, {'attr': {'class': 'form-control', 'placeholder': 'Ajoutez des détails...'}}) }}
+            {{ form_errors(addDocument.details) }}
+            </div>
+            
+            <!-- Expéditeur -->
+            <div class="form-group">
+            {{ form_label(addDocument.expediteur, 'Expéditeur', {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget(addDocument.expediteur, {'attr': {'class': 'form-control', 'placeholder': 'Nom de l\'expéditeur'}}) }}
+            {{ form_errors(addDocument.expediteur) }}
+            </div>
+            
+            <!-- Destinataire -->
+            <div class="form-group">
+            {{ form_label(addDocument.destinataire, 'Destinataire', {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget(addDocument.destinataire, {'attr': {'class': 'form-control', 'placeholder': 'Nom du destinataire'}}) }}
+            {{ form_errors(addDocument.destinataire) }}
+            </div>
+                      
+            <!-- Fichier -->
+            <div class="form-group">
+            {{ form_label(addDocument.file_path, 'Fichier', {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget(addDocument.file_path, {'attr': {'class': 'form-control-file'}}) }}
+            {{ form_errors(addDocument.file_path) }}
+            </div>
+            
+            <!-- Actif -->
+            <div class="form-check">
+            {{ form_widget(addDocument.isActive, {'attr': {'class': 'form-check-input'}}) }}
+            {{ form_label(addDocument.isActive, 'Actif', {'label_attr': {'class': 'form-check-label'}}) }}
+            {{ form_errors(addDocument.isActive) }}
+            </div>    
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        </div>
+        {{ form_end(addDocument) }}
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour ajouter un nouveau type de document -->
+<div class="modal fade" id="addTypeDocumentModal" tabindex="-1" aria-labelledby="addTypeDocumentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTypeDocumentModalLabel">Ajouter un nouveau type de document</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            {% if dossier is not null %}
+                {{ form_start(addTypeDocument, {'action': path('add_TypeDocument', {'id': dossier.id}), 'method': 'POST', 'attr': {'class': 'form'}}) }}
+                {{ form_label(addTypeDocument.name, 'Nom du type de document') }}
+                {{ form_widget(addTypeDocument.name, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(addTypeDocument.name) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                {{ form_widget(addTypeDocument.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                {{ form_end(addTypeDocument) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

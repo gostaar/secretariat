@@ -14,49 +14,27 @@ services:
       - symfony
     container_name: database
 
-  apache:
+  nginx_php:
     build:
       context: .
-      dockerfile: apache.dockerfile
+      dockerfile: nginx_php.dockerfile
     ports:
-      - 8080:80 # Le 1er port est celui de l'hôte
+      - 8080:80
     volumes:
       - .:/var/www/html
     depends_on:
       - mysql
-      - php
+      - redis
     networks:
       - symfony
-    container_name: apache
+    container_name: nginx_php
 
-  php:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-      args:
-        - UID=${UID:-1000}
-        - GID=${UID:-1000}
-    environment:
-      DATABASE_URL: "mysql://symfony:secret@mysql:3306/symfony"
-    volumes:
-      - .:/var/www/html
-    networks:
-      - symfony
-    container_name: php
-
-  composer:
-    build:
-      context: .
-      dockerfile: composer.dockerfile
-      args:
-        - UID=${UID:-1000}
-        - GID=${UID:-1000}
-    volumes:
-      - .:/var/www/html
-    working_dir: /var/www/html
-    networks:
-      - symfony
-    container_name: composer
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    expose:
+      - "6379"
 
   node:
     container_name: node
