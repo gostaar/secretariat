@@ -53,7 +53,7 @@ body {
       }
 }
 
-/* ===== navigation ===== */
+/* ===== header et navigation ===== */
 
 .body-user{
     min-width: 100vw;
@@ -63,8 +63,6 @@ body {
     display: flex;
     flex-flow: column wrap;
 }
-
-/* ===== header ===== */
 
 .bg-rgba{
     background-color: rgba(0, 0, 0, 0.8);
@@ -97,6 +95,74 @@ body .sidebar.d-none.d-md-block {
     position: fixed;
     width: 100%;
     transition: all 0.3s ease-in-out;
+}
+
+.sidebar ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    padding-top:5rem;
+    padding-bottom: 1rem;
+}
+
+.sidebar a {
+    color: black;
+    text-decoration: none;
+}
+
+body .sidebar.d-none.d-md-block {
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.d-md-none .sidebar {
+    background-color: #343a40;
+    position: fixed;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+#navBurger {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 20px;
+}
+
+#menu-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    z-index: 1100;
+    color:rgb(128, 128, 128);
+}
+
+@media (max-width: 767px) {
+    .sidebar {
+        display: none;
+    }
+
+    .navBarEspaceClient{
+        color: rgb(0, 195, 255) !important;
+        text-decoration: underline rgb(0, 195, 255) !important;
+    }
+
+    #menu-toggle {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        border-radius: 5px;
+        border: 2px solid transparent;
+        box-shadow: 0 0 5px 4px rgb(218, 215, 215); 
+        background-color: rgba(255,255,255,0.9);
+    
+    }
+
+    /* .sidebar.active {
+        display: block;
+    } */
 }
 
 #navBurger {
@@ -264,4 +330,51 @@ body .sidebar.d-none.d-md-block {
     .btn {
         font-size: 0.70rem;
     }
-  }
+}
+
+/* ==== spinner temps de chargement ===== */
+
+#loadingIndicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    display: none;
+}
+
+.spinner {
+    display: flex;
+    justify-content: space-between;
+    width: 50px;
+}
+
+.spinner > div {
+    width: 12px;
+    height: 12px;
+    background-color: #333;
+    border-radius: 50%;
+    animation: bounce 1.2s infinite ease-in-out;
+}
+
+.spinner .bounce1 {
+    animation-delay: 0s;
+}
+
+.spinner .bounce2 {
+    animation-delay: 0.2s;
+}
+
+.spinner .bounce3 {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(0); }
+    50% { transform: scale(1); }
+}

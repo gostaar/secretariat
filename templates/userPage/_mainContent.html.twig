@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body p-0 m-md-4 c-access d-flex justify-content-around flex-wrap">
                     {% set items = [
-                        { id: 'btnEspacePersonnel', href: 'link-espacepersonnel', icon: 'fa-user-circle', title: 'Espace Personnel', service: 'Espace Personnel' },
+                        { id: 'btnEspacePersonnel', href: 'link-espacepersonnel', icon: 'fa-user-circle', title: 'Espace Personnel' },
                         { id: 'btnAgenda', href: 'link-Agenda', icon: 'fa-calendar-alt', title: 'Agenda', service: 'Agenda' },
                         { id: 'btnTelephone', href: 'link-Telephone', icon: 'fa-phone-alt', title: 'Gestion Téléphonique', service: 'Téléphonique' },
                         { id: 'btnAdministratif', href: 'link-Administratif', icon: 'fa-file-alt', title: 'Documents Administratifs', service: 'Administratif' },
@@ -19,7 +19,7 @@
 
                     <div class="card-body p-5 m-md-4 c-access d-flex justify-content-around flex-wrap">
                         {% for item in items %}
-                            {% if item.service in services %}
+                            {% if item.service is not defined or item.service in services %}
                                 <a id="{{ item.id }}" href="{{ path('user', {fragment: item.href}) }}" style="max-width:130px;" class="text-center d-flex flex-column flex-start text-decoration-none">
                                     <i class="fas {{ item.icon }} fa-2x d-sm-none text-black"></i>
                                     <i class="fas {{ item.icon }} fa-3x d-none d-sm-inline d-md-inline text-black"></i>

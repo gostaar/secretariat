@@ -13,7 +13,7 @@
 {% endif %}
 
 <header class="navbar">
-    <button class="change-fragment-site btn fs-3 text-start fw-bold text-primary flex-grow-1" 
+    <button class="change-fragment-site btn fs-3 text-center text-md-start text-lg-start fw-bold text-primary flex-grow-1" 
     data-fragment={{fragmentValue}} 
     data-subFragment="acceuil" 
     style="text-decoration: none;">
@@ -120,17 +120,17 @@
 
                     <li class="text-center mb-2">
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a class="navBarEspaceClient text-success nav-link text-decoration-none" href="{{ path('admin') }}">
+                            <a type='button' class="btn navBarEspaceClient text-success nav-link text-decoration-none" href="{{ path('admin') }}">
                                 <h5>{{ app.user.email }}</h5>
                             </a>
                         {% elseif is_granted('ROLE_USER') %}
-                            <a class="navBarEspaceClient text-success nav-link text-decoration-none" href="{{ path('user') }}">
+                            <a type='button' class="btn navBarEspaceClient text-success nav-link text-decoration-none" href="{{ path('user') }}">
                                 <h5>{{ app.user.email }}</h5>
                             </a>
                         {% else %}
-                            <h5><a href="{{ path('app_login') }}" class='nav-link'>
-                                Espace client
-                            </a></h5>
+                            <a href="{{ path('app_login') }}" type='button' class='btn nav-link text-white'>
+                                <h5>Espace client</h5>
+                            </a>
                         {% endif %}
                     </li>
                 </ul>

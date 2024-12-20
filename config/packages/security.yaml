@@ -11,6 +11,11 @@ security:
                 property: email
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
+
+        home:
+            pattern: ^/$
+            security: false
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -29,10 +34,9 @@ security:
                 target: /
                 invalidate_session: true 
 
-
         api:
             pattern: ^/google-calendar
-            stateless: true
+            # stateless: true
             json_login:
                 check_path: /google-calendar/login
             # activate different ways to authenticate
@@ -44,10 +48,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/client, roles: ROLE_ADMIN}
+        # Permettre l'accès anonyme pour la page d'accueil
+        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY, allow_if: "not is_granted('IS_AUTHENTICATED_FULLY')" }        
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/user, roles: ROLE_USER}
-        - { path: ^/google-calendar, roles: [ROLE_USER, ROLE_ADMIN]}
+        # - { path: ^/google-calendar, roles: [ROLE_USER, ROLE_ADMIN]}
         # ici je voudrais que si je suis authentifié, je ne peux pas accéder à ces pages
         # - { path: ^/(login|)$, roles: IS_AUTHENTICATED_FULLY, allow_if: false }
 

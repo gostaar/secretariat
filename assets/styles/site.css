@@ -30,11 +30,12 @@ body {
     animation: fade 2s linear;
 }
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
     .bg-image {
         padding: 1rem;
-    }
-}
+    } */
+
+/* } */
 
 /* ========== Footer et Contact ========== */
 footer {
@@ -369,6 +370,16 @@ body .sidebar.d-none.d-md-block {
     border-radius: 20px;
 }
 
+#menu-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    z-index: 1100;
+    color:rgb(128, 128, 128);
+}
+
 @media (max-width: 767px) {
     .sidebar {
         display: none;
@@ -377,7 +388,19 @@ body .sidebar.d-none.d-md-block {
     .navBarEspaceClient{
         color: rgb(0, 195, 255) !important;
         text-decoration: underline rgb(0, 195, 255) !important;
-      }
+    }
+
+    #menu-toggle {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        border-radius: 5px;
+        border: 2px solid transparent;
+        box-shadow: 0 0 5px 4px rgb(218, 215, 215); 
+        background-color: rgba(255,255,255,0.9);
+    
+    }
 
     /* .sidebar.active {
         display: block;
@@ -538,3 +561,49 @@ body .sidebar.d-none.d-md-block {
     }
 }
 
+/* ==== spinner temps de chargement ===== */
+
+#loadingIndicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    display: none;
+}
+
+.spinner {
+    display: flex;
+    justify-content: space-between;
+    width: 50px;
+}
+
+.spinner > div {
+    width: 12px;
+    height: 12px;
+    background-color: #333;
+    border-radius: 50%;
+    animation: bounce 1.2s infinite ease-in-out;
+}
+
+.spinner .bounce1 {
+    animation-delay: 0s;
+}
+
+.spinner .bounce2 {
+    animation-delay: 0.2s;
+}
+
+.spinner .bounce3 {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(0); }
+    50% { transform: scale(1); }
+}

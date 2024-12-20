@@ -11,35 +11,35 @@
     {% set fragmentButtonValue = 'part' %}
     {% set buttonValue = 'Vers les particuliers' %}
 {% endif %}
-<section class='background-contact d-flex flex-column flex-fill'>
+<section class='background-contact d-flex flex-column flex-fill min-vh-100'>
   {% include 'partials/Page/_navBar.html.twig' %}
-   <section class="hero d-flex justify-content-center flex-column flex-grow-1 position-relative">
+   <section class="hero">
         <div class="heroContent">
             <h1>Contactez-nous</h1>
             <p class='d-flex flex-wrap'>Nous sommes à votre écoute pour répondre à toutes vos questions.</p>
         </div>
-      <div class="position-absolute bottom-0 end-0 mb-3 me-3">
+      <div class="w-100 my-3">
           <button type="button" class="change-fragment-site btn btn-primary fs-5" data-fragment={{fragmentButtonValue}} data-subFragment="acceuil">{{buttonValue}}</button>
       </div>
   </section>
-</section>
-<section class='bg-white'>
-  <h1 class="expert-title">Coordonnées</h1>
-  <div id="experts" class="experts">
-      {% set contacts = [
-          { 'icon': 'fas fa-home fa-3x text-danger', 'title': 'Adresse', 'content': '123 Rue des Entreprises, 75000 Paris, France' },
-          { 'icon': 'fas fa-envelope fa-3x text-danger', 'title': 'Email', 'content': '<a href="mailto:contact@secretairepro.com">contact@secretairepro.com</a>' },
-          { 'icon': 'fas fa-phone-alt fa-3x text-danger', 'title': 'Téléphone', 'content': '<a href="tel:+1234567890">+123 456 7890</a>' }
-      ] %}
-      
-      {% for contact in contacts %}
-          <div class="expert-item d-flex flex-column align-items-center">
-              <i class="{{ contact.icon }}" style="height:60px;"></i>
-              <h2>{{ contact.title }}</h2>
-              <p>{{ contact.content|raw }}</p>
-          </div>
-      {% endfor %}
-  </div>
+  <section class='intro d-flex flex-column justify-content-evenly bg-white flex-fill'>
+    <h1 class="expert-title">Coordonnées</h1>
+    <div id="experts" class="experts">
+        {% set contacts = [
+            { 'icon': 'fas fa-home fa-3x text-danger', 'title': 'Adresse', 'content': '123 Rue des Entreprises, 75000 Paris, France' },
+            { 'icon': 'fas fa-envelope fa-3x text-danger', 'title': 'Email', 'content': '<a href="mailto:contact@secretairepro.com">contact@secretairepro.com</a>' },
+            { 'icon': 'fas fa-phone-alt fa-3x text-danger', 'title': 'Téléphone', 'content': '<a href="tel:+1234567890">+123 456 7890</a>' }
+        ] %}
+        
+        {% for contact in contacts %}
+            <div class="expert-item d-flex flex-column align-items-center">
+                <i class="{{ contact.icon }}" style="height:60px;"></i>
+                <h2>{{ contact.title }}</h2>
+                <p>{{ contact.content|raw }}</p>
+            </div>
+        {% endfor %}
+    </div>
+  </section>
 </section>
 
 

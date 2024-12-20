@@ -10,26 +10,26 @@
     {% set fragmentButtonValue = 'part' %}
     {% set buttonValue = 'Vers les particuliers' %}
 {% endif %}
-<section class='background-index d-flex flex-column flex-fill'>
+<section class='background-index d-flex flex-column flex-fill min-vh-100'>
 
       {% include 'partials/Page/_navBar.html.twig' %}
 
-    <section class="hero flex-grow-1 position-relative">
+    <section class="hero">
         <div class="heroContent">
             <h1>Votre Secrétaire Indépendante</h1>
             <p>Des services de secrétariat professionnels pour tous.</p>
         </div>
-        <div>
+        <div class="w-100 my-3">
             <button type="button" class="change-fragment-site btn btn-warning fs-5 border border-secondary" data-fragment={{fragmentValue}} data-subFragment="contact" >
                 Contactez-nous
             </button>
         </div>
-        <div class="position-absolute bottom-0 end-0 mb-3 me-3">
+        <div class="w-100 my-3">
           <button type="button" class="change-fragment-site btn btn-primary fs-5" data-fragment={{fragmentButtonValue}} data-subFragment="acceuil">{{buttonValue}}</button>
         </div>
     </section>
 
-    <section class='intro bg-white'>
+    <section class='intro d-flex flex-column justify-content-evenly bg-white flex-fill'>
         <h1 class="expert-title">Libérez-vous des tâches administratives et concentrez-vous sur l’essentiel.</h1>
         <div id="experts" class="experts">
             {% set experts = [] %}

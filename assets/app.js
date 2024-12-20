@@ -10,21 +10,58 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-function changeFragmentSite() {
-
-    document.body.addEventListener('click', function (event) {
+async function changeFragmentSite() {
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    
+    document.body.addEventListener('click', async function (event) {
         if (event.target && event.target.classList.contains('change-fragment-site')) {
             const fragment = event.target.dataset.fragment;
             const subFragment = event.target.dataset.subfragment;
 
-            fetch(`/?fragment=${fragment}&subFragment=${subFragment}`, {
-                method: 'GET',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
+            loadingIndicator.style.display = 'block';
+
+            try {
+                // Effectuer la requête AJAX
+                const response = await fetch(`/?fragment=${fragment}&subFragment=${subFragment}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                });
+                const data = await response.json();
+
+                // Masquer l'indicateur de chargement après la réponse
+                loadingIndicator.style.display = 'none';
+
+                if (subFragment === 'service') {
+                    document.querySelector('#fragmentContent').addEventListener('click', function (event) {
+                        if (event.target && event.target.classList.contains('btn-link')) {
+                            const button = event.target.closest('.list-group-flush');
+                            if (button) {
+                                const btn = button.querySelector('.btn-link');
+                                if (btn.classList.contains('collapsed')) {
+                                    button.classList.remove('selected');
+                                } else {
+                                    button.classList.add('selected');
+                                }
+                            }
+                        }
+                    });
+                }
+
+                if (subFragment === 'job') {
+                    document.querySelector('#fragmentContent').addEventListener('change', function (event) {
+                        if (event.target && event.target.id === 'job') {
+                            const customJobField = document.getElementById('customJob');
+                            if (event.target.value === 'Autre') {
+                                customJobField.classList.remove('d-none');
+                            } else {
+                                customJobField.classList.add('d-none');
+                            }
+                        }
+                    });
+                }
+
                 if (data.fragmentContent) {
                     const fragmentContent = document.getElementById('fragmentContent');
                     if (fragmentContent) {
@@ -38,37 +75,59 @@ function changeFragmentSite() {
                         subFragmentContent.innerHTML = data.subFragmentContent;
                     }
                 }
-            })
-            .catch(error => console.error('Erreur:', error));
+            } catch (error) {
+                console.error('Erreur:', error);
+                loadingIndicator.style.display = 'none'; // Masquer l'indicateur en cas d'erreur
+            }
         }
     });
 }
 
-function changeFragmentUser(){
+
+async function changeFragmentUser() {
     const buttons = document.querySelectorAll('.change-fragment');
+    const loadingIndicator = document.getElementById('loadingIndicator');
 
     buttons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', async function() {  // Ajout de async ici pour la fonction click
             const fragment = button.getAttribute('data-fragment');
+            
+            // Affichage de l'indicateur de chargement
+            loadingIndicator.style.display = 'block';
 
-            fetch(`/user?fragment=${fragment}`, {
-                method: 'GET',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest', 
-                },
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('fragmentContent').innerHTML = data;
+            try {
+                // Récupération des données avec fetch
+                const response = await fetch(`/user?fragment=${fragment}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest', 
+                    },
+                });
 
-                buttons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-            })
-            .catch(error => console.error('Error:', error));
+                // Vérification de la réponse
+                if (response.ok) {
+                    const data = await response.json();  // Attendre la conversion en JSON
+
+                    // Masquer l'indicateur de chargement une fois les données récupérées
+                    loadingIndicator.style.display = 'none';
+
+                    // Mettre à jour le contenu du fragment
+                    document.getElementById('fragmentContent').innerHTML = data.fragmentContent;
+
+                    // Mettre à jour les classes des boutons pour l'état actif
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                } else {
+                    throw new Error('Erreur lors de la récupération des données');
+                }
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                loadingIndicator.style.display = 'none'; // Masquer l'indicateur en cas d'erreur
+            }
         });
     });
 }
-
 
 // function handleGoogleEventButton() {
 //     const btnNewGoogleEvent = document.getElementById('btnNewGoogleEvent');

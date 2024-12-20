@@ -15,12 +15,12 @@ framework:
     # router:
     #     resource: '%kernel.project_dir%/config/routes.yaml'
     cache:
-        app: cache.redis
-        system: cache.adapter.filesystem
-        pools:
-            cache.redis:
-                adapter: cache.adapter.redis
-        default_redis_provider: 'redis://%redis_host%:%redis_port%'
+        app: cache.adapter.redis
+        # system: cache.adapter.filesystem
+        # pools:
+        #     cache.redis:
+        #         adapter: cache.adapter.redis
+        default_redis_provider: 'redis://host.docker.internal:6379'
     serializer:
         enabled: true
     session:
