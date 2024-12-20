@@ -14,22 +14,24 @@ services:
       - symfony
     container_name: database
 
-  nginx_php:
+  apache:
     build:
       context: .
-      dockerfile: nginx_php.dockerfile
+      dockerfile: apache.dockerfile
     ports:
-      - 8080:80
+      - 8080:80 # Le 1er port est celui de l'hôte
     volumes:
-      - .:/var/www/html
+      - .:/var/www/html/
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
     depends_on:
       - mysql
+      - redis
     networks:
       - symfony
-    container_name: nginx_php
+    container_name: apache
 
   node:
-    container_name: node
     build: 
       context: .
       dockerfile: node.dockerfile
@@ -40,9 +42,20 @@ services:
       - NODE_ENV=development
     networks:
       - symfony
+    container_name: node
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    networks:
+      - symfony
+    container_name: redis
+    restart: always
 
 networks:
   symfony:
     driver: bridge
+
 volumes:
   mysql-data:

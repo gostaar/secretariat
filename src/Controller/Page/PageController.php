@@ -4,26 +4,30 @@ namespace App\Controller\Page;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
+use App\Service\RedisService;
+use Symfony\Component\Routing\Annotation\Route;
+
+
 
 class PageController extends AbstractController
 {
-    private CacheInterface $cache;
+    private RedisService $redisService;
+    private CacheInterface $cache; // Assurez-vous que la propriété est définie
 
-    // Injection du service de cache
-    public function __construct(CacheInterface $cache)
+    // Injectez le service CacheInterface via le constructeur
+    public function __construct(RedisService $redisService, CacheInterface $cache)
     {
-        $this->cache = $cache;
+        $this->redisService = $redisService;
+        $this->cache = $cache; // Initialisez la propriété cache
     }
 
+
     #[Route('/', name: 'home_index')]
-    public function index(AuthenticationUtils $authenticationUtils, Request $request): Response
+    public function index(Request $request): Response
     {
         $commonFragments = [
             'acceuil' => 'partials/Page/_intro.html.twig',
@@ -49,12 +53,18 @@ class PageController extends AbstractController
         ];
         
         $fragment = $request->query->get('fragment', 'partproChoice');
+        $cacheKey = "fragment_content_$fragment";
+
         $subFragment = $request->query->get('subFragment', 'acceuil');
        
         $subFragmentTemplate = $sections[$fragment]['subFragments'][$subFragment] ?? null;
         if (!$subFragmentTemplate) {$subFragmentTemplate = 'partials/Page/_intro.html.twig';}
         
-        $subFragmentContent = $this->renderView($subFragmentTemplate);
+        //$subFragmentContent = $this->renderView($subFragmentTemplate);
+        $subFragmentContent = $this->cache->get("subFragment_{$cacheKey}_{$subFragment}", function (ItemInterface $item) use ($subFragmentTemplate) {
+            $item->expiresAfter(3600); // expire après 1 heure
+            return $this->renderView($subFragmentTemplate);
+        });
 
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse([

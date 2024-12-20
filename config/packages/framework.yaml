@@ -1,19 +1,31 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
-    secret: '%env(APP_SECRET)%'
-    #csrf_protection: true
+    # secret: '%env(APP_SECRET)%'
+    # #csrf_protection: true
 
-    # Note that the session will be started ONLY if you read or write from it.
-    session:
-        enabled: true
-        name: PHPSESSID
+    # # Note that the session will be started ONLY if you read or write from it.
+    # session:
+    #     enabled: true
+    #     name: PHPSESSID
         #SESSION AVEC REDIS
         # handler_id: 'snc_redis.session.handler'
         # save_path: '%env(REDIS_URL)%/sessions'
     
+    secret: '%env(APP_SECRET)%'
+    # router:
+    #     resource: '%kernel.project_dir%/config/routes.yaml'
     cache:
-        app: 'cache.adapter.redis'
-        default_redis_provider: 'redis://localhost:6379'
+        app: cache.redis
+        system: cache.adapter.filesystem
+        pools:
+            cache.redis:
+                adapter: cache.adapter.redis
+        default_redis_provider: 'redis://%redis_host%:%redis_port%'
+    serializer:
+        enabled: true
+    session:
+        handler_id: null
+    validation: 
 
     #esi: true
     #fragments: true
@@ -22,6 +34,7 @@ framework:
             max_redirects: 7
 
     default_locale: fr
+
 
 when@test:
     framework:

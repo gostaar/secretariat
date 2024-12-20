@@ -1,7 +1,13 @@
 window.addEventListener('DOMContentLoaded', () => {
     // handleGoogleEventButton();
-    changeFragmentUser();
-    changeFragmentSite();
+    if (window.location.pathname.startsWith('/user')) {
+        changeFragmentUser();
+        detailsEvent();
+    }
+    
+    if (window.location.pathname === '/') {
+        changeFragmentSite(); 
+    }
 });
 
 function changeFragmentSite() {
@@ -84,7 +90,7 @@ function changeFragmentUser(){
 // }
 
 // Détails event
-document.addEventListener('DOMContentLoaded', () => {
+function detailsEvent(){
     const eventList = document.querySelectorAll('#eventList .list-group-item');
     const modalTitle = document.getElementById('eventTitle');
     const modalDate = document.getElementById('eventDate');
@@ -105,4 +111,4 @@ document.addEventListener('DOMContentLoaded', () => {
             modalGoogleId.textContent = `Google Event ID : ${item.dataset.googleid}`;
         });
     });
-});
+}

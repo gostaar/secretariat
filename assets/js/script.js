@@ -4,8 +4,13 @@ import { repertoire } from './user/repertoire.js';
 import { contact } from './user/contact.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    linkMenu();
-    page();
-    repertoire();
-    contact();
+    if (window.location.pathname.startsWith('/user')) {
+        linkMenu(); 
+        repertoire();
+        contact(); 
+    }
+    
+    if (window.location.pathname === '/') {
+        page(); 
+    }
 });

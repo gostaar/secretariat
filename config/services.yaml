@@ -9,6 +9,9 @@ parameters:
     googleOauthScope: '%env(GOOGLE_OAUTH_SCOPE)%'
     redirectUri: '%env(REDIRECT_URI)%'
     kernel.logs_dir: '%kernel.project_dir%/var/log'
+    redis_host: '127.0.0.1'     # Adresse du serveur Redis
+    redis_port: 6379            # Port de Redis
+    redis_password: null
    
 services:
 
@@ -38,6 +41,9 @@ services:
             $clientId: '%clientId%'
             $clientSecret: '%clientSecret%'
             $redirectUri: '%redirectUri%'
+
+    App\Service\RedisService:
+        public: true
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

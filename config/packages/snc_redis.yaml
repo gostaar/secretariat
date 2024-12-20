@@ -1,0 +1,18 @@
+snc_redis:
+    clients:
+        default:
+            type: 'phpredis'
+            alias: 'default'
+            dsns:
+                - 'redis://%redis_host%:%redis_port%'
+            # host: '%redis_host%'
+            # port: '%redis_port%'
+            # persistent: false
+            # timeout: 0.0
+    monolog:
+        # handlers:
+        #     redis:
+        #         type: redis
+        client: 'snc_redis.default'
+        key: 'logs'
+        #         formatter: 'monolog.formatter.json'
