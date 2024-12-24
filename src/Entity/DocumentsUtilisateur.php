@@ -44,6 +44,23 @@ class DocumentsUtilisateur
     #[ORM\ManyToOne(inversedBy: 'documents')]
     private ?TypeDocument $typeDocument = null;
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'date_document' => $this->getDateDocument(),
+            'name' => $this->getName(),
+            'expediteur' => $this->getExpediteur(),
+            'destinataire' => $this->getDestinataire(),
+            'file_path' => $this->getFilePath(),
+            'is_active' => $this->isActive(),
+            'details' => $this->getDetails(),
+            'user' => $this->getUser(),
+            'dossier' => $this->getDossier(),
+            'typeDocument' => $this->getTypeDocument(),
+        ];
+    }
+
     public function __toString(): string
     {
         return $this->name;

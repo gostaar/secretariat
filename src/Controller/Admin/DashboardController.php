@@ -21,15 +21,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class DashboardController extends AbstractDashboardController
 {   
+    private $cache;
+
+    public function __construct(CacheInterface $cache)
+    {
+        $this->cache = $cache;
+    }
+
     #[Route('/admin', name: 'admin')]
     public function home_index():Response
     {
-        $routeBuilder = $this->container->get(AdminUrlGenerator::class);
-        $url = $routeBuilder->setController(UserCrudController::class)->generateUrl();
+        $url = $this->cache->get('admin_url', function (ItemInterface $item) {
+            $item->expiresAfter(3600); 
+            $routeBuilder = $this->container->get(AdminUrlGenerator::class);
+            return $routeBuilder->setController(UserCrudController::class)->generateUrl();
+        });
 
         return $this->redirect($url);
     }
@@ -37,12 +48,12 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Secretaire');
+            ->setTitle('Tableaud d\'administration');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToRoute('Retour vers le site', 'fa fa-home', 'home_index');
+        yield MenuItem::linkToUrl('Retour vers le site', 'fa fa-home', '/');
 
         // Section Utilisateurs
         yield MenuItem::section('Gestion des utilisateurs');

@@ -44,6 +44,17 @@ class Services
         $this->dossiers = new ArrayCollection();
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'users' => $this->getUsers(),
+            'events' => $this->getEvents(),
+            'dossiers' => $this->getDossiers(),
+        ];
+    }
+
     public function __toString(): string
     {
         return $this->name; // Retourne le nom du dossier par exemple

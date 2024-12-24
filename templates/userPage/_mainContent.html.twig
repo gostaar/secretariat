@@ -7,7 +7,7 @@
                 <div class="container card-header d-flex justify-content-between align-items-center">
                     <h4>Accès rapide</h4>
                 </div>
-                <div class="card-body p-0 m-md-4 c-access d-flex justify-content-around flex-wrap">
+                <div class="card-body p-5 m-md-4 c-access d-flex justify-content-around flex-wrap">
                     {% set items = [
                         { id: 'btnEspacePersonnel', href: 'link-espacepersonnel', icon: 'fa-user-circle', title: 'Espace Personnel' },
                         { id: 'btnAgenda', href: 'link-Agenda', icon: 'fa-calendar-alt', title: 'Agenda', service: 'Agenda' },
@@ -16,19 +16,27 @@
                         { id: 'btnCommercial', href: 'link-Commercial', icon: 'fa-briefcase', title: 'Documents commerciaux', service: 'Commercial' },
                         { id: 'btnNumerique', href: 'link-Numerique', icon: 'fa-laptop-code', title: 'Documents numériques', service: 'Numérique' }
                     ] %}
+                    {% for item in items %}
+                        {% if item.service is not defined or item.service in services %}
+                            <div class="d-flex flex-column align-items-center" style="position: relative; max-width: 130px;">
+                                <button 
+                                    type="button" 
+                                    id="{{ item.id }}" 
+                                    data-fragment="{{ item.href }}" 
+                                    class="change-fragment btn d-flex flex-column flex-start align-items-center text-decoration-none"
+                                    style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: transparent; border: none; z-index: 1; padding: 0;">
+                                </button>
 
-                    <div class="card-body p-5 m-md-4 c-access d-flex justify-content-around flex-wrap">
-                        {% for item in items %}
-                            {% if item.service is not defined or item.service in services %}
-                                <a id="{{ item.id }}" href="{{ path('user', {fragment: item.href}) }}" style="max-width:130px;" class="text-center d-flex flex-column flex-start text-decoration-none">
-                                    <i class="fas {{ item.icon }} fa-2x d-sm-none text-black"></i>
-                                    <i class="fas {{ item.icon }} fa-3x d-none d-sm-inline d-md-inline text-black"></i>
-                                    <h6 class="d-block d-md-none text-black">{{ item.title }}</h6>
-                                    <h5 class="d-none d-md-block text-black">{{ item.title }}</h5>
-                                </a>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                                <!-- Affichage de l'icône en version mobile et desktop -->
+                                <i class="fas {{ item.icon }} fa-2x d-sm-none text-black" style="pointer-events: none;"></i>
+                                <i class="fas {{ item.icon }} fa-3x d-none d-sm-inline d-md-inline text-black" style="pointer-events: none;"></i>
+
+                                <!-- Affichage du titre en version mobile et desktop -->
+                                <h6 class="d-block d-md-none text-center text-black" style="pointer-events: none;">{{ item.title }}</h6>
+                                <h5 class="d-none d-md-block text-center text-black" style="pointer-events: none;">{{ item.title }}</h5>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
 

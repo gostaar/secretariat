@@ -2,7 +2,7 @@
     {# Inclure le template principal du fragment #}
     {% include sections[currentFragment].template with {
         'currentFragment': currentFragment,
-        'currentSubFragment': currentSubFragment
+        'currentSubFragment': currentSubFragment,
     } %}
     
     {% if sections[currentFragment].subFragments is defined and sections[currentFragment].subFragments[currentSubFragment] is defined %}

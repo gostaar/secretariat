@@ -4,12 +4,12 @@ namespace App\Controller\User;
 use App\Entity\Services;
 use App\Form\ServicesType;
 use App\Service\ServiceService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ServicesController extends AbstractController
@@ -67,6 +67,26 @@ class ServicesController extends AbstractController
         $user = $this->getUser();
         $this->serviceService->deleteService($id, $user);
         return new JsonResponse(['success' => true], 200);
+    }
+
+    #[Route('/create-services', name: 'create_services')]
+    public function createServices(EntityManagerInterface $em): Response
+    {
+        $servicesNames = Services::AVAILABLE_SERVICES;
+
+        foreach ($servicesNames as $serviceName) {
+            // Créer un nouvel objet Service
+            $service = new Services();
+            $service->setName($serviceName);
+
+            // Persister le service dans la base de données
+            $em->persist($service);
+        }
+
+        // Enregistrer toutes les nouvelles entités dans la base de données
+        $em->flush();
+
+        return new Response('Services créés avec succès!');
     }
 
 }

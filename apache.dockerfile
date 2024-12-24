@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y \
     php-curl \
     php-mbstring \
     php-xml \
-    php-zip
+    php-zip \
+    php-intl
 
 # Installer l'extension Redis pour PHP
 RUN apt-get update && apt-get install -y \

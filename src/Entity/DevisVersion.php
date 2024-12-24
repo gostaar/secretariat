@@ -25,7 +25,7 @@ class DevisVersion
     private ?bool $is_active = null;
 
     #[ORM\Column(type: 'string', enumType: DevisStatus::class)]
-    private ?string $status = null;
+    private DevisStatus $status = DevisStatus::EN_ATTENTE;
 
     #[ORM\Column(length: 255)]
     private ?string $version = null;
@@ -36,7 +36,6 @@ class DevisVersion
     public function __construct()
     {
         // Définir une valeur par défaut pour le statut, par exemple "pending"
-        $this->status = DevisStatus::EN_ATTENTE->value;
     }
 
     public function getId(): ?int
@@ -63,20 +62,21 @@ class DevisVersion
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): DevisStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function getStatusLabel(): string
     {
-        if (!in_array($status, DevisStatus::getValues())) {
-            throw new \InvalidArgumentException("Invalid status value");
-        }
+        return $this->status->value;
+    }
+
+    public function setStatus(DevisStatus $status): self
+    {
         $this->status = $status;
         return $this;
     }
-
     public function getCommentaire(): ?string
     {
         return $this->commentaire;
@@ -96,7 +96,7 @@ class DevisVersion
 
     public function setActive(bool $is_active): static
     {
-        $this->IsActivis_activee = $is_active;
+        $this->is_active = $is_active;
 
         return $this;
     }

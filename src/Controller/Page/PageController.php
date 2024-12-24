@@ -11,23 +11,21 @@ use Symfony\Contracts\Cache\ItemInterface;
 use App\Service\RedisService;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-
 class PageController extends AbstractController
 {
     private RedisService $redisService;
-    private CacheInterface $cache; // Assurez-vous que la propriété est définie
+    private CacheInterface $cache; 
 
-    // Injectez le service CacheInterface via le constructeur
     public function __construct(RedisService $redisService, CacheInterface $cache)
     {
         $this->redisService = $redisService;
-        $this->cache = $cache; // Initialisez la propriété cache
+        $this->cache = $cache;
     }
 
-
-    #[Route('/', name: 'home_index')]
-    public function index(Request $request): Response
+    /**
+     * Definition of sections
+     */
+    private function getSections()
     {
         $commonFragments = [
             'acceuil' => 'partials/Page/_intro.html.twig',
@@ -35,11 +33,11 @@ class PageController extends AbstractController
             'service' => 'partials/Page/_service.html.twig',
             'contact' => 'partials/Page/_contact.html.twig',
         ];
-        
+
         $sections = [
             'pro' => [
                 'template' => 'partials/Page/index.html.twig',
-                'subFragments' => $commonFragments, 
+                'subFragments' => $commonFragments,
             ],
             'part' => [
                 'template' => 'partials/Page/index.html.twig',
@@ -51,34 +49,68 @@ class PageController extends AbstractController
                 'template' => 'pages/_partproChoice.html.twig',
             ],
         ];
-        
+
+        return [
+            'sections' => $sections,
+            'commonFragments' => $commonFragments,
+        ];
+    }
+
+    /**
+     * Variables of initialization
+     */
+    private function getInitializations($fragment)
+    {
+        return [
+            'fragmentValue' => $fragment,
+            'fragmentButtonValue' => $fragment === 'part' ? 'pro' : 'part',
+            'buttonValue' => $fragment === 'part' ? 'Vers les pros' : 'Vers les particuliers',
+            'titleAdministratif' => $fragment === 'part' ? 'Gestion Administrative' : 'Services Administratifs',
+            'titleNumerique' => $fragment === 'part' ? 'Gestion Numérique' : 'Services de Développement Numérique',
+        ];
+    }
+
+    #[Route('/', name: 'home_index')]
+    public function index(Request $request): Response
+    {   
+        $session = $request->getSession();
+        $session->invalidate();
+        $response = new Response();
+        $response->headers->clearCookie('PHPSESSID');
+
+        $data = $this->getSections();
+        $sections = $data['sections'];
+        $commonFragments = $data['commonFragments'];
+
         $fragment = $request->query->get('fragment', 'partproChoice');
-        $cacheKey = "fragment_content_$fragment";
+        
+        $initialisation = $this->getInitializations($fragment);
 
         $subFragment = $request->query->get('subFragment', 'acceuil');
-       
-        $subFragmentTemplate = $sections[$fragment]['subFragments'][$subFragment] ?? null;
-        if (!$subFragmentTemplate) {$subFragmentTemplate = 'partials/Page/_intro.html.twig';}
-        
-        //$subFragmentContent = $this->renderView($subFragmentTemplate);
-        $subFragmentContent = $this->cache->get("subFragment_{$cacheKey}_{$subFragment}", function (ItemInterface $item) use ($subFragmentTemplate) {
-            $item->expiresAfter(3600); // expire après 1 heure
-            return $this->renderView($subFragmentTemplate);
-        });
 
+        $fragmentData = $sections[$fragment] ?? $sections['partproChoice'];
+        $subFragmentTemplate = $fragmentData['subFragments'][$subFragment] ?? $commonFragments['acceuil'];
+
+        $cacheKey = "subFragment_{$fragment}_{$subFragment}";
+        $subFragmentContent = $this->cache->get($cacheKey, function (ItemInterface $item) use ($subFragmentTemplate, $initialisation) {
+            $item->expiresAfter(3600);
+            return $this->renderView($subFragmentTemplate, ['initialisation' => $initialisation]);
+        });
+        
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse([
-                'fragmentContent' => $this->renderView($sections[$fragment]['template']),
+                'fragmentContent' => $this->renderView(
+                    $fragmentData['template'], 
+                ),
                 'subFragmentContent' => $subFragmentContent,
             ]);
-        }
-
+        }   
+       
         return $this->render('pages/index.html.twig', [
             'sections' => $sections,
             'currentFragment' => $fragment,
             'currentSubFragment' => $subFragment,
             'currentSubFragmentTemplate' => $subFragmentTemplate,
-
         ]);
     }
 }

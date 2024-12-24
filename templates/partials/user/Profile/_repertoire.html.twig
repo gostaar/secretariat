@@ -34,12 +34,12 @@
                   </div>
               {% else %}
                   <div id="dossierRepertoireList" class="d-flex flex-wrap">
-                      {% for dossier in filteredDossiers|slice(0, 3) %}
+                      {% for dossier in filteredDossiers %}
                           <a id="dossier_{{ dossier.id }}" data-id="{{ dossier.id }}" 
                             style="max-width:100px;" 
                             class="dossier repertoire text-center d-flex flex-column flex-start text-decoration-none">
-                              <i class="fas fa-folder fa-3x text-center text-warning"></i>
-                              <p class='text-black'>{{ dossier.name }}</p>
+                              <i class="dossier fas fa-folder fa-3x text-center text-warning" data-id="{{ dossier.id }}"></i>
+                              <p class='dossier text-black' data-id="{{ dossier.id }}">{{ dossier.name }}</p>
                           </a>
                       {% endfor %}
                   </div>
@@ -63,16 +63,16 @@
         <h5 class="modal-title" id="exampleModalLabel">Créer un nouveau Dossier</h5>
       </div>
       <div class="modal-body">
-        {{ form_start(addDossier, {'action': path('add_dossier'), 'method': 'POST'}) }}
+        {{ form_start(forms['addDossier'], {'action': path('add_dossier'), 'method': 'POST'}) }}
         <div class="form-group">
-          {{ form_label(addDossier.name, 'Nom du dossier', {'label_attr': {'class': 'col-form-label'}}) }}
-          {{ form_widget(addDossier.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom du Dossier'}}) }}
+          {{ form_label(forms['addDossier'].name, 'Nom du dossier', {'label_attr': {'class': 'col-form-label'}}) }}
+          {{ form_widget(forms['addDossier'].name, {'attr': {'class': 'form-control', 'placeholder': 'Nom du Dossier'}}) }}
         </div>
       </div>
       <div class="modal-footer">
-        {{ form_widget(addDossier.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+        {{ form_widget(forms['addDossier'].submit, {'attr': {'class': 'btn btn-primary'}}) }}
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        {{ form_end(addDossier) }}
+        {{ form_end(forms['addDossier']) }}
       </div>
     </div>
   </div>
@@ -100,7 +100,7 @@
 </div>
 
 <!-- Menu Conextuel -->
-<div id="contextMenu" class="dropdown-menu" style="display: none; position: absolute;">
+<div id="contextMenu" class="dropdown-menu" class="d-none" style="position: absolute;">
     <a class="dropdown-item" href="javascript:void(0)" id="openDossier">Ouvrir le dossier</a>
     <a class="dropdown-item" href="javascript:void(0)" id="renameDossier">Renommer le dossier</a>
     <a class="dropdown-item" href="javascript:void(0)" id="deleteDossier">Supprimer le dossier</a>

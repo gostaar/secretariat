@@ -62,6 +62,27 @@ class Repertoire
         $this->contacts = new ArrayCollection();
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'nom' => $this->getNom(),
+            'adresse' => $this->getAdresse(),
+            'code_postal' => $this->getCodePostal(),
+            'ville' => $this->getVille(),
+            'pays' => $this->getPays(),
+            'telephone' => $this->getTelephone(),
+            'mobile' => $this->getMobile(),
+            'email' => $this->getEmail(),
+            'siret' => $this->getSiret(),
+            'nom_entreprise' => $this->getNomEntreprise(),
+            'user' => $this->getUser(),
+            'dossier' => $this->getDossier(),
+            'contacts' => $this->getContacts(),
+        ];
+    }
+
+
     public function __toString()
     {
         return $this->nom;

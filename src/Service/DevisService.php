@@ -73,7 +73,6 @@ class DevisService
             $existingDevis->setMontant($montant);
             $existingDevis->setDateDevis($date_devis);
             $existingDevis->setStatus($status);
-            $existingDevis->setStatus($status);
             $existingDevis->setCommentaire($commentaire);
             $existingDevis->setIsActive($is_active);
         }

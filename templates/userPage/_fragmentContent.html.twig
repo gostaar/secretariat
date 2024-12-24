@@ -1,26 +1,3 @@
-{% set sections = {
-    'link-Acceuil': 'userPage/_mainContent.html.twig',
-    'link-Administratif': 'partials/user/Administratif/_documents.html.twig',
-    'link-newDocument': 'partials/user/Administratif/_newDocuments.html.twig',
-    'link-Agenda': 'partials/user/Agenda/_agenda.html.twig',
-    'link-MainAgenda': 'partials/user/Agenda/_agendaMain.html.twig',
-    'link-PageAgenda': 'partials/user/Agenda/agenda.html.twig',
-    'link-Commercial': 'partials/user/Commercial/_commercial.html.twig',
-    'link-Numerique': 'partials/user/Numerique/_numerique.html.twig',
-    'link-Profile': 'partials/user/Profile/_profile.html.twig',
-    'link-espacepersonnel': 'partials/user/Profile/_espacepersonnel.html.twig',
-    'link-Repertoire': 'partials/user/Profile/_repertoire.html.twig',
-    'link-PageRepertoire': 'partials/user/Profile/repertoire.html.twig',
-    'link-Factures': 'partials/user/Profile/_factures.html.twig',
-    'link-PageFacture': 'partials/user/Profile/facture.html.twig',
-    'link-PageDevis': 'partials/user/Profile/devis.html.twig',
-    'link-parametres': 'partials/user/Profile/_parametres.html.twig',
-    'link-Telephone': 'partials/user/Telephone/_telephone.html.twig',
-    'link-PageDocument': 'partials/user/document.html.twig',
-    'link-PageDossier': 'partials/user/dossier.html.twig'
-} %}
-
-{# Vérification du fragment et inclusion du fichier correspondant #}
 {% if sections[currentFragment] %}
     {% include sections[currentFragment] %}
 {% else %}

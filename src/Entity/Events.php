@@ -48,6 +48,21 @@ class Events
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?User $user = null;
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'description' => $this->getDescription(),
+            'location' => $this->getLocation(),
+            'start' => $this->getStart(),
+            'end' => $this->getEnd(),
+            'google_calendar_event_id' => $this->getGoogleCalendarEventId(),
+            'services' => $this->getServices(),
+            'user' => $this->getUser(),
+        ];
+    }
+
     public function __toString()
     {
         return $this->title;

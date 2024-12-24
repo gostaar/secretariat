@@ -1,13 +1,3 @@
-{% set buttonValue = '' %}
-{% if app.request.query.get('fragment') == 'part' %}
-    {% set fragmentValue = 'part' %}
-    {% set fragmentButtonValue = 'pro' %}
-    {% set buttonValue = 'Vers les pros' %}
-{% elseif app.request.query.get('fragment') == 'pro' %}
-    {% set fragmentValue = 'pro' %}
-    {% set fragmentButtonValue = 'part' %}
-    {% set buttonValue = 'Vers les particuliers' %}
-{% endif %}
 <div class="background-jobs d-flex flex-column flex-fill min-vh-100">
     {% include 'partials/Page/_navBar.html.twig' %}
     <section class="hero">
@@ -16,12 +6,12 @@
             <p>Découvrez nos offres de jobs dans le domaine administratif et numérique.</p>
         </div>
          <div class="w-100 my-3">
-            <button type="button" class="change-fragment-site btn btn-warning fs-5 border border-secondary" data-fragment={{fragmentValue}} data-subFragment="contact" >
+            <button type="button" class="change-fragment-site btn btn-warning fs-5 border border-secondary" data-fragment={{initialisation.fragmentValue}} data-subFragment="contact" >
                 Contactez-nous
             </button>
         </div>
         <div class="w-100 my-3">
-            <button type="button" class="change-fragment-site btn btn-primary fs-5" data-fragment={{fragmentButtonValue}} data-subFragment="acceuil">{{buttonValue}}</button>
+            <button type="button" class="change-fragment-site btn btn-primary fs-5" data-fragment={{initialisation.fragmentButtonValue}} data-subFragment="acceuil">{{initialisation.buttonValue}}</button>
         </div>
     </section>
     <section class="intro d-flex flex-column justify-content-evenly bg-white flex-fill">
@@ -29,14 +19,13 @@
         <h2 class="services-subtitle">Postes disponibles</h2>
         <div id="services" class="service-list d-flex flex-wrap justify-content-center">
             <div class="service-item d-flex flex-column align-items-center">
-                {% set job_offers = [] %}
                 {#{% set job_offers = [
                     { "title": "Assistant(e) Administratif(ve)", "description": "Rejoignez notre équipe pour gérer diverses tâches administratives pour nos clients." },
                     { "title": "Développeur Web", "description": "Nous cherchons un développeur pour créer des sites internet modernes et fonctionnels." },
                     { "title": "Support Technique", "description": "Fournissez un support technique pour nos services numériques et bureautiques." } 
                 ] %}#}
 
-                {% if job_offers is empty %}
+                {% if job_offers is not defined %}
                     Pas d'offre d'emploi actuellement
                 {% else %}
                     {% for job in job_offers %}

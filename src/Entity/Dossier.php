@@ -42,6 +42,17 @@ class Dossier
         $this->documents = new ArrayCollection();
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'user' => $this->getUser(),
+            'services' => $this->getServices(),
+            'repertoires' => $this->getRepertoires(),
+            'documents' => $this->getDocuments(),
+        ];
+    }
 
     public function __toString(): string
     {

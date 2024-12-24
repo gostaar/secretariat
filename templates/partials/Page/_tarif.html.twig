@@ -1,16 +1,3 @@
-{% set fragmentValue = '' %}
-{% set fragmentButtonValue = '' %}
-{% set buttonValue = '' %}
-{% if app.request.query.get('fragment') == 'part' %}
-    {% set fragmentValue = 'part' %}
-    {% set fragmentButtonValue = 'pro' %}
-    {% set buttonValue = 'Vers les pros' %}
-{% elseif app.request.query.get('fragment') == 'pro' %}
-    {% set fragmentValue = 'pro' %}
-    {% set fragmentButtonValue = 'part' %}
-    {% set buttonValue = 'Vers les particuliers' %}
-{% endif %}
-
 <section class="background-tarifs d-flex flex-column flex-fill min-vh-100">
     {% include 'partials/Page/_navBar.html.twig' %}
 
@@ -20,12 +7,12 @@
             <p>Détails des tarifs</p>
         </div>
        <div class="w-100 my-3">
-            <button type="button" class="change-fragment-site btn btn-warning fs-5 border border-secondary" data-fragment={{fragmentValue}} data-subFragment="contact" >
+            <button type="button" class="change-fragment-site btn btn-warning fs-5 border border-secondary" data-fragment={{initialisation.fragmentValue}} data-subFragment="contact" >
                 Contactez-nous
             </button>
         </div>
         <div class="w-100 my-3">
-            <button type="button" class="change-fragment-site btn btn-primary fs-5" data-fragment={{fragmentValue}} data-subFragment="acceuil">{{buttonValue}}</button>
+            <button type="button" class="change-fragment-site btn btn-primary fs-5" data-fragment={{initialisation.fragmentValue}} data-subFragment="acceuil">{{initialisation.buttonValue}}</button>
         </div>
     </section>
     <section class='intro d-flex flex-column justify-content-evenly bg-white flex-fill'>

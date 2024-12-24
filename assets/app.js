@@ -1,3 +1,6 @@
+import { facture } from './js/user/facture.js';
+import { repertoire } from './js/user/repertoire.js';
+
 window.addEventListener('DOMContentLoaded', () => {
     // handleGoogleEventButton();
     if (window.location.pathname.startsWith('/user')) {
@@ -10,6 +13,24 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+//gestion de la navigation
+window.appState = {
+    endLoadingState: false
+};
+
+navigation.addEventListener("navigate", () => {
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if(window.appState.endLoadingState === false) {
+       loadingIndicator.style.display = 'flex';
+    }
+    window.appState.endLoadingState = false;
+});
+
+window.addEventListener("popstate", () => {
+    window.appState.endLoadingState = true;
+});
+
 async function changeFragmentSite() {
     const loadingIndicator = document.getElementById('loadingIndicator');
     
@@ -18,10 +39,9 @@ async function changeFragmentSite() {
             const fragment = event.target.dataset.fragment;
             const subFragment = event.target.dataset.subfragment;
 
-            loadingIndicator.style.display = 'block';
+            loadingIndicator.style.display = 'flex';
 
             try {
-                // Effectuer la requête AJAX
                 const response = await fetch(`/?fragment=${fragment}&subFragment=${subFragment}`, {
                     method: 'GET',
                     headers: {
@@ -29,8 +49,6 @@ async function changeFragmentSite() {
                     },
                 });
                 const data = await response.json();
-
-                // Masquer l'indicateur de chargement après la réponse
                 loadingIndicator.style.display = 'none';
 
                 if (subFragment === 'service') {
@@ -76,58 +94,55 @@ async function changeFragmentSite() {
                     }
                 }
             } catch (error) {
-                console.error('Erreur:', error);
-                loadingIndicator.style.display = 'none'; // Masquer l'indicateur en cas d'erreur
+                loadingIndicator.style.display = 'none';
             }
         }
     });
 }
 
-
 async function changeFragmentUser() {
-    const buttons = document.querySelectorAll('.change-fragment');
     const loadingIndicator = document.getElementById('loadingIndicator');
+    const UserContent = document.getElementById('userContent');
 
-    buttons.forEach(button => {
-        button.addEventListener('click', async function() {  // Ajout de async ici pour la fonction click
+    UserContent.addEventListener('click', async function(event) {
+        const button = event.target;
+
+        if (button.classList.contains('change-fragment')) {
             const fragment = button.getAttribute('data-fragment');
-            
-            // Affichage de l'indicateur de chargement
-            loadingIndicator.style.display = 'block';
+            loadingIndicator.style.display = 'flex';
 
             try {
-                // Récupération des données avec fetch
                 const response = await fetch(`/user?fragment=${fragment}`, {
                     method: 'GET',
                     headers: {
-                        'X-Requested-With': 'XMLHttpRequest', 
+                        'X-Requested-With': 'XMLHttpRequest',
                     },
                 });
 
-                // Vérification de la réponse
                 if (response.ok) {
-                    const data = await response.json();  // Attendre la conversion en JSON
-
-                    // Masquer l'indicateur de chargement une fois les données récupérées
+                    const data = await response.json();
                     loadingIndicator.style.display = 'none';
+                    
+                    if(fragment === 'link-Factures'){
+                        facture();
+                    }
 
-                    // Mettre à jour le contenu du fragment
-                    document.getElementById('fragmentContent').innerHTML = data.fragmentContent;
+                    if(fragment === 'link-Repertoire'){
+                        repertoire();
+                    }
 
-                    // Mettre à jour les classes des boutons pour l'état actif
-                    buttons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
+                    document.getElementById('fragmentContent').innerHTML = data.fragmentContent; 
+
                 } else {
                     throw new Error('Erreur lors de la récupération des données');
                 }
-
             } catch (error) {
-                console.error('Erreur:', error);
-                loadingIndicator.style.display = 'none'; // Masquer l'indicateur en cas d'erreur
+                loadingIndicator.style.display = 'none';
             }
-        });
+        }
     });
 }
+
 
 // function handleGoogleEventButton() {
 //     const btnNewGoogleEvent = document.getElementById('btnNewGoogleEvent');
