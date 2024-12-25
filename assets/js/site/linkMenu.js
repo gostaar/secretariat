@@ -1,4 +1,4 @@
-export function page(){
+export function linkMenu(){
 
     const navLinks = document.querySelectorAll('#navbarNav .nav-link, #navbarNav button');
 
@@ -15,4 +15,3 @@ export function page(){
     });
 
 }
-

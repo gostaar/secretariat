@@ -4,8 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Entity\Facture;
+use App\Entity\FactureLigne;
 use App\Entity\Contact;
 use App\Entity\Devis;
+use App\Entity\DevisLigne;
 use App\Entity\DevisVersion;
 use App\Entity\DocumentsUtilisateur;
 use App\Entity\Dossier;
@@ -62,11 +64,13 @@ class DashboardController extends AbstractDashboardController
         // Section Facturation
         yield MenuItem::section('Gestion de la facturation');
         yield MenuItem::linkToCrud('Factures', 'fa fa-file-invoice-dollar', Facture::class);
+        yield MenuItem::linkToCrud('Lignes Factures', 'fa fa-file-invoice-dollar', FactureLigne::class);
         yield MenuItem::linkToCrud('Paiements', 'fa fa-credit-card', Paiement::class);
         
         // Section Devis et Documents
         yield MenuItem::section('Gestion des Devis');
         yield MenuItem::linkToCrud('Devis', 'fa fa-file-contract', Devis::class);
+        yield MenuItem::linkToCrud('Lignes Devis', 'fa fa-file-contract', DevisLigne::class);
         yield MenuItem::linkToCrud('Versions de devis', 'fa fa-copy', DevisVersion::class);
         
         // Section Répertoire et Services

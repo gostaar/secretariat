@@ -21,7 +21,7 @@ class Facture
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $montant = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_paiement = null;
 
     #[ORM\Column]
@@ -37,7 +37,7 @@ class Facture
     private ?string $commentaire = null;
 
     #[ORM\Column]
-    private ?bool $is_active = false;
+    private bool $is_active = false;
 
     /**
      * @var Collection<int, Paiement>
@@ -45,11 +45,18 @@ class Facture
     #[ORM\OneToMany(targetEntity: Paiement::class, mappedBy: 'facture')]
     private Collection $paiements;
 
+    /**
+     * @var Collection<int, FactureLigne>
+     */
+    #[ORM\OneToMany(targetEntity: FactureLigne::class, mappedBy: 'facture')]
+    private Collection $factureLignes;
+
     public function __construct()
     {
         // Définir une valeur par défaut pour le statut, par exemple "pending"
         // $this->status = FactureStatus::NON_PAYE->value;
         $this->paiements = new ArrayCollection();
+        $this->factureLignes = new ArrayCollection();
     }
 
     public function __toString(): string{
@@ -95,12 +102,23 @@ class Facture
         return $this;
     }
 
+    public function updateMontant(): void
+    {
+        $montant = 0;
+
+        foreach ($this->factureLignes as $ligne) {
+            $montant += $ligne->getMontant();
+        }
+
+        $this->montant = $montant;
+    }
+
     public function getDatePaiement(): ?\DateTimeInterface
     {
         return $this->date_paiement;
     }
 
-    public function setDatePaiement(\DateTimeInterface $date_paiement): static
+    public function setDatePaiement(?\DateTimeInterface $date_paiement): static
     {
         $this->date_paiement = $date_paiement;
 
@@ -159,12 +177,12 @@ class Facture
         return $this;
     }
 
-    public function isActive(): ?bool
+    public function isActive(): bool
     {
         return $this->is_active;
     }
 
-    public function setActive(bool $is_active): static
+    public function setActive(bool $is_active): self
     {
         $this->is_active = $is_active;
 
@@ -195,6 +213,36 @@ class Facture
             // set the owning side to null (unless already changed)
             if ($paiement->getFacture() === $this) {
                 $paiement->setFacture(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FactureLigne>
+     */
+    public function getFactureLignes(): Collection
+    {
+        return $this->factureLignes;
+    }
+
+    public function addFactureLigne(FactureLigne $factureLigne): static
+    {
+        if (!$this->factureLignes->contains($factureLigne)) {
+            $this->factureLignes->add($factureLigne);
+            $factureLigne->setFacture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactureLigne(FactureLigne $factureLigne): static
+    {
+        if ($this->factureLignes->removeElement($factureLigne)) {
+            // set the owning side to null (unless already changed)
+            if ($factureLigne->getFacture() === $this) {
+                $factureLigne->setFacture(null);
             }
         }
 

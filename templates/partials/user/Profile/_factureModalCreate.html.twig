@@ -1,0 +1,97 @@
+<div class="modal fade" id="factureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Créer une nouvelle Facture</h5>
+      </div>
+      <div class="modal-body">
+        {{ form_start(forms['addFacture'], {'action': path('add_facture'), 'method': 'POST'}) }}
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{ form_label(forms['addFacture'].montant, 'Montant de la facture', {'label_attr': {'class': 'col-form-label'}}) }}
+                    {{ form_widget(forms['addFacture'].montant, {'attr': {'class': 'form-control', 'placeholder': 'Montant de la facture'}}) }}
+                    {{ form_errors(forms['addFacture'].montant, {'attr': {'class': 'text-danger'}}) }}
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{ form_label(forms['addFacture'].date_facture, 'Date de la facture', {'label_attr': {'class': 'col-form-label'}}) }}
+                    {{ form_widget(forms['addFacture'].date_facture, {'attr': {'class': 'form-control', 'placeholder': 'Sélectionnez la date de la facture'}}) }}
+                    {{ form_errors(forms['addFacture'].date_facture, {'attr': {'class': 'text-danger'}}) }}
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{ form_label(forms['addFacture'].date_paiement, 'Date de paiement', {'label_attr': {'class': 'col-form-label'}}) }}
+                    {{ form_widget(forms['addFacture'].date_paiement, {'attr': {'class': 'form-control', 'placeholder': 'Sélectionnez la date de paiement'}}) }}
+                    {{ form_errors(forms['addFacture'].date_paiement, {'attr': {'class': 'text-danger'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{ form_label(forms['addFacture'].status, 'Statut de la facture', {'label_attr': {'class': 'col-form-label'}}) }}
+                    {{ form_widget(forms['addFacture'].status, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(forms['addFacture'].status, {'attr': {'class': 'text-danger'}}) }}
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    {{ form_label(forms['addFacture'].commentaire, 'Commentaire', {'label_attr': {'class': 'col-form-label'}}) }}
+                    {{ form_widget(forms['addFacture'].commentaire, {'attr': {'class': 'form-control', 'placeholder': 'Ajoutez un commentaire'}}) }}
+                    {{ form_errors(forms['addFacture'].commentaire, {'attr': {'class': 'text-danger'}}) }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-check">
+            {{ form_widget(forms['addFacture'].is_active, {'attr': {'class': 'form-check-input'}}) }}
+            {{ form_label(forms['addFacture'].is_active, 'Activer cette facture', {'label_attr': {'class': 'form-check-label'}}) }}
+            {{ form_errors(forms['addFacture'].is_active, {'attr': {'class': 'text-danger'}}) }}
+        </div>
+
+       <div id="facture-lignes-wrapper" data-prototype="{{ form_widget(forms['addFacture'].factureLignes.vars.prototype)|e('html_attr') }}">
+            {% for ligne in forms['addFacture'].factureLignes %}
+                <div class="facture-ligne">
+                    <label for="factureLignes_{{ loop.index }}_designation" class="col-form-label">Désignation</label>
+                    <input type="text" id="factureLignes_{{ loop.index }}_designation" 
+                        name="factureLignes[{{ loop.index }}][designation]" 
+                        class="form-control" />
+
+                    <label for="factureLignes_{{ loop.index }}_quantite" class="col-form-label">Quantité</label>
+                    <input type="number" id="factureLignes_{{ loop.index }}_quantite" 
+                        name="factureLignes[{{ loop.index }}][quantite]" 
+                        class="form-control" />
+
+                    <label for="factureLignes_{{ loop.index }}_prix_unitaire" class="col-form-label">Prix Unitaire</label>
+                    <input type="number" id="factureLignes_{{ loop.index }}_prix_unitaire" 
+                        name="factureLignes[{{ loop.index }}][prix_unitaire]" 
+                        class="form-control" />
+
+                    {{ form_widget(ligne) }}
+
+                    <button type="button" class="remove-ligne btn btn-danger">Supprimer</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <button type="button" id="add-facture-ligne" class="btn btn-success">Ajouter une ligne</button>
+        </div>
+
+        <div class="modal-footer">
+            {{ form_widget(forms['addFacture'].submit, {'attr': {'class': 'btn btn-primary'}}) }}
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        </div>
+
+        {{ form_end(forms['addFacture']) }}
+      </div>
+    </div>
+  </div>
+</div>

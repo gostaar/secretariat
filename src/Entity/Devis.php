@@ -36,9 +36,16 @@ class Devis
     #[ORM\Column]
     private ?bool $is_active = false;
 
+    /**
+     * @var Collection<int, DevisLigne>
+     */
+    #[ORM\OneToMany(targetEntity: DevisLigne::class, mappedBy: 'devis')]
+    private Collection $devisLignes;
+
     public function __construct()
     {
         // $this->status = DevisStatus::EN_ATTENTE->value;
+        $this->devisLignes = new ArrayCollection();
     }
 
     public function toArray(): array
@@ -55,7 +62,7 @@ class Devis
     }
 
     public function __toString(): string{
-        return 'Devis n° '.$this->id.' '.number_format($this->montant, 2, ',', ' ') . ' €';;
+        return 'Devis n° '.$this->id.' '.number_format($this->montant, 2, ',', ' ') . ' €';
     }
 
     public function getId(): ?int
@@ -142,6 +149,36 @@ class Devis
     public function setIsActive(bool $is_active): static
     {
         $this->is_active = $is_active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DevisLigne>
+     */
+    public function getDevisLignes(): Collection
+    {
+        return $this->devisLignes;
+    }
+
+    public function addDevisLigne(DevisLigne $devisLigne): static
+    {
+        if (!$this->devisLignes->contains($devisLigne)) {
+            $this->devisLignes->add($devisLigne);
+            $devisLigne->setDevis($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevisLigne(DevisLigne $devisLigne): static
+    {
+        if ($this->devisLignes->removeElement($devisLigne)) {
+            // set the owning side to null (unless already changed)
+            if ($devisLigne->getDevis() === $this) {
+                $devisLigne->setDevis(null);
+            }
+        }
 
         return $this;
     }

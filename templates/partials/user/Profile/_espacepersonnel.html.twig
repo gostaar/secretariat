@@ -5,7 +5,7 @@
             <div class="container card-header d-flex justify-content-between align-items-center">
                 <h4>Espace personnel</h4>
             </div>
-            <div class="card-body p-5 m-md-4 c-access d-flex justify-content-around flex-wrap">
+            <div class="card-body p-2 p-md-5 m-md-4 c-access d-flex justify-content-around flex-wrap">
                 {% set buttons = [
                     {id: 'btnFactures', icon: 'file-invoice', link: 'link-Factures', text: 'Factures'},
                     {id: 'btnRepertoire', icon: 'folder', link: 'link-Repertoire', text: 'Répertoire', service:'Repertoire'},
@@ -14,7 +14,7 @@
                 ] %}
                 {% for button in buttons %}
                     {% if button.service is not defined or button.service is empty or button.service in services %}
-                        <div class="d-flex flex-column align-items-center" style="position: relative; max-width: 130px;">
+                        <div class="d-flex flex-column align-items-center" style="position: relative; width: 130px;">
                             <button 
                                 type="button" 
                                 id="{{ button.id }}"

@@ -37,17 +37,30 @@ class DevisController extends AbstractController
     {
         $user = $this->getUser();
         $devis = new Devis();
-        $devisForm = $this->createForm(DevisType::class, $devis);
     
+        $devisForm = $this->createForm(DevisType::class, $devis);
         $devisForm->handleRequest($request);
 
-        if ($devisForm->isSubmitted() && $devisForm->isValid()) {
-            $this->devisService->addDevis($devis, $user);
+        $isActive = $devisForm->get('is_active')->getData();
+        $devis->setActive($isActive);
     
-            $url = $this->generateUrl('user') . '#link-Repertoire';
-            return new RedirectResponse($url);
+        if ($devisForm->isSubmitted() && $devisForm->isValid()) {
+            $devis->setUser($user);
+    
+            $this->factureService->addDevis($devis, $user);
+    
+            foreach ($devis->getLignes() as $ligne) {
+                $ligne->setDevis($devis);
+                $this->entityManager->persist($ligne);
+            }
+    
+            $this->entityManager->flush();
+    
+            $this->addFlash('success', 'Devis et lignes ajoutées avec succès.');
+            return $this->redirectToRoute('user', ['fragment' => 'link-Devis'], 302);
         }
-        return new Response();
+    
+        return new Response;
     }
 
     #[Route('/update_devis/{id}', name: 'update_devis', methods: ['POST'])]

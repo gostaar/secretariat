@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Facture;
+use App\Entity\FactureLigne;
 use App\Enum\FactureStatus;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -19,6 +21,8 @@ class FactureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $facture = $options['data'];
+
         $builder
             ->add('montant', NumberType::class, [
                 'label' => 'Montant',
@@ -46,6 +50,15 @@ class FactureType extends AbstractType
             ->add('is_active', CheckboxType::class, [
                 'label' => 'Active',
                 'required' => false,
+                'mapped' => false,
+                'data' => $facture->isActive(),
+            ])
+            ->add('factureLignes', CollectionType::class, [
+                'label' => 'Facture',
+                'entry_type' => FactureLigneType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer la facture',

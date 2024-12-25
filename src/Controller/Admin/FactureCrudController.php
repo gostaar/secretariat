@@ -40,6 +40,11 @@ class FactureCrudController extends AbstractCrudController
                     'by_reference' => false,
                 ])
                 ->autocomplete(),
+            AssociationField::new('factureLignes')
+                ->setFormTypeOptions([
+                    'by_reference' => false,
+                ])
+                ->autocomplete(),
             
             AssociationField::new('client', 'Utilisateur associé')
                 ->setFormTypeOptions([

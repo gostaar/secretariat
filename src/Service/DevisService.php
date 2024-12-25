@@ -16,7 +16,31 @@ class DevisService
 
     public function getDevis($id)
     {
-        return $this->em->getRepository(Devis::class)->find($id);
+        $devis = $this->em->getRepository(Devis::class)->find($id);
+
+        if (!$devis) {
+            return null;
+        }
+    
+        $devisData = [
+            'id' => $devis->getId(),
+            'montant' => $devis->getMontant(),
+            'date_devis' => $devis->getDateDevis()->format('d-m-Y'),
+            'status' => $devis->getStatus(),
+            'client' => $devis->getClient(),
+            'commentaire' => $devis->getCommentaire(),
+            'is_active' => $devis->isActive(),
+            'devisLignes' => array_map(function($ligne) {
+                return [
+                    'designation' => $ligne->getDesignation(),
+                    'quantite' => $ligne->getQuantite(),
+                    'prixUnitaire' => $ligne->getPrixUnitaire(),
+                    'htva' => $ligne->getQuantite() * $ligne->getPrixUnitaire(),
+                ];
+            }, $devis->getDevisLignes()->toArray()) 
+        ];
+    
+        return $devisData;
     }
 
     public function addDevis(Devis $devis, User $user)

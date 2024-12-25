@@ -28,9 +28,7 @@ class FactureController extends AbstractController
     public function getFacture($id)
     {
         $facture = $this->factureService->getFacture($id);
-        return $this->redirectToRoute('user', [
-            'facture' => $facture
-        ], 302, ['fragment' => 'link-PageFacture']);
+        return new JsonResponse($facture);
     }
 
     #[Route('/add_facture', name: 'add_facture', methods: ['POST'])]
@@ -44,12 +42,14 @@ class FactureController extends AbstractController
 
         if ($factureForm->isSubmitted() && $factureForm->isValid()) {
             $this->factureService->addFacture($facture, $user);
-    
-            $url = $this->generateUrl('user') . '#link-Repertoire';
-            return new RedirectResponse($url);
+
+            return $this->redirectToRoute('user', [
+                'facture' => $facture,
+            ], 302, ['fragment' => 'link-Factures']);
         }
         return new Response();
     }
+
 
     #[Route('/update_facture/{id}', name: 'update_facture', methods: ['POST'])]
     public function updateFacture(int $id, Request $request) : JsonResponse

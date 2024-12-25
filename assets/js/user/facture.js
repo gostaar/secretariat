@@ -1,8 +1,8 @@
 export function facture() {
-    // Gestion des clics globaux sur le document
-    document.addEventListener('click', function handleFactureClick(e) {
+    // Fonction qui gère les clics et les interactions tactiles
+    function handleFactureClick(e) {
         if (e.target.classList.contains('facture')) {
-        handleFactureDetails(e);
+            handleFactureDetails(e);
         }
 
         if (e.target.id === 'btnPdfFacture') {
@@ -13,39 +13,139 @@ export function facture() {
         if (e.target.id === 'btnPrintFacture') {
             previewAndPrintPdf();
         }
+    }
+
+    document.addEventListener('click', handleFactureClick);
+    document.addEventListener('pointerdown', handleFactureClick);
+
+    const wrapper = document.getElementById('facture-lignes-wrapper');
+    const addButton = document.getElementById('add-facture-ligne');
+
+    // addButton.addEventListener('click', () => {
+    //     addFactureLigne(wrapper);
+    // });
+
+    // wrapper.addEventListener('click', (e) => {
+    //     if (e.target.classList.contains('remove-ligne')) {
+    //         e.target.parentElement.remove();
+    //     }
+    // });
+
+    // const form = document.querySelector('#factureModal form');
+    // form.addEventListener('submit', (e) => {
+    //     if (!validateFactureLignes(wrapper)) {
+    //         e.preventDefault(); 
+    //     }
+    // });
+}
+
+function addFactureLigne(wrapper) {
+    let prototype = wrapper.dataset.prototype;
+    let index = wrapper.children.length;
+
+    prototype = prototype.replace(/__name__/g, index);
+
+    const newField = document.createElement('div');
+    newField.classList.add('facture-ligne');
+    newField.innerHTML = prototype;
+
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.innerText = 'Supprimer';
+    removeButton.classList.add('remove-ligne');
+    newField.appendChild(removeButton);
+
+    wrapper.appendChild(newField);
+}
+
+function validateFactureLignes(wrapper) {
+    let isValid = true;
+
+    wrapper.querySelectorAll('.facture-ligne').forEach((ligne) => {
+        const quantity = ligne.querySelector('[name$="[quantite]"]');
+        const price = ligne.querySelector('[name$="[prix_unitaire]"]');
+
+        const existingError = ligne.querySelector('.error-message');
+        if (existingError) existingError.remove();
+
+        if (!quantity.value || !price.value || quantity.value <= 0 || price.value <= 0) {
+            isValid = false;
+
+            const error = document.createElement('div');
+            error.classList.add('error-message', 'text-danger');
+            error.innerText = 'Veuillez remplir correctement tous les champs.';
+            ligne.appendChild(error);
+        }
     });
+
+    return isValid;
 }
 
 let factureId;
 
-// Mise à jour des champs de formulaire avec les données de la facture
 function handleFactureDetails(e) {
     e.preventDefault();
     e.stopPropagation();
-
+    
     factureId = e.target.getAttribute('data-id');
-    const factureMontant = e.target.getAttribute('data-montant');
-    const factureDateFacture = e.target.getAttribute('data-date_facture') || new Date().toISOString().split('T')[0];
-    // const factureDatePaiement = e.target.getAttribute('data-date_paiement');
-    // const factureStatus = e.target.getAttribute('data-status');
-    // const factureCommentaire = e.target.getAttribute('data-commentaire');
-    // const factureIsActive = e.target.getAttribute('data-is_active') === 'true';
+    document.getElementById('modalContentFacture').classList.add('d-none');
+    document.getElementById('loading').style.display = 'flex';
+    
+    fetch(`/facture/${factureId}`)
+    .then(response => response.json())
+    .then(data => {
+        // Remplir les informations de la facture dans le modal
+        document.getElementById('factureId').textContent = factureId;
+        document.getElementById('factureId2').textContent = factureId;
+        document.getElementById('factureDate_facture').textContent = data.date_facture;
+        document.getElementById('factureDateLimite').textContent = getFactureDateLimite(data.date_facture);
+        
+        const factureContentTable2 = document.getElementById('factureContentTable2');
+        while (factureContentTable2.firstChild) {
+            factureContentTable2.removeChild(factureContentTable2.firstChild);
+        }
+        let totalHtva = 0;
 
-    const dateFacture = new Date(factureDateFacture);
-    dateFacture.setMonth(dateFacture.getMonth() + 1);
-    const factureDateLimite = dateFacture.toISOString().split('T')[0];
+        if (data.factureLignes && Array.isArray(data.factureLignes)) {
+            data.factureLignes.forEach(function (ligne) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="text-start" style='font-size: 14px;'>${ligne.designation}</td>
+                    <td class="text-end" style='font-size: 14px;'>${ligne.quantite}</td>
+                    <td class="text-end" style='font-size: 14px;'>${ligne.prixUnitaire}</td>
+                    <td class="text-end" style='font-size: 14px;'>${ligne.htva}</td>
+                `;
+                let formattedHtva = ligne.htva.replace(/\s/g, '').replace('€', '').replace(',', '.');
+                formattedHtva = parseFloat(formattedHtva);
+                totalHtva += formattedHtva;
+                factureContentTable2.appendChild(row);
+            });
+        }
 
-    document.getElementById('factureId').textContent = factureId;
-    document.getElementById('factureId2').textContent = factureId;
-    document.getElementById('factureMontant').textContent = factureMontant;
-    document.getElementById('factureMontant2').textContent = factureMontant;
-    document.getElementById('factureDate_facture').textContent = factureDateFacture;
-    document.getElementById('factureDateLimite').textContent = factureDateLimite;
-    // document.getElementById('factureDate_paiement').textContent = factureDatePaiement;
-    // document.getElementById('factureStatus').textContent = factureStatus;
-    // document.getElementById('factureCommentaire').textContent = factureCommentaire;
-    // document.getElementById('factureIs_active').textContent = factureIsActive ? 'Active' : 'Inactive';
+        const totalHtvaFormatted = new Intl.NumberFormat('fr-FR', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(totalHtva);
+
+        document.getElementById('factureMontant').textContent = totalHtvaFormatted;
+        document.getElementById('factureMontant2').textContent = totalHtvaFormatted;
+        
+        // Cloner les lignes de facture pour remplir une autre table (si nécessaire)
+        const dataToCopy = factureContentTable2.cloneNode(true);
+        const factureContentTable = document.getElementById('factureContentTable');
+        const tbody = factureContentTable.querySelector('tbody');
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+        }
+        tbody.append(...dataToCopy.childNodes); 
+        
+        document.getElementById('modalContentFacture').classList.remove('d-none');
+        document.getElementById('loading').style.display = 'none';
+    });
 }
+
 
 // Génération du fichier PDF
 function generatePdf() {
@@ -137,5 +237,13 @@ function previewAndPrintPdf() {
         });
 }
 
+function getFactureDateLimite(dateFacture) {
+    const dateParts = dateFacture.split('-'); 
+    const dateObj = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
 
-    
+    dateObj.setMonth(dateObj.getMonth() + 1);
+
+    const newDate = `${dateObj.getDate().toString().padStart(2, '0')}-${(dateObj.getMonth() + 1).toString().padStart(2, '0')}-${dateObj.getFullYear()}`;
+
+    return newDate;
+}

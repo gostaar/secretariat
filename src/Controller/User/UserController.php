@@ -3,10 +3,12 @@
 namespace App\Controller\User;
 
 use App\Entity\Devis;
+use App\Entity\DevisLigne;
 use App\Entity\DocumentsUtilisateur;
 use App\Entity\Dossier;
 use App\Entity\Events;
 use App\Entity\Facture;
+use App\Entity\FactureLigne;
 use App\Entity\Repertoire;
 use App\Entity\Services;
 use App\Entity\TypeDocument;
@@ -14,9 +16,11 @@ use App\Entity\User;
 use App\Enum\DevisStatus;
 use App\Enum\FactureStatus;
 use App\Form\DevisType;
+use App\Form\DevisLigneType;
 use App\Form\DocumentsUtilisateurType;
 use App\Form\DossierType;
 use App\Form\FactureType;
+use App\Form\FactureLigneType;
 use App\Form\RepertoireType;
 use App\Form\ServicesType;
 use App\Form\TypeDocumentType;
@@ -139,7 +143,9 @@ class UserController extends AbstractController
         return [
             'addDossier' => $this->createForm(DossierType::class, new Dossier())->createView(),
             'addFacture' => $this->createForm(FactureType::class, new Facture())->createView(),
+            'addFactureLigne' => $this->createForm(FactureLigneType::class, new FactureLigne())->createView(),
             'addDevis' => $this->createForm(DevisType::class, new Devis())->createView(),
+            'addDevisLigne' => $this->createForm(DevisLigneType::class, new DevisLigne())->createView(),
             'addService' => $this->createForm(ServicesType::class, new Services())->createView(),
             'addDocument' => $this->createForm(DocumentsUtilisateurType::class, new DocumentsUtilisateur())->createView(),
             'addRepertoire' => $this->createForm(RepertoireType::class, new Repertoire())->createView(),

@@ -65,7 +65,11 @@ body {
 }
 
 .bg-rgba{
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0,0,0,0.8);
+}
+
+.deconnexion{
+    color: rgb(255, 0, 0) !important;
 }
 
 .icon-size {
@@ -86,7 +90,7 @@ body {
 }
 
 body .sidebar.d-none.d-md-block {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: grey;
     height: 100%;
 }
   
@@ -200,7 +204,26 @@ body .sidebar.d-none.d-md-block {
 }
 /* ===== Facture ===== */
 
+.facture-ligne {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
 
+button.remove-ligne {
+    color: white;
+    background-color: red;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.error-message {
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
 
 /* ===== Agenda ===== */
 #calendar {

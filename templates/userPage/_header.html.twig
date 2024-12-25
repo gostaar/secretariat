@@ -10,7 +10,7 @@
             </a>
             <ul class="list-unstyled ms-3 my-auto">
                 <li><span class="d-flex flex-wrap text-white text-break d-none d-sm-inline">{{ app.user.email }}</span></li>
-                <li><a class="text-danger d-none d-sm-inline" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                <li><a class="deconnexion d-none d-sm-inline" href="{{ path('app_logout') }}">Déconnexion</a></li>
             </ul>
         </div>
         <hr>
@@ -41,7 +41,7 @@
                 <div class="d-flex flex-column">
                     <a href="{{ path('user', {fragment: 'link-Profile'}) }}" class="list-unstyled text-white">{{ app.user.email }}</a>
                     <div class="list-unstyled">
-                        <a href="{{ path('app_logout') }}" class="bt w-100 text-danger">Déconnexion</a>
+                        <a href="{{ path('app_logout') }}" class="bt w-100 deconnexion">Déconnexion</a>
                     </div>
                 </div>
             </div>

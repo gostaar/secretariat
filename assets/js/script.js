@@ -1,13 +1,10 @@
-import { linkMenu } from './user/linkMenu.js';
-import { repertoire } from './user/repertoire.js';
-import { contact } from './user/contact.js';
-import { facture } from './user/facture.js';
+import { linkMenu as userLinkMenu } from './user/linkMenu.js';
+import { linkMenu as siteLinkMenu } from './site/linkMenu.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname.startsWith('/user')) {
-        linkMenu(); 
-        // repertoire();
-        contact();
-        // facture(); 
+export function initializeMenu(path) {
+    if (path.startsWith('/user')) {
+        userLinkMenu();
+    } else if (path.startsWith('/')) {
+        siteLinkMenu();
     }
-});
+}

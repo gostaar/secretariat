@@ -10,35 +10,42 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Numéro</th>
+                        <th>N°</th>
                         <th>Statut</th>
-                        <th>Commentaire</th>
-                        <th>Active</th>
+                        <th>Détails</th>
+                        {# <th>Active</th> #}
+                        <th>Montant</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for facture in factures %}
-                        <tr>
+                        {# Les écrans normaux et grands écrans #}
+                        <tr class="d-none d-sm-table-row">
                             <td>{{ facture.id }}</td>
                             <td>{{ facture.status }}</td>
                             <td>{{ facture.commentaire }}</td>
-                            <td>{{ facture.is_active }}</td>
+                            {# <td>{{ facture.is_active }}</td> #}
+                            <td>{{ facture.montant | format_currency('EUR') }}</td>
                             <td> 
                                 <button 
                                     type="button" 
                                     class="facture btn text-primary text-decoration-underline" 
                                     data-toggle="modal" 
                                     data-target="#factureDetailsModal" 
-                                    data-id="{{ facture.id }}" 
-                                    data-montant="{{ facture.montant }}" 
-                                    data-dateFacture="{{ facture.date_facture|date('d/m/Y') }}" 
-                                    data-datePaiement="{{ facture.date_paiement|date('d/m/Y') }}" 
-                                    data-status="{{ facture.status}}" 
-                                    data-commentaire="{{ facture.commentaire }}" 
-                                    data-isactive="{{ facture.is_active }}">
+                                    data-id="{{ facture.id }}">
                                     Détails
                                 </button>
                             </td>
+                        </tr>
+                    {% endfor %}
+                    {% for facture in factures %}
+                        {# Les petits écrans #}
+                        <tr class="table-row d-sm-none">
+                            <td class="facture text-break" data-toggle="modal" data-target="#factureDetailsModal" data-id="{{ facture.id }}">{{ facture.id }}</td>
+                            <td class="facture text-break" data-toggle="modal" data-target="#factureDetailsModal" data-id="{{ facture.id }}">{{ facture.status }}</td>
+                            <td class="facture text-break" data-toggle="modal" data-target="#factureDetailsModal" data-id="{{ facture.id }}">{{ facture.commentaire }}</td>
+                            {# <td class="facture text-break" data-toggle="modal" data-target="#factureDetailsModal" data-id="{{ facture.id }}">{{ facture.is_active }}</td> #}
+                            <td class="facture text-break" data-toggle="modal" data-target="#factureDetailsModal" data-id="{{ facture.id }}">{{ facture.montant | format_currency('EUR') }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -67,97 +74,7 @@
 </div>
 
 <!-- Modal pour créer le facture-->
-<div class="modal fade" id="factureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Créer une nouvelle Facture</h5>
-      </div>
-      <div class="modal-body">
-        {{ form_start(forms['addFacture'], {'action': path('add_facture'), 'method': 'POST'}) }}
-        
-        <div class="form-group">
-            {{ form_label(forms['addFacture'].montant, 'Montant de la facture', {'label_attr': {'class': 'col-form-label'}}) }}
-            {{ form_widget(forms['addFacture'].montant, {'attr': {'class': 'form-control', 'placeholder': 'Montant de la facture'}}) }}
-            {{ form_errors(forms['addFacture'].montant, {'attr': {'class': 'text-danger'}}) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_label(forms['addFacture'].date_facture, 'Date de la facture', {'label_attr': {'class': 'col-form-label'}}) }}
-            {{ form_widget(forms['addFacture'].date_facture, {'attr': {'class': 'form-control', 'placeholder': 'Sélectionnez la date de la facture'}}) }}
-            {{ form_errors(forms['addFacture'].date_facture, {'attr': {'class': 'text-danger'}}) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_label(forms['addFacture'].date_paiement, 'Date de paiement', {'label_attr': {'class': 'col-form-label'}}) }}
-            {{ form_widget(forms['addFacture'].date_paiement, {'attr': {'class': 'form-control', 'placeholder': 'Sélectionnez la date de paiement'}}) }}
-            {{ form_errors(forms['addFacture'].date_paiement, {'attr': {'class': 'text-danger'}}) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_label(forms['addFacture'].status, 'Statut de la facture', {'label_attr': {'class': 'col-form-label'}}) }}
-            {{ form_widget(forms['addFacture'].status, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(forms['addFacture'].status, {'attr': {'class': 'text-danger'}}) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_label(forms['addFacture'].commentaire, 'Commentaire', {'label_attr': {'class': 'col-form-label'}}) }}
-            {{ form_widget(forms['addFacture'].commentaire, {'attr': {'class': 'form-control', 'placeholder': 'Ajoutez un commentaire'}}) }}
-            {{ form_errors(forms['addFacture'].commentaire, {'attr': {'class': 'text-danger'}}) }}
-        </div>
-
-        <div class="form-group form-check">
-            {{ form_widget(forms['addFacture'].is_active, {'attr': {'class': 'form-check-input'}}) }}
-            {{ form_label(forms['addFacture'].is_active, 'Activer cette facture', {'label_attr': {'class': 'form-check-label'}}) }}
-            {{ form_errors(forms['addFacture'].is_active, {'attr': {'class': 'text-danger'}}) }}
-        </div>
-
-        <div class="modal-footer">
-            {{ form_widget(forms['addFacture'].submit, {'attr': {'class': 'btn btn-primary'}}) }}
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        </div>
-
-        {{ form_end(forms['addFacture']) }}
-      </div>
-    </div>
-  </div>
-</div>
+{% include 'partials/user/Profile/_factureModalCreate.html.twig' %}
 
 <!-- Modal pour afficher les informations de la facture -->
-<div class="modal fade" id="factureDetailsModal" tabindex="-1" role="dialog" aria-labelledby="factureDetailsModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title w-100 d-flex justify-content-between" id="factureDetailsModalLabel">
-          <span>Détails de la facture n°<label id="factureId" class="border-0 bg-transparent text-black"></label></span>
-          <span><label id="factureMontant2" class="border-0 bg-transparent text-black"></label> €</h5></span>
-      </div>
-      <div class="modal-body m-3 p-0">
-
-        <!-- Tableau des articles de la facture -->
-        <table class="table table-bordered" style="width: 100%; table-layout: fixed;">
-            <thead>
-                <tr>
-                    <th class="text-start border-1" style="background-color: #f0f0f0; width: 50%;">Désignation</th>
-                    <th class="text-center border-1" style="background-color: #f0f0f0;">Qté</th>
-                    <th class="text-center border-1" style="background-color: #f0f0f0;">PU</th>
-                    <th class="text-center border-1" style="background-color: #f0f0f0;">HTVA</th>
-                </tr>
-            </thead>
-            <tbody id="factureContentTable">
-                <tr>
-                    <td class="text-start border-1" style='width: 50%;'>à définir</td>
-                    <td class="text-end border-1">à définir</td>
-                    <td class="text-end border-1">à définir</td>
-                    <td class="text-end border-1">à définir</td>
-                </tr>
-            </tbody>
-        </table>
-       <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-          <button type="button" class="btn btn-primary" id="btnPdfFacture">PDF</button>
-          <button type="button" class="btn btn-primary" id="btnPrintFacture">Impression</button>
-      </div>
-    </div>
-  </div>
-</div>
+{% include 'partials/user/Profile/_factureModalInfos.html.twig' %}
