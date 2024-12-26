@@ -12,6 +12,7 @@ export async function changeFragmentUser() {
         if (button.classList.contains('change-fragment')) {
             const fragment = button.getAttribute('data-fragment');
             loadingIndicator.style.display = 'flex';
+            history.pushState(null, '', `?fragment=${fragment}`);
 
             try {
                 const response = await fetch(`/user?fragment=${fragment}`, {
@@ -25,21 +26,22 @@ export async function changeFragmentUser() {
                     const data = await response.json();
                     loadingIndicator.style.display = 'none';
 
-                    if (fragment === 'link-Factures') {
-                        facture();
-                    };
-
-                    if (fragment === 'link-Repertoire') {
-                        repertoire();
-                    };
-
-                    if (fragment === 'link-Contact') {
-                        // contact();
-                    };
-                    
-                    if (fragment === 'link-Agenda'){
-                        // agenda();
-                    };
+                    switch (fragment) {
+                        case 'link-Factures':
+                            facture();
+                            break;
+                        case 'link-Repertoire':
+                            repertoire();
+                            break;
+                        case 'link-Contact':
+                            // contact();
+                            break;
+                        case 'link-Agenda':
+                            // agenda();
+                            break;
+                        default:
+                            break;
+                    }
 
                     document.getElementById('fragmentContent').innerHTML = data.fragmentContent; 
 

@@ -60,9 +60,9 @@ class UserController extends AbstractController
     private function getUserData(): array
     {
         $user = $this->getUser();
-        $cacheKey = 'user_data_' . $user->getId();
+        // $cacheKey = 'user_data_' . $user->getId();
 
-        $cachedData = $this->cache->getItem($cacheKey);
+        // $cachedData = $this->cache->getItem($cacheKey);
         
         $userData = [
             'user' => $user,
@@ -75,14 +75,14 @@ class UserController extends AbstractController
             'events' => $user->getEvents(),
         ];
 
-        if ($cachedData->isHit()) {
-            // return $cachedData->get();
-            $this->cache->delete($cacheKey);
-        }
+        // if ($cachedData->isHit()) {
+        //     // return $cachedData->get();
+        //     $this->cache->delete($cacheKey);
+        // }
 
-        $cachedData->set($userData);
-        $cachedData->expiresAfter(3600);
-        $this->cache->save($cachedData);
+        // $cachedData->set($userData);
+        // $cachedData->expiresAfter(3600);
+        // $this->cache->save($cachedData);
 
         return $userData;
     }
@@ -140,7 +140,6 @@ class UserController extends AbstractController
      */
     private function getForms()
     {   
-        new FactureLigne();
         return [
             'addDossier' => $this->createForm(DossierType::class, new Dossier())->createView(),
             'addFacture' => $this->createForm(FactureType::class, new Facture())->createView(),
