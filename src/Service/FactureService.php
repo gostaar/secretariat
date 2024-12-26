@@ -45,42 +45,32 @@ class FactureService
         return $factureData;
     }
 
-    public function addFacture(Facture $facture, User $user): bool
+    public function addFacture(Facture $facture, User $user)
     {
-        $totalFacture = 0;
-
         $existingFacture = $this->em
             ->getRepository(Facture::class)
             ->findOneBy(['id' => $facture->getId(), 'client' => $user]);
 
         if ($existingFacture) {
-            return false; 
+            return false;
         }
-
-        foreach ($facture->getFactureLignes() as $ligne) {
-            $ligneTotal = $ligne->getQuantite() * $ligne->getPrixUnitaire();
-            $ligne->setTotal($ligneTotal);
-            $ligne->setFacture($facture);
-            $totalFacture += $ligneTotal;
-        }
-
-        $existingLignes = $this->factureLigneRepository->findBy(['facture' => $facture]);
-        foreach ($existingLignes as $ligne) {
-            if (!$facture->getFactureLignes()->contains($ligne)) {
-                $this->em->remove($ligne);
-            }
-        }
-
-        $facture->setMontant($totalFacture);
 
         $user->addFacture($facture);
-
         $this->em->persist($facture);
         $this->em->flush();
+
+        $this->addFlash('success', 'la facture a été créée');
 
         return true;
     }
 
+    public function addFactureLigne(Facture $facture, FactureLigne $factureLigne): void
+    {
+        $factureLigne->setFacture($facture);
+
+        $this->entityManager->persist($factureLigne);
+        $this->entityManager->flush();
+    }
 
     public function deleteFacture(int $id, User $user)
     {

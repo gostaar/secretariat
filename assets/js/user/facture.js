@@ -18,8 +18,10 @@ export function facture() {
     document.addEventListener('click', handleFactureClick);
     document.addEventListener('pointerdown', handleFactureClick);
 
-    const wrapper = document.getElementById('facture-lignes-wrapper');
-    const addButton = document.getElementById('add-facture-ligne');
+
+
+    // const wrapper = document.getElementById('facture-lignes-wrapper');
+    // const addButton = document.getElementById('add-facture-ligne');
 
     // addButton.addEventListener('click', () => {
     //     addFactureLigne(wrapper);
@@ -39,47 +41,47 @@ export function facture() {
     // });
 }
 
-function addFactureLigne(wrapper) {
-    let prototype = wrapper.dataset.prototype;
-    let index = wrapper.children.length;
+// function addFactureLigne(wrapper) {
+//     let prototype = wrapper.dataset.prototype;
+//     let index = wrapper.children.length;
 
-    prototype = prototype.replace(/__name__/g, index);
+//     prototype = prototype.replace(/__name__/g, index);
 
-    const newField = document.createElement('div');
-    newField.classList.add('facture-ligne');
-    newField.innerHTML = prototype;
+//     const newField = document.createElement('div');
+//     newField.classList.add('facture-ligne');
+//     newField.innerHTML = prototype;
 
-    const removeButton = document.createElement('button');
-    removeButton.type = 'button';
-    removeButton.innerText = 'Supprimer';
-    removeButton.classList.add('remove-ligne');
-    newField.appendChild(removeButton);
+//     const removeButton = document.createElement('button');
+//     removeButton.type = 'button';
+//     removeButton.innerText = 'Supprimer';
+//     removeButton.classList.add('remove-ligne');
+//     newField.appendChild(removeButton);
 
-    wrapper.appendChild(newField);
-}
+//     wrapper.appendChild(newField);
+// }
 
-function validateFactureLignes(wrapper) {
-    let isValid = true;
+// function validateFactureLignes(wrapper) {
+//     let isValid = true;
 
-    wrapper.querySelectorAll('.facture-ligne').forEach((ligne) => {
-        const quantity = ligne.querySelector('[name$="[quantite]"]');
-        const price = ligne.querySelector('[name$="[prix_unitaire]"]');
+//     wrapper.querySelectorAll('.facture-ligne').forEach((ligne) => {
+//         const quantity = ligne.querySelector('[name$="[quantite]"]');
+//         const price = ligne.querySelector('[name$="[prix_unitaire]"]');
 
-        const existingError = ligne.querySelector('.error-message');
-        if (existingError) existingError.remove();
+//         const existingError = ligne.querySelector('.error-message');
+//         if (existingError) existingError.remove();
 
-        if (!quantity.value || !price.value || quantity.value <= 0 || price.value <= 0) {
-            isValid = false;
+//         if (!quantity.value || !price.value || quantity.value <= 0 || price.value <= 0) {
+//             isValid = false;
 
-            const error = document.createElement('div');
-            error.classList.add('error-message', 'text-danger');
-            error.innerText = 'Veuillez remplir correctement tous les champs.';
-            ligne.appendChild(error);
-        }
-    });
+//             const error = document.createElement('div');
+//             error.classList.add('error-message', 'text-danger');
+//             error.innerText = 'Veuillez remplir correctement tous les champs.';
+//             ligne.appendChild(error);
+//         }
+//     });
 
-    return isValid;
-}
+//     return isValid;
+// }
 
 let factureId;
 

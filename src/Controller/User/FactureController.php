@@ -50,6 +50,32 @@ class FactureController extends AbstractController
         return new Response();
     }
 
+    #[Route('/add_facture_ligne/{id}', name: 'add_facture_ligne', methods: ['POST'])]
+    public function addFactureLigne(int $id, Request $request): Response
+    {
+        $facture = $this->getDoctrine()->getRepository(Facture::class)->find($id);
+
+        if (!$facture) {
+            throw $this->createNotFoundException('Facture not found');
+        }
+        $form = $this->createForm(FactureLigneType::class, null, [
+            'facture' => $facture, // Passer l'objet facture
+        ]);
+
+        // Traiter le formulaire
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $factureLigne = $form->getData();
+
+            $this->factureLigneService->addFactureLigne($facture, $factureLigne);
+
+            return $this->redirectToRoute('user', [
+                'id' => $facture->getId(),
+            ], 302, ['fragment' => 'link-Factures']);
+        }
+        
+        return new Response();
+    }
 
     #[Route('/update_facture/{id}', name: 'update_facture', methods: ['POST'])]
     public function updateFacture(int $id, Request $request) : JsonResponse

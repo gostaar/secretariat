@@ -21,17 +21,13 @@ export function initializeNavigation() {
 }
 
 export function initializeFragments() {
-    const path = window.location.pathname;
-
-    const fragmentHandlers = {
-        '/': changeFragmentSite(),
-        '/user': changeFragmentUser(),
-    };
-
-    for (const [key, handler] of Object.entries(fragmentHandlers)) {
-        if (path.startsWith(key) && typeof handler === 'function') {
-            handler();
-            break;
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.pathname.startsWith('/user')) {
+            changeFragmentUser();
         }
-    }
+        
+        if (window.location.pathname === '/') {
+            changeFragmentSite(); 
+        }
+    });
 }

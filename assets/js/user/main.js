@@ -1,6 +1,5 @@
 import { facture } from './facture.js';
 import { repertoire } from './repertoire.js';
-import { contact } from './contact.js';
 import { agenda } from './agenda.js';
 
 export async function changeFragmentUser() {
@@ -35,7 +34,7 @@ export async function changeFragmentUser() {
                     };
 
                     if (fragment === 'link-Contact') {
-                        contact();
+                        // contact();
                     };
                     
                     if (fragment === 'link-Agenda'){

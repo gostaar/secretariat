@@ -24,7 +24,9 @@ class FactureLigne
     private ?string $prix_unitaire = null;
 
     #[ORM\ManyToOne(inversedBy: 'factureLignes')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Facture $facture = null;
+
 
     public function __toString(): string{
         return $this->designation;
@@ -82,4 +84,5 @@ class FactureLigne
 
         return $this;
     }
+
 }

@@ -1,61 +1,93 @@
+version: '3'
+
 services:
-  mysql:
-    image: mysql:8.0
+  nginx:
+    image: nginx:1.22-alpine
     ports:
-      - 3306:3306
+      - "8080:80"
+    volumes:
+      - ./:/code
+      - ./nginx.conf:/etc/nginx/nginx.conf
+  php:
+    build: .
+    volumes:
+      - ./:/code
+  mysql:
+    image: mysql:8.2
     environment:
       MYSQL_USER: symfony
       MYSQL_PASSWORD: secret
       MYSQL_DATABASE: symfony
       MYSQL_ROOT_PASSWORD: secret
     volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - symfony
-    container_name: database
-
-  apache:
-    build:
-      context: .
-      dockerfile: apache.dockerfile
-    ports:
-      - 8080:80 # Le 1er port est celui de l'hôte
-    volumes:
-      - .:/var/www/html/
+      - data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
     environment:
-      - APACHE_DOCUMENT_ROOT=/var/www/html/public
-    depends_on:
-      - mysql
-      - redis
-    networks:
-      - symfony
-    container_name: apache
-
-  node:
-    build: 
-      context: .
-      dockerfile: node.dockerfile
-    volumes:
-      - .:/var/www/html
-    working_dir: /var/www/html
-    environment:
-      - NODE_ENV=development
-    networks:
-      - symfony
-    container_name: node
-
-  redis:
-    image: redis:alpine
-    ports:
-      - 6379:6379
-    networks:
-      - symfony
-    container_name: redis
-    restart: always
-
-networks:
-  symfony:
-    driver: bridge
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: secret
 
 volumes:
-  mysql-data:
+  data:
+
+# services:
+#   mysql:
+#     image: mysql:8.0
+#     ports:
+#       - 3306:3306
+#     environment:
+#       MYSQL_USER: symfony
+#       MYSQL_PASSWORD: secret
+#       MYSQL_DATABASE: symfony
+#       MYSQL_ROOT_PASSWORD: secret
+#     volumes:
+#       - mysql-data:/var/lib/mysql
+#     networks:
+#       - symfony
+#     container_name: database
+
+#   apache:
+#     build:
+#       context: .
+#       dockerfile: apache.dockerfile
+#     ports:
+#       - 8080:80 # Le 1er port est celui de l'hôte
+#     volumes:
+#       - .:/var/www/html/
+#     environment:
+#       - APACHE_DOCUMENT_ROOT=/var/www/html/public
+#     depends_on:
+#       - mysql
+#       - redis
+#     networks:
+#       - symfony
+#     container_name: apache
+
+#   node:
+#     build: 
+#       context: .
+#       dockerfile: node.dockerfile
+#     volumes:
+#       - .:/var/www/html
+#     working_dir: /var/www/html
+#     environment:
+#       - NODE_ENV=development
+#     networks:
+#       - symfony
+#     container_name: node
+
+#   redis:
+#     image: redis:alpine
+#     ports:
+#       - 6379:6379
+#     networks:
+#       - symfony
+#     container_name: redis
+#     restart: always
+
+# networks:
+#   symfony:
+#     driver: bridge
+
+# volumes:
+#   mysql-data:

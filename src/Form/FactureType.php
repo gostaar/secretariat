@@ -54,13 +54,16 @@ class FactureType extends AbstractType
                 'data' => $facture->isActive(),
             ])
             ->add('factureLignes', CollectionType::class, [
-                'label' => 'Facture',
                 'entry_type' => FactureLigneType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-            ])
-            ->add('submit', SubmitType::class, [
+                'entry_options' => ['label' => false],
+                'attr' => [
+                    'data-controller' => 'form-collection'
+                ]
+            ])        
+            ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer la facture',
             ]);
     }

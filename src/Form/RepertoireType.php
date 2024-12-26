@@ -72,14 +72,14 @@ class RepertoireType extends AbstractType
                 'required' => false,
                 'data' => $options['dossier'] ?? null,
                 'class' => Dossier::class,
-                'choice_label' => 'id', // Afficher l'ID ou un autre champ du dossier
+                'choice_label' => 'id',
             ])
             ->add('contacts', CollectionType::class, [
                 'label' => 'Contacts',
-                'entry_type' => ContactType::class,  // Utilisez un formulaire ContactType pour gérer l'ajout de contacts
+                'entry_type' => ContactType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => false,  // Important pour que les contacts soient correctement gérés
+                'by_reference' => false
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer le répertoire',

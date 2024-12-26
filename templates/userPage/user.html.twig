@@ -6,8 +6,8 @@
     <div id="userContent" class="custom-bg d-flex ">
         {% include 'userPage/_header.html.twig' %}
         
-        {# Afficher uniquement la section correspondant au fragment #}
         <div id="fragmentContent" class="custom-bg full-height m-0 p-0 w-100">
+            {% include 'partials/flash.html.twig' %}
             {% include 'userPage/_fragmentContent.html.twig' %}
         </div>
     </div>

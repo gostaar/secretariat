@@ -1,3 +1,5 @@
+import { contact } from '../site/contact.js';
+
 export async function changeFragmentSite() {
     const loadingIndicator = document.getElementById('loadingIndicator');
     

@@ -139,11 +139,11 @@ class UserController extends AbstractController
      * Retrieve and return forms
      */
     private function getForms()
-    {
+    {   
+        new FactureLigne();
         return [
             'addDossier' => $this->createForm(DossierType::class, new Dossier())->createView(),
             'addFacture' => $this->createForm(FactureType::class, new Facture())->createView(),
-            'addFactureLigne' => $this->createForm(FactureLigneType::class, new FactureLigne())->createView(),
             'addDevis' => $this->createForm(DevisType::class, new Devis())->createView(),
             'addDevisLigne' => $this->createForm(DevisLigneType::class, new DevisLigne())->createView(),
             'addService' => $this->createForm(ServicesType::class, new Services())->createView(),

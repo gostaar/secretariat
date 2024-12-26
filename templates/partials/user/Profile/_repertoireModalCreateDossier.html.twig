@@ -1,0 +1,20 @@
+<div class="modal fade" id="dossierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Créer un nouveau Dossier</h5>
+      </div>
+      <div class="modal-body">
+        {{ form_start(forms['addDossier'], {'action': path('add_dossier'), 'method': 'POST'}) }}
+        <div class="form-group">
+          {{ form_row(forms['addDossier'].name) }}
+        </div>
+      </div>
+      <div class="modal-footer">
+        {# {{ form_widget(forms['addDossier'].submit, {'attr': {'class': 'btn btn-primary'}}) }} #}
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        {{ form_end(forms['addDossier']) }}
+      </div>
+    </div>
+  </div>
+</div>

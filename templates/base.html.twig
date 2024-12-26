@@ -10,7 +10,7 @@
         {{ encore_entry_link_tags('loginStyle') }}
     {% elseif app.request.pathinfo == '/' %}
         {{ encore_entry_link_tags('siteStyle') }} 
-    {% elseif app.request.pathinfo starts with '/user' %}
+    {% else %}
         {{ encore_entry_link_tags('userStyle') }} 
     {% endif %}
 
@@ -30,7 +30,6 @@
 </head>
 <body>
     {% include '_loading.html.twig' %}
-
     {% block body %}
     {% endblock %}
 

@@ -48,8 +48,10 @@ class Facture
     /**
      * @var Collection<int, FactureLigne>
      */
-    #[ORM\OneToMany(targetEntity: FactureLigne::class, mappedBy: 'facture')]
+    #[ORM\OneToMany(targetEntity: FactureLigne::class, mappedBy: 'facture', orphanRemoval: true)]
     private Collection $factureLignes;
+
+
 
     public function __construct()
     {
@@ -57,6 +59,7 @@ class Facture
         // $this->status = FactureStatus::NON_PAYE->value;
         $this->paiements = new ArrayCollection();
         $this->factureLignes = new ArrayCollection();
+
     }
 
     public function __toString(): string{
@@ -75,6 +78,7 @@ class Facture
             'is_active' => $this->isActive(),
             'paiements' => $this->getPaiements(),
             'status' => $this->getStatusLabel(),
+            'factureLignes' => $this->getFactureLignes(),
         ];
     }
 
@@ -248,4 +252,5 @@ class Facture
 
         return $this;
     }
+
 }
