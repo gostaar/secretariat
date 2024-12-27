@@ -36,57 +36,106 @@ php bin/console security:hash-password
 ### APACHE
 docker-compose exec apache service apache2 restart
 
-## Procédure d'ajout de fragment
-1) dans le template:
-    a) on détermine ce qu'on a besoin au niveau de l'url => faut-il un fragment supplémentaire?
-    b) on créer un button avec les bons data-fragments pour accéder à notre nouveau template
-    (ex: 
-        <div class="d-flex flex-column align-items-center p-1" style="position: relative; width: 130px;">
-            <button 
-                type="button" 
-                data-fragment="link-PageRepertoire"
-                data-dossier="{{ dossier.id }}"  <!-- => ici ce serait pour un nouveau fragment dans l'url -->
-                class="change-fragment btn d-flex flex-column flex-start align-items-center text-decoration-none"
-                style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: transparent; border: none; z-index: 1; padding: 0;">
-            </button>
+# **Procédure d'ajout de fragment**
 
-            <i class="fas fa-folder fa-3x text-center text-warning"></i>
-            <p class='text-black'>{{ dossier.name }}</p>
-        </div>
-    )
-2) dans le controller: 
-    a) on vérifie si le nouveau fragment se trouve dans l'url: $dossierId = $request->query->get('dossier');
-    b) on détermine si le nouveau fragment est null ou non (les pages ou on a pas besoin du nouveau fragment) (ex: $formData = $this->routeDataService->getFormData($fragment, $dossierId ? (int) $dossierId : null);)
+## **1. Dans le template**
+### **a) Définir les besoins**
+- Déterminez si un **fragment supplémentaire** est nécessaire au niveau de l'URL.
 
-    x) Ne pas oublier de faire la même pour la route /changefragment pour que les data se mettent à jour depuis ajax
+### **b) Création d'un bouton pour le nouveau fragment**
+- Créez un bouton avec les attributs `data-fragment` appropriés pour accéder au nouveau template.
 
-3) dans le service: 
-    a) on prépare notre route: dans RouteDataService.php
-    b) on ajoute le nouveau fragment à la fonction principale getFormData() (ex: getFormData(?int $dossierId = null))
-    c) getTemplateMapping() -> on fait correspondre notre template avec un nom de fragment (ex: 'link-Acceuil' => 'userPage/_mainContent.html.twig')
+**Exemple :**
+```html
+<div class="d-flex flex-column align-items-center p-1" style="position: relative; width: 130px;">
+    <button 
+        type="button" 
+        data-fragment="link-PageRepertoire"
+        data-dossier="{{ dossier.id }}"  <!-- Nouveau fragment dans l'URL -->
+        class="change-fragment btn d-flex flex-column flex-start align-items-center text-decoration-none"
+        style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: transparent; border: none; z-index: 1; padding: 0;">
+    </button>
+    <i class="fas fa-folder fa-3x text-center text-warning"></i>
+    <p class='text-black'>{{ dossier.name }}</p>
+</div>
 
-    IMPORTANT
-    d) lors de l'appel à getRouteConfig(), on vérifie si le nouveau fragment existe et on l'envoie comme argument à la fonction
-    (ex: $dossierId ? $routeConfig = $this->getRouteConfig($dossiersDocuments, $user, $dossierId) : $routeConfig = $this->getRouteConfig($dossiersDocuments, $user);)
-    e) dans la fonction getRouteConfig, on ajoute le nouveau fragment: getRouteConfig(array $dossiersDocuments, $user, ?int $dossierId = null): array
-    f) et on construit les éléments nécessaires, à savoir, user et services sont automatiquement définis:
-    (ex:
-        'link-PageRepertoire' => $this->createLinkConfig([
-            'addContact' => \App\Form\ContactType::class,   
-            'addRepertoire' => \App\Form\RepertoireType::class,
-        ], [
-            'dossier' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Dossier::class)->find($dossierId) : null,
-            'repertoires' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Repertoire::class)->findBy(['dossier' => $dossierId]) : [],
-            'contacts' =>$this->entityManager->getRepository(\App\Entity\Contact::class)->findAll(),
-        ]),
-    )
-    explications: 'addContact' => \App\Form\ContactType::class,  correspond à 'addContact' => $this->formFactory->create(\App\Form\ContactType::class, ...
-    une recherche d'entité se fait via un switch, donc s'il y a une nouvelle entité, il faut la référencer dans le switch!!
-    ...\App\Entity\Contact)->>createView()
+# Procédure d'ajout de fragment
 
-    g) les datas supplémentaires à services et user sont ajouté dans le deuxième tableau: doit vérifier si le nouveau fragment existe, puis on applique les fonctions communes de recherche ...
-    ex:  [
-            'dossier' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Dossier::class)->find($dossierId) : null,
-            'repertoires' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Repertoire::class)->findBy(['dossier' => $dossierId]) : [],
-            'contacts' =>$this->entityManager->getRepository(\App\Entity\Contact::class)->findAll(),
-        ],
+## 2. Dans le contrôleur
+### a) Vérifiez la présence du nouveau fragment
+Utilisez `Request` pour récupérer le fragment depuis l'URL :
+```php
+$dossierId = $request->query->get('dossier');
+```
+
+### b) Gérez la condition d'existence
+Si le fragment est requis, passez sa valeur (ou `null`) au service :
+```php
+$formData = $this->routeDataService->getFormData($fragment, $dossierId ? (int) $dossierId : null);
+```
+
+### c) Mettez à jour la route AJAX
+Vérifiez que la route `/changefragment` gère aussi le nouveau fragment. Cela permettra de mettre à jour les données via les requêtes AJAX.
+
+## 3. Dans le service
+### a) Préparez la route
+Ajoutez le support du nouveau fragment dans `RouteDataService.php`.
+
+### b) Mettez à jour `getFormData()`
+Ajoutez un nouvel argument optionnel pour prendre en charge le fragment :
+```php
+public function getFormData(string $fragment, ?int $dossierId = null): array
+```
+
+### c) Mettez à jour `getTemplateMapping()`
+Associez le fragment à son template correspondant :
+```php
+'link-Acceuil' => 'userPage/_mainContent.html.twig',
+```
+
+### d) Ajoutez le fragment dans `getRouteConfig()`
+Vérifiez si le fragment est défini avant de l'envoyer à la fonction :
+```php
+$dossierId 
+    ? $routeConfig = $this->getRouteConfig($dossiersDocuments, $user, $dossierId) 
+    : $routeConfig = $this->getRouteConfig($dossiersDocuments, $user);
+```
+
+Adaptez la signature de la fonction pour inclure le fragment :
+```php
+private function getRouteConfig(array $dossiersDocuments, $user, ?int $dossierId = null): array
+```
+
+### e) Construisez les données nécessaires
+Ajoutez les entités et formulaires requis dans la configuration des routes.
+
+**Exemple :**
+```php
+'link-PageRepertoire' => $this->createLinkConfig([
+    'addContact' => \App\Form\ContactType::class,   
+    'addRepertoire' => \App\Form\RepertoireType::class,
+], [
+    'dossier' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Dossier::class)->find($dossierId) : null,
+    'repertoires' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Repertoire::class)->findBy(['dossier' => $dossierId]) : [],
+    'contacts' => $this->entityManager->getRepository(\App\Entity\Contact::class)->findAll(),
+]),
+```
+
+### f) Ajoutez les recherches d'entités
+Vérifiez la présence du fragment et appliquez les fonctions de recherche nécessaires :
+```php
+[
+    'dossier' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Dossier::class)->find($dossierId) : null,
+    'repertoires' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Repertoire::class)->findBy(['dossier' => $dossierId]) : [],
+    'contacts' => $this->entityManager->getRepository(\App\Entity\Contact::class)->findAll(),
+],
+```
+
+### g) Référencement dans les switches
+Si une nouvelle entité est introduite, ajoutez-la dans le `switch` pour gérer les vues :
+```php
+...\App\Entity\Contact)->createView();
+```
+
+## IMPORTANT
+Les données supplémentaires (au-delà de `services` et `user`) doivent être vérifiées et ajoutées dans le deuxième tableau lors de l'appel de `createLinkConfig()`.
