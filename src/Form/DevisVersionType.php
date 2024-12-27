@@ -12,36 +12,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 class DevisVersionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('montant', MoneyType::class, [
-                'currency' => 'EUR',
-                'label' => 'Montant de la version du devis',
-                'required' => true,
-            ])
-            ->add('date_modification', DateTimeType::class, [
-                'widget' => 'single_text',
-                'label' => 'Date de la version du devis',
-                'required' => true,
-            ])
-            ->add('commentaire', TextareaType::class, [
-                'label' => 'Commentaire',
-                'required' => true,
-                'attr' => [
-                    'placeholder' => 'Ajoutez un commentaire...',
-                ],
-            ])
+            ->add('montant')
+            ->add('commentaire')
             ->add('is_active', CheckboxType::class, [
                 'label' => 'Actif',
                 'required' => false,
-            ])
-            ->add('version', CheckboxType::class, [
-                'label' => 'Version',
-                'required' => true,
             ])
             ->add('status', ChoiceType::class, [
                 'label' => 'Statut',
@@ -50,7 +33,18 @@ class DevisVersionType extends AbstractType
                     array_map(fn($case) => (string) $case->value, DevisStatus::cases()) // Convertir la valeur de l'énumération en string
                 ),
                 'required' => true,
+            ])
+            ->add('version', CheckboxType::class, [
+                'label' => 'Version',
+                'required' => true,
+            ])
+            ->add('date_modification', null, [
+                'widget' => 'single_text',
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Enregistrer le devis',
             ]);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

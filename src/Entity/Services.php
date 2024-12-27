@@ -80,9 +80,9 @@ class Services
     public const AVAILABLE_SERVICES = [
         'Administratif',
         'Commercial',
-        'Numérique',
+        'Numerique',
         'Agenda',
-        'Téléphonique',
+        'Telephonique',
         'Repertoire',
         'Espace Personnel'
     ];

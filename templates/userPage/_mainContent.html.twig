@@ -11,10 +11,10 @@
                     {% set items = [
                         { id: 'btnEspacePersonnel', href: 'link-espacepersonnel', icon: 'fa-user-circle', title: 'Espace Personnel' },
                         { id: 'btnAgenda', href: 'link-Agenda', icon: 'fa-calendar-alt', title: 'Agenda', service: 'Agenda' },
-                        { id: 'btnTelephone', href: 'link-Telephone', icon: 'fa-phone-alt', title: 'Gestion Téléphonique', service: 'Téléphonique' },
+                        { id: 'btnTelephone', href: 'link-Telephone', icon: 'fa-phone-alt', title: 'Gestion Téléphonique', service: 'Telephonique' },
                         { id: 'btnAdministratif', href: 'link-Administratif', icon: 'fa-file-alt', title: 'Documents Administratifs', service: 'Administratif' },
                         { id: 'btnCommercial', href: 'link-Commercial', icon: 'fa-briefcase', title: 'Documents commerciaux', service: 'Commercial' },
-                        { id: 'btnNumerique', href: 'link-Numerique', icon: 'fa-laptop-code', title: 'Documents numériques', service: 'Numérique' }
+                        { id: 'btnNumerique', href: 'link-Numerique', icon: 'fa-laptop-code', title: 'Documents numériques', service: 'Numerique' }
                     ] %}
                     {% for item in items %}
                         {% if item.service is not defined or item.service in services %}

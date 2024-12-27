@@ -5,9 +5,9 @@
                 <h4>Numérique</h4>
             </div>
             <div class="card-body">
-                {# {% set filteredDossiers = dossiers|filter(dossier => dossier.services == 'Numerique') %} #}
+                {# {% set dossiers = dossiers|filter(dossier => dossier.services == 'Numerique') %} #}
                 
-                {% if filteredDossiers is empty %}
+                {% if dossiers is empty %}
                     <!-- Aucun numerique -->
                     <div class="text-center">
                         <div style="position: relative; display: inline-block;">
@@ -23,7 +23,7 @@
                         <p class="text-muted">À cet endroit, vous pourrez consulter vos documents numériques.</p>
                     </div>
                 {% else %}
-                    {% for dossier in filteredDossiers|slice(0, 3) %}
+                    {% for dossier in dossiers|slice(0, 3) %}
                         <a id="dossier_{{ dossier.id }}" data-id="{{ dossier.id }}" style="max-width:100px;" class="dossier text-center d-flex flex-column flex-start text-decoration-none">
                             <i class="fas fa-folder fa-3x text-center text-warning"></i>
                             <p class='text-black'>{{ dossier.name }}</p>

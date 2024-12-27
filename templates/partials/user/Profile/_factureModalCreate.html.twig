@@ -5,21 +5,21 @@
         <h5 class="modal-title" id="exampleModalLabel">Créer une nouvelle Facture</h5>
       </div>
       <div class="modal-body">
-        {{ form_start(forms['addFacture'], {'action': path('add_facture'), 'method': 'POST'}) }}
+        {{ form_start(addFacture, {'action': path('add_facture'), 'method': 'POST'}) }}
         
         <div class="d-flex">
-            {{ form_row(forms['addFacture'].montant) }}
-            {{ form_row(forms['addFacture'].date_facture) }}
-            {{ form_row(forms['addFacture'].date_paiement) }}
+            {{ form_row(addFacture.montant) }}
+            {{ form_row(addFacture.date_facture) }}
+            {{ form_row(addFacture.date_paiement) }}
         </div>
         <div class="d-flex">
-            {{ form_row(forms['addFacture'].status) }}
-            {{ form_row(forms['addFacture'].commentaire) }}
+            {{ form_row(addFacture.status) }}
+            {{ form_row(addFacture.commentaire) }}
         </div>
-            {{ form_row(forms['addFacture'].is_active) }}
-            {{ form_row(forms['addFacture'].factureLignes) }}
+            {{ form_row(addFacture.is_active) }}
+            {{ form_row(addFacture.factureLignes) }}
 
-        {{ form_end(forms['addFacture']) }}
+        {{ form_end(addFacture) }}
       </div>
     </div>
   </div>

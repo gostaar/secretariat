@@ -13,10 +13,11 @@ class TypeDocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name') // Le seul champ pour le TypeDocument
+            ->add('name')
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer le Type_Document',
-            ]);
+                'label' => 'Enregistrer le Type de document',
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

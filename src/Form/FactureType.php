@@ -3,55 +3,45 @@
 namespace App\Form;
 
 use App\Entity\Facture;
-use App\Entity\FactureLigne;
+use App\Entity\User;
+use App\Form\FactureLigneType;
 use App\Enum\FactureStatus;
-use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class FactureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $facture = $options['data'];
-
         $builder
-            ->add('montant', NumberType::class, [
-                'label' => 'Montant',
-                'required' => true,
-                'scale' => 2,
-            ])
-            ->add('date_facture', DateTimeType::class, [
-                'label' => 'Date de la facture',
+            ->add('montant')
+            ->add('date_paiement', null, [
                 'widget' => 'single_text',
-                'required' => true,
             ])
-            ->add('date_paiement', DateTimeType::class, [
-                'label' => 'Date de paiement',
+            ->add('date_facture', null, [
                 'widget' => 'single_text',
-                'required' => false,
             ])
             ->add('status', EnumType::class, [
                 'class' => FactureStatus::class,
                 'choice_label' => fn (FactureStatus $choice) => $choice->getLabel(),
             ])
-            ->add('commentaire', TextareaType::class, [
-                'label' => 'Commentaire',
-                'required' => false,
-            ])
+            ->add('commentaire')
             ->add('is_active', CheckboxType::class, [
                 'label' => 'Active',
                 'required' => false,
                 'mapped' => false,
                 'data' => $facture->isActive(),
+            ])
+            ->add('client', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'id',
             ])
             ->add('factureLignes', CollectionType::class, [
                 'entry_type' => FactureLigneType::class,
@@ -65,7 +55,8 @@ class FactureType extends AbstractType
             ])        
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer la facture',
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

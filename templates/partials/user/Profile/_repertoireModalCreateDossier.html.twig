@@ -5,15 +5,15 @@
         <h5 class="modal-title" id="exampleModalLabel">Créer un nouveau Dossier</h5>
       </div>
       <div class="modal-body">
-        {{ form_start(forms['addDossier'], {'action': path('add_dossier'), 'method': 'POST'}) }}
+        {{ form_start(addDossier, {'action': path('add_dossier'), 'method': 'POST'}) }}
         <div class="form-group">
-          {{ form_row(forms['addDossier'].name) }}
+          {{ form_row(addDossier.name) }}
         </div>
       </div>
       <div class="modal-footer">
-        {# {{ form_widget(forms['addDossier'].submit, {'attr': {'class': 'btn btn-primary'}}) }} #}
+        {# {{ form_widget(addDossier.submit, {'attr': {'class': 'btn btn-primary'}}) }} #}
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        {{ form_end(forms['addDossier']) }}
+        {{ form_end(addDossier) }}
       </div>
     </div>
   </div>

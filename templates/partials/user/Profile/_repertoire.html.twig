@@ -16,8 +16,7 @@
                       placeholder="Rechercher un dossier...">
               </div>
 
-              {# {% set filteredDossiers = dossiers|filter(dossier => dossier.services == 'Repertoire') %} #}
-              {% if filteredDossiers is empty %}
+              {% if dossiers is empty %}
                   <!-- Aucun numerique -->
                   <div class="text-center">
                       <div style="position: relative; display: inline-block;">
@@ -34,7 +33,7 @@
                   </div>
               {% else %}
                   <div id="dossierRepertoireList" class="d-flex flex-wrap">
-                      {% for dossier in filteredDossiers %}
+                      {% for dossier in dossiers %}
                           <a id="dossier_{{ dossier.id }}" data-id="{{ dossier.id }}" 
                             style="max-width:100px;" 
                             class="dossier repertoire text-center d-flex flex-column flex-start text-decoration-none">

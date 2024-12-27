@@ -17,10 +17,10 @@ class FactureLigneType extends AbstractType
             ->add('designation')
             ->add('quantite')
             ->add('prix_unitaire')
-            ->add('factures', EntityType::class, [
-                'class' => Facture::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('facture', EntityType::class, [
+            //     'class' => Facture::class,
+            //     'choice_label' => 'id',
+            // ])
         ;
     }
 

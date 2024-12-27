@@ -85,7 +85,7 @@
                         </div>
                     {% else %}
                         <div class="flex-grow-1 p-4 d-flex justify-content-center gap-3">
-                            {% for dossier in filteredDossiers|slice(0, 3) %}
+                            {% for dossier in dossiers|slice(0, 3) %}
                                 <a id="dossier_{{ dossier.id }}" data-id="{{ dossier.id }}" href="/repertoire/{{ dossier.id }}" style="max-width:100px;" class="text-center d-flex flex-column flex-start text-decoration-none">
                                     <i class="fas fa-folder fa-3x text-center text-warning"></i>
                                     <p class='text-black'>{{ dossier.name }}</p>
