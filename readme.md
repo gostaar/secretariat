@@ -58,10 +58,8 @@ docker-compose exec apache service apache2 restart
     <i class="fas fa-folder fa-3x text-center text-warning"></i>
     <p class='text-black'>{{ dossier.name }}</p>
 </div>
-
-# Procédure d'ajout de fragment
-
-## 2. Dans le contrôleur
+```
+##  2. Dans le contrôleur
 ### a) Vérifiez la présence du nouveau fragment
 Utilisez `Request` pour récupérer le fragment depuis l'URL :
 ```php
