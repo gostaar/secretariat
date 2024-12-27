@@ -6,20 +6,26 @@ export async function changeFragmentUser() {
     const loadingIndicator = document.getElementById('loadingIndicator');
     const UserContent = document.getElementById('userContent');
 
-    async function loadFragment(fragment) {
+    async function loadFragment(fragment, dossierId = null) {
+        console.log(`dossierId : ${dossierId}`);
         loadingIndicator.style.display = 'flex'; 
-        history.pushState(null, '', `?fragment=${fragment}`);
+        let url = `/changefragment?fragment=${fragment}`;
+        if (dossierId) { url += `&dossier=${dossierId}`;}
+        history.pushState(null, '', `?fragment=${fragment}${dossierId ? '&dossier=' + dossierId : ''}`);
 
         try {
-            const response = await fetch(`/changefragment?fragment=${fragment}`, { method: 'GET' });
+            const response = await fetch(url, { method: 'GET' });
 
             if (!response.ok) {
                 throw new Error(`Erreur HTTP : ${response.status}`);
             }
 
             const data =  await response.json();
-            console.log(data.fragmentContent);
-            updateFragmentContent(fragment, data.fragmentContent);
+           
+            updateFragmentContent(fragment);
+            document.getElementById('fragmentContent').innerHTML = data.fragmentContent;
+
+
         } catch (error) {
             console.error("Erreur lors du chargement du fragment : ", error);
         } finally {
@@ -27,9 +33,7 @@ export async function changeFragmentUser() {
         }
     }
 
-    function updateFragmentContent(fragment, content) {
-        document.getElementById('fragmentContent').innerHTML = content;
-
+    function updateFragmentContent(fragment) {
         switch (fragment) {
             case 'link-Factures':
                 facture();
@@ -54,9 +58,27 @@ export async function changeFragmentUser() {
         if (button.classList.contains('change-fragment')) {
             event.preventDefault();  
             const fragment = button.getAttribute('data-fragment');
+            const dossier = button.getAttribute('data-dossier');
+console.log(dossier);
+            dossier ? await loadFragment(fragment, dossier) : await loadFragment(fragment); 
             
-            await loadFragment(fragment);
         }
     });
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const fragmentFromUrl = urlParams.get('fragment');
+
+    if (fragmentFromUrl) {
+        updateFragmentContent(fragmentFromUrl);
+    }
+
+    window.addEventListener('popstate', async function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const fragmentFromUrl = urlParams.get('fragment');
+        const dossierIdFromUrl = urlParams.get('dossier');  // Récupère l'ID du dossier si présent
+    
+        if (fragmentFromUrl) {
+            dossierIdFromUrl ? await loadFragment(fragmentFromUrl, dossierIdFromUrl) : await loadFragment(fragmentFromUrl);
+        }
+    });
 }

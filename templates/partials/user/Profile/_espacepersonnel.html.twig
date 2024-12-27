@@ -85,11 +85,25 @@
                         </div>
                     {% else %}
                         <div class="flex-grow-1 p-4 d-flex justify-content-center gap-3">
-                            {% for dossier in dossiers|slice(0, 3) %}
-                                <a id="dossier_{{ dossier.id }}" data-id="{{ dossier.id }}" href="/repertoire/{{ dossier.id }}" style="max-width:100px;" class="text-center d-flex flex-column flex-start text-decoration-none">
-                                    <i class="fas fa-folder fa-3x text-center text-warning"></i>
-                                    <p class='text-black'>{{ dossier.name }}</p>
-                                </a>
+                            {# {% for dossier in dossiers|slice(0, 3) %} #}
+
+                            {% for dossier in dossiers %}
+                            <div class="d-flex flex-column align-items-center p-1" style="position: relative; width: 130px;">
+                                <button 
+                                    type="button" 
+                                    data-fragment="link-PageRepertoire"
+                                    data-dossier="{{ dossier.id }}" 
+                                    class="change-fragment btn d-flex flex-column flex-start align-items-center text-decoration-none"
+                                    style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: transparent; border: none; z-index: 1; padding: 0;">
+                                </button>
+
+                                <i class="fas fa-folder fa-3x text-center text-warning"></i>
+                                <p class='text-black'>{{ dossier.name }}</p>
+                            </div>
+                                {# <a id="dossier_{{ dossier.id }}" data-id="{{ dossier.id }}" href="/repertoire/{{ dossier.id }}" style="max-width:100px;" class="text-center d-flex flex-column flex-start text-decoration-none">
+                                    
+                                    
+                                </a> #}
                             {% endfor %}
                         </div>
                     {% endif %}

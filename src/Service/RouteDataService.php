@@ -24,7 +24,7 @@ class RouteDataService
         $this->formFactory = $formFactory;
     }
 
-    public function getFormData(string $fragment)
+    public function getFormData(string $fragment, ?int $dossierId = null)
     {
         $user = $this->security->getUser();
 
@@ -33,7 +33,7 @@ class RouteDataService
 
         $dossiersDocuments = $this->getDossiersDocumentsByService($services, $user);
 
-        $routeConfig = $this->getRouteConfig($dossiersDocuments, $user);
+        $dossierId ? $routeConfig = $this->getRouteConfig($dossiersDocuments, $user, $dossierId) : $routeConfig = $this->getRouteConfig($dossiersDocuments, $user);
         $config = $routeConfig[$fragment] ?? $this->createLinkConfig([], $dossiersDocuments['Repertoire']);
 
         $templateMapping = $this->getTemplateMapping();
@@ -60,7 +60,8 @@ class RouteDataService
         }
         return $dossiersDocuments;
     }
-    private function getRouteConfig(array $dossiersDocuments, $user): array
+    
+    private function getRouteConfig(array $dossiersDocuments, $user, ?int $dossierId = null): array
     {
         return [
             'link-Acceuil' => $this->createLinkConfig([], $dossiersDocuments['Repertoire']),
@@ -110,8 +111,7 @@ class RouteDataService
 
             'link-espacepersonnel' => $this->createLinkConfig([], [
                 'factures' => $this->mapEntitiesToArray($user->getFactures()),
-                'dossiers' => $user->getDossiers(), 
-                $dossiersDocuments['Repertoire']
+                ...$dossiersDocuments['Repertoire'],
             ]),
 
             'link-Repertoire' => $this->createLinkConfig([
@@ -121,10 +121,13 @@ class RouteDataService
             ], $dossiersDocuments['Repertoire']),
 
             'link-PageRepertoire' => $this->createLinkConfig([
-                'addDossier' => \App\Form\DossierType::class,   
-                'addDocument' => \App\Form\DocumentsUtilisateurType::class,
-                'addTypeDocument' => \App\Form\TypeDocumentType::class,
-            ], $dossiersDocuments['Repertoire']),
+                'addContact' => \App\Form\ContactType::class,   
+                'addRepertoire' => \App\Form\RepertoireType::class,
+            ], [
+                'dossier' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Dossier::class)->find($dossierId) : null,
+                'repertoires' => $dossierId ? $this->entityManager->getRepository(\App\Entity\Repertoire::class)->findBy(['dossier' => $dossierId]) : [],
+                'contacts' =>$this->entityManager->getRepository(\App\Entity\Contact::class)->findAll(),
+            ]),
 
             'link-Factures' => $this->createLinkConfig([ 
                 'addFacture' => \App\Form\FactureType::class,

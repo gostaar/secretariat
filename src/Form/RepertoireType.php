@@ -18,14 +18,14 @@ class RepertoireType extends AbstractType
         $builder
             ->add('nom')
             ->add('adresse')
-            ->add('code_postal')
+            ->add('codePostal')
             ->add('ville')
             ->add('pays')
             ->add('telephone')
             ->add('mobile')
             ->add('email')
             ->add('siret')
-            ->add('nom_entreprise')
+            ->add('nomEntreprise')
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'id',
@@ -33,7 +33,7 @@ class RepertoireType extends AbstractType
             ->add('dossier', EntityType::class, [
                 'class' => Dossier::class,
                 'choice_label' => 'id',
-            ])
+            ]) 
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer le Répertoire',
             ])

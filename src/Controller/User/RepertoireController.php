@@ -12,18 +12,25 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Service\RouteDataService;    
 
 class RepertoireController extends AbstractController
 {
+    private RouteDataService $routeDataService;
     private EntityManagerInterface $em;
     private RepertoireService $repertoireService;
     private DossierService $dossierService;
    
-    public function __construct(EntityManagerInterface $em, DossierService $dossierService,RepertoireService $repertoireService){
+    public function __construct(
+        EntityManagerInterface $em, 
+        DossierService $dossierService,
+        RepertoireService $repertoireService,
+        RouteDataService $routeDataService
+    ){
         $this->em = $em;
         $this->dossierService = $dossierService;
         $this->repertoireService = $repertoireService;
+        $this->routeDataService = $routeDataService;
     }
 
     private function getUserData(): array
@@ -36,20 +43,36 @@ class RepertoireController extends AbstractController
     }
 
     #[Route('/repertoire/{id}', name: 'repertoire', methods: ['GET', 'POST'])]
-    public function getRepertoire($id)
+    public function getRepertoire($id, Request $request)
     {
-        $dossier = $this->dossierService->getDossier($id);
-        $userData = $this->getUserData();
+        $fragment = $request->query->get('fragment', "link-Acceuil");
+        $formData = $this->routeDataService->getFormData($fragment);
 
-        $repertoireForm = $this->createForm(RepertoireType::class, new Repertoire(), [
-            'dossier' => $dossier,
+        // $dossier = $this->dossierService->getDossier($id);
+        // $userData = $this->getUserData();
+
+        // // Créer un objet Repertoire et définir son dossier
+        // $repertoire = new Repertoire();
+        // $repertoire->setDossier($dossier);  // Associer le Dossier à Repertoire
+
+        // $repertoireForm = $this->createForm(RepertoireType::class, $repertoire);
+
+        // $repertoireForm->handleRequest($request);
+
+        // if ($repertoireForm->isSubmitted() && $repertoireForm->isValid()) {
+        //     // Traitement après soumission du formulaire, par exemple, persister les données
+        // }
+
+        // // return $this->render('partials/user/Profile/repertoire.html.twig', array_merge($userData, [
+        // //     'dossier' => $dossier,
+        // //     'addRepertoire' => $repertoireForm->createView(),
+        // // ]));
+        
+        return $this->json([
+            'fragmentContent' => $this->renderView('userPage/_fragmentContent.html.twig', $formData),
         ]);
-      
-        return $this->render('partials/user/Profile/repertoire.html.twig',  array_merge($userData, [
-            'dossier' => $dossier,
-            'addRepertoire' => $repertoireForm,
-        ]));
     }
+
 
     #[Route('/add_repertoire', name: 'add_repertoire', methods: ['POST'])]
     public function addRepertoire(Request $request): Response

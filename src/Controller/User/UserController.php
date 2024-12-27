@@ -26,7 +26,9 @@ class UserController extends AbstractController
     public function index(Request $request): Response
     {
         $fragment = $request->query->get('fragment', "link-Acceuil");
-        $formData = $this->routeDataService->getFormData($fragment);
+        $dossierId = $request->query->get('dossier');
+
+        $formData = $this->routeDataService->getFormData($fragment, $dossierId ? (int) $dossierId : null);
 
         return $this->render('userPage/user.html.twig', $formData);
     }
@@ -35,7 +37,9 @@ class UserController extends AbstractController
     public function changefragment(Request $request): Response
     {
         $fragment = $request->query->get('fragment', "link-Acceuil");
-        $formData = $this->routeDataService->getFormData($fragment);
+        $dossierId = $request->query->get('dossier');
+
+        $formData = $this->routeDataService->getFormData($fragment, $dossierId ? (int) $dossierId : null);
 
         return $this->json([
             'fragmentContent' => $this->renderView('userPage/_fragmentContent.html.twig', $formData),
