@@ -32,11 +32,10 @@ use symfony;
 ```
 password: secret
 
-- email: user@example.com 
-  password: user
-
-- email: admin@example.com
-  password: admin
+| Utilisateur       | Mot de passe        |
+|-------------------|---------------------|
+| user@example.com  | user                |
+| admin@example.com | admin               |
 
 ## **HASH**
 ```bash
