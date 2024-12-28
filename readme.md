@@ -137,3 +137,43 @@ Si une nouvelle entité est introduite, ajoutez-la dans le `switch` pour gérer 
 
 ## IMPORTANT
 Les données supplémentaires (au-delà de `services` et `user`) doivent être vérifiées et ajoutées dans le deuxième tableau lors de l'appel de `createLinkConfig()`.
+
+##  4. Dans le assets/js/user/main.js
+### a) Ajouter le nouveau fragment à loadFragment()
+```js
+loadFragment(dossierId = null)
+```
+
+### b) Préparer le fragment pour l'url dans loadFragment()
+```js
+if (dossierId) { url += `&dossier=${dossierId}`;}
+history.pushState(null, '', `?fragment=${fragment}${dossierId ? '&dossier=' + dossierId : ''}`);
+```
+
+### c) Si besoin d'autres fonctions, ajouter dans updateFragmentContent(fragment) 
+Où fragment est le fragment de base, rien à changer ici
+Ajouter l'import de la fonction...
+```js
+import { repertoire } from './repertoire.js';
+case 'link-Repertoire':
+    repertoire();
+    break;
+```
+
+### d) Dans la fonction d'appel UserContent.addEventListener ('click', async function(event)) -> button
+On récupère le nouveau fragment et on vérifie s'il existe
+```js
+const dossier = button.getAttribute('data-dossier');
+dossier ? await loadFragment(fragment, dossier) : await loadFragment(fragment); 
+```
+
+### e) Dans la fonction d'appel window.addEventListener('popstate', async function() {}) -> actualisation
+On récupère le nouveau fragment et on vérifie s'il existe
+```js
+const dossierIdFromUrl = urlParams.get('dossier');
+    
+if (fragmentFromUrl) {
+    dossierIdFromUrl ? await loadFragment(fragmentFromUrl, dossierIdFromUrl) : await loadFragment(fragmentFromUrl);
+} 
+```
+

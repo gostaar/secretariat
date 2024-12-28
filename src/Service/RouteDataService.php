@@ -206,7 +206,7 @@ class RouteDataService
                     break;
                 case \App\Form\FactureType::class:
                     $entity = new \App\Entity\Facture();
-                break;
+                    break;
                 case \App\Form\RepertoireType::class:
                     $entity = new \App\Entity\Repertoire();
                     break;

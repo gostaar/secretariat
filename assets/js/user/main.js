@@ -7,7 +7,6 @@ export async function changeFragmentUser() {
     const UserContent = document.getElementById('userContent');
 
     async function loadFragment(fragment, dossierId = null) {
-        console.log(`dossierId : ${dossierId}`);
         loadingIndicator.style.display = 'flex'; 
         let url = `/changefragment?fragment=${fragment}`;
         if (dossierId) { url += `&dossier=${dossierId}`;}
@@ -24,7 +23,6 @@ export async function changeFragmentUser() {
            
             updateFragmentContent(fragment);
             document.getElementById('fragmentContent').innerHTML = data.fragmentContent;
-
 
         } catch (error) {
             console.error("Erreur lors du chargement du fragment : ", error);
@@ -59,7 +57,7 @@ export async function changeFragmentUser() {
             event.preventDefault();  
             const fragment = button.getAttribute('data-fragment');
             const dossier = button.getAttribute('data-dossier');
-console.log(dossier);
+
             dossier ? await loadFragment(fragment, dossier) : await loadFragment(fragment); 
             
         }
@@ -75,7 +73,7 @@ console.log(dossier);
     window.addEventListener('popstate', async function() {
         const urlParams = new URLSearchParams(window.location.search);
         const fragmentFromUrl = urlParams.get('fragment');
-        const dossierIdFromUrl = urlParams.get('dossier');  // Récupère l'ID du dossier si présent
+        const dossierIdFromUrl = urlParams.get('dossier');
     
         if (fragmentFromUrl) {
             dossierIdFromUrl ? await loadFragment(fragmentFromUrl, dossierIdFromUrl) : await loadFragment(fragmentFromUrl);
