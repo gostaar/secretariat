@@ -36,6 +36,31 @@ php bin/console security:hash-password
 ### APACHE
 docker-compose exec apache service apache2 restart
 
+<details>
+  <summary>Table des matières</summary>
+  <ul>
+    <li><a href="#procédure-dajout-de-fragment">Procédure d'ajout de fragment</a></li>
+    <li><a href="#2-dans-le-contrôleur">Dans le contrôleur</a>
+      <ul>
+        <li><a href="#a-vérifiez-la-présence-du-nouveau-fragment">Vérifiez la présence du nouveau fragment</a></li>
+        <li><a href="#b-gérez-la-condition-dexistence">Gérez la condition d'existence</a></li>
+        <li><a href="#c-mettez-à-jour-la-route-ajax">Mettez à jour la route AJAX</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-dans-le-service">Dans le service</a>
+      <ul>
+        <li><a href="#a-préparez-la-route">Préparez la route</a></li>
+        <li><a href="#b-mettez-à-jour-getformdata">Mettez à jour getFormData()</a></li>
+        <li><a href="#c-mettez-à-jour-gettemplatemapping">Mettez à jour getTemplateMapping()</a></li>
+        <li><a href="#d-ajoutez-le-fragment-dans-getrouteconfig">Ajoutez le fragment dans getRouteConfig()</a></li>
+        <li><a href="#e-construisez-les-données-nécessaires">Construisez les données nécessaires</a></li>
+        <li><a href="#f-ajoutez-les-recherches-dentités">Ajoutez les recherches d'entités</a></li>
+        <li><a href="#g-référencement-dans-les-switches">Référencement dans les switches</a></li>
+      </ul>
+    </li>
+  </ul>
+</details>
+
 # **Procédure d'ajout de fragment**
 
 ## **1. Dans le template**
