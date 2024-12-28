@@ -1,47 +1,55 @@
-## Sur l'ordinateur doit être installé node et composer 
+### Sur l'ordinateur doit être installé node et composer 
 
-# ####### A FAIRE ######
+# **A FAIRE**
+```bash
 docker-compose up -d
 docker exec secretariat-php-1 php /code/bin/console doctrine:migrations:migrate --no-interaction
 docker exec secretariat-php-1 php /code/bin/console doctrine:fixtures:load --no-interaction
-
-### Docker
+```
+## ** Docker **
+```bash
 docker ps
 docker exec -it secretariat-php-1 sh
-TOUT SUPPRIMER: 
+```
+### **TOUT SUPPRIMER:**
+```bash 
 docker system prune -a --volumes
+```
 
-### Commandes utiles
+## **Commandes utiles**
+```bash 
 composer install
 npm install
 npm run dev
 php bin/console make:migration
 docker exec -it secretariat-php-1 php /code/bin/console doctrine:migrations:migrate --no-interaction
+```
 
-### INFOS
+## **INFOS**
+```bash
 docker exec secretariat-mysql-1 mysql -u root -p
 use symfony;
-
+```
 password: secret
 
-email: user@example.com 
-password: user
+- email: user@example.com 
+  password: user
 
-email: admin@example.com
-password: admin
+- email: admin@example.com
+  password: admin
 
-### HASH
+## **HASH**
+```bash
 php bin/console security:hash-password
+```
 
-### APACHE
+## **APACHE**
+```bash
 docker-compose exec apache service apache2 restart
+```
 
 <details>
   <summary><h1>Procédure d'ajout de fragment</h1></summary>
-
-
-
-# **Procédure d'ajout de fragment**
 
 ## **1. Dans le template**
 ### **a) Définir les besoins**
