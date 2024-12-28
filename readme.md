@@ -6,7 +6,7 @@ docker-compose up -d
 docker exec secretariat-php-1 php /code/bin/console doctrine:migrations:migrate --no-interaction
 docker exec secretariat-php-1 php /code/bin/console doctrine:fixtures:load --no-interaction
 ```
-## ** Docker **
+## **Docker**
 ```bash
 docker ps
 docker exec -it secretariat-php-1 sh
