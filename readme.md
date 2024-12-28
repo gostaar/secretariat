@@ -37,7 +37,7 @@ php bin/console security:hash-password
 docker-compose exec apache service apache2 restart
 
 <details>
-  <summary>Table des matières</summary>
+  <summary># **Procédure d'ajout de fragment**</summary>
   <ul>
     <li><a href="#procédure-dajout-de-fragment">Procédure d'ajout de fragment</a></li>
     <li><a href="#2-dans-le-contrôleur">Dans le contrôleur</a>
